@@ -3,14 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "start": "npm run serve",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "dropbox": "^4.0.3",
+    "isomorphic-fetch": "^2.2.1",
+    "material-design-icons-iconfont": "^3.0.3",
+    "query-string": "^6.0.0",
     "register-service-worker": "^1.0.0",
     "vue": "^2.5.16",
     "vue-router": "^3.0.1",
+    "vuetify": "^1.0.17",
     "vuex": "^3.0.1"
   },
   "devDependencies": {
