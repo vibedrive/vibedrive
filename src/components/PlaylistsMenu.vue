@@ -1,5 +1,14 @@
 <template>
-  <v-list>
+  <v-list dense> 
+
+    <v-list-tile @click="" >
+      <v-list-tile-content>
+        <v-list-tile-title>
+          All tracks
+        </v-list-tile-title>
+      </v-list-tile-content>
+    </v-list-tile>
+
     <v-list-group
       v-for="group in groups"
       v-model="group.active"

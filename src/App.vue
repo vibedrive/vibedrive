@@ -1,15 +1,13 @@
 <template>
 
   <v-app id="app" dark>
-    <v-navigation-drawer clipped fixed v-model="drawer" app>
 
-        <PlaylistsMenu></PlaylistsMenu>
-        
-
+    <v-navigation-drawer fixed permanent v-model="drawer" app>
+      <PlaylistsMenu></PlaylistsMenu>    
     </v-navigation-drawer>
-    <v-toolbar app fixed clipped-left>
-      <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
-      <v-toolbar-title>Application</v-toolbar-title>
+
+    <v-toolbar app fixed>
+      <v-toolbar-title></v-toolbar-title>
     </v-toolbar>
     <v-content>
 
@@ -17,7 +15,7 @@
 
     </v-content>
     <v-footer app fixed>
-      <span>&copy; 2017</span>
+      
     </v-footer>
   </v-app>
 </template>

@@ -1,11 +1,13 @@
 <template>
-  <div class="home">
-    hello?
-    <a class="button" :href="authenticationURL">
-      Connect to Dropbox
-    </a>
-
-  </div>
+  <v-container fluid fill-height>
+    <v-layout>
+      <div class="home">
+        <v-btn color="info" :href="authenticationURL">
+          Connect to Dropbox
+        </v-btn>
+      </div>
+    </v-layout>
+  </v-container>
 </template>
 
 <script>
