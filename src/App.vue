@@ -28,6 +28,16 @@
       </v-menu>
     </v-toolbar>
 
+    <v-snackbar
+      color="red"
+      timeout="3000"
+      top right
+      multi-line vertical
+      v-model="error.visible"
+      @click.native="error.visible = false">
+      {{ error.text }}
+    </v-snackbar>
+
     <router-view :state="state"/>
   </v-app>
 </template>
@@ -55,6 +65,10 @@
     },
     data: () => ({
       drawer: true,
+      error: {
+        visible: false,
+        text: ''
+      },
       items: [
         { title: 'Profile', href: '/profile' }
       ]
