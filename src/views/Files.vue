@@ -4,13 +4,18 @@
         <v-layout>
           <v-flex xs8 offset-xs2>
 
+            <div class="title mb-3">Dropbox</div>
+
             <v-data-table
               :items="files"
               :headers="headers"
-              :loading="true"
+              :loading="loading"
+              :no-data-text="loading ? '' : 'No files found.' "
               hide-actions
               dark>
+ 
               <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
+
               <template slot="items" slot-scope="props">
                 <td class="text-xs-left">
                   {{ props.item.name }}
@@ -24,6 +29,7 @@
                   </v-btn>
                 </td>
               </template>
+
             </v-data-table>
 
           </v-flex>
@@ -33,10 +39,22 @@
 </template>
 
 <script>
+  import { Dropbox } from 'dropbox'
 
   export default {
     name: 'Files',
+    props: {
+      state: Object
+    },
     mounted: function () {
+      var dbx = new Dropbox({ 
+        accessToken: this.state.plugins.dropbox.token
+      })
+
+      dbx.filesListFolder({ path: '' }).then(res => {
+        this.loading = false
+        this.files = res.entries
+      }).catch(console.error)
     },
     computed: {
     },
@@ -47,6 +65,7 @@
     },
     data () {
       return {
+        loading: true,
         headers: [{
           text: 'File Name',
           value: 'name'
@@ -60,11 +79,7 @@
           width: '32',
           value: 'name'
         }],
-        files: [
-          { name: 'file-A.mp3', size: 10470175 },
-          { name: 'file-B.mp3', size: 5730264 },
-          { name: 'file-C.mp3', size: 8310374 }
-        ]
+        files: []
       }
     },
     components: {
