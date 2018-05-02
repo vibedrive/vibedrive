@@ -1,24 +1,66 @@
 <template>
-
   <v-app id="app" dark>
+    <v-toolbar app fixed dense clipped-left>
+      <v-toolbar-title>
+        <span>Vibedrive</span>
+      </v-toolbar-title>
 
-    <v-navigation-drawer fixed permanent v-model="drawer" app>
-      <PlaylistsMenu></PlaylistsMenu>    
-    </v-navigation-drawer>
+      <v-spacer></v-spacer>
 
-    <v-toolbar app fixed>
-      <v-toolbar-title></v-toolbar-title>
+      <v-toolbar-items>
+        <v-btn flat to="/files">Files</v-btn>
+        <v-btn flat to="/tracks">Tracks</v-btn>
+      </v-toolbar-items>
+
+      <v-spacer></v-spacer>
+
+      <v-menu bottom lazy offset-y min-width="240">
+        <v-btn icon slot="activator" dark>
+          <v-icon>account_circle</v-icon>
+        </v-btn>
+        <v-list>
+          <v-list-tile v-for="(item, i) in items" :key="i" @click="router.push(item.href)">
+            <v-list-tile-title>
+              {{ item.title }}
+            </v-list-tile-title>
+          </v-list-tile>
+        </v-list>
+      </v-menu>
     </v-toolbar>
-    <v-content>
 
-      <router-view/>
-
-    </v-content>
-    <v-footer app fixed>
-      
-    </v-footer>
+    <router-view :state="state"/>
   </v-app>
 </template>
+
+<script>
+  import PouchDB from 'pouchdb'
+  import storage from 'local-storage'
+  import router from '@/router'
+  import store from '@/store'
+
+  export default {
+    mounted () {
+      this.db = new PouchDB('vibedrive')
+      this.router = router
+      this.storage = storage
+      this.store = store
+
+      var token = this.storage.get('vibedrive:dropbox-token', token)
+      if (token) this.store.dispatch('auth:save-dropbox-token', token)
+    },
+    computed: {
+      state: function () {
+        return store.state
+      }
+    },
+    data: () => ({
+      drawer: true,
+      items: [
+        { title: 'Profile', href: '/profile' }
+      ]
+    })
+  }
+</script>
 
 <style lang="stylus">
   #app
@@ -35,19 +77,3 @@
       &.router-link-exact-active
         color #42b983
 </style>
-
-<script>
-  import PlaylistsMenu from '@/components/PlaylistsMenu'
-
-  export default {
-    data: () => ({
-      drawer: true
-    }),
-    props: {
-      source: String
-    },
-    components: {
-      PlaylistsMenu
-    }
-  }
-</script>

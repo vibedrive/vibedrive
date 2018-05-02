@@ -11,7 +11,9 @@
   "dependencies": {
     "dropbox": "^4.0.3",
     "isomorphic-fetch": "^2.2.1",
+    "local-storage": "^1.4.2",
     "material-design-icons-iconfont": "^3.0.3",
+    "pouchdb": "^6.4.3",
     "query-string": "^6.0.0",
     "register-service-worker": "^1.0.0",
     "vue": "^2.5.16",
