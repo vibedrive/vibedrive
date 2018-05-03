@@ -2,7 +2,7 @@
   <v-content>
     <v-container fluid>
         <v-layout>
-          <v-flex xs8 offset-xs2>
+          <v-flex>
 
             <div class="title mb-3">Dropbox</div>
 
@@ -17,6 +17,12 @@
               <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
 
               <template slot="items" slot-scope="props">
+                <td class="text-xs-left">
+                  {{ props.item.id }}
+                </td>
+                <td class="text-xs-left">
+                  {{ props.item.status }}
+                </td>
                 <td class="text-xs-left">
                   {{ props.item.name }}
                 </td>
@@ -40,6 +46,7 @@
 
 <script>
   import dropbox from '@/services/dropbox'
+  import db from '@/services/db'
 
   export default {
     name: 'Files',
@@ -48,12 +55,7 @@
     },
     mounted: function () {
       this.$nextTick(function () {
-        dropbox.folders.list()
-          .then(res => {
-            this.loading = false
-            this.files = res.entries
-          })
-          .catch(console.error)
+        this.fetchFiles()
       })
     },
     filters: {
@@ -61,10 +63,39 @@
         return ( value / (1000 * 1000) ).toFixed(2)
       }
     },
+    methods: {
+      fetchFiles: async function () {
+        var { entries } = await dropbox.folders.list()
+        var tracks = await db.tracks.list()
+
+        var tracksByDropboxId = {}
+
+        tracks.forEach(track => {
+          tracksByDropboxId[track.identifiers.dropbox] = track
+        })
+
+        var found
+
+        this.files = entries.map(file => {
+          found = tracksByDropboxId[file.id]
+          file.status = found ? found.status : 'Untracked'
+
+          return file
+        })
+
+        this.loading = false
+      }
+    },
     data () {
       return {
         loading: true,
         headers: [{
+          text: 'Id',
+          value: 'id'
+        },{
+          text: 'Status',
+          value: 'status'
+        },{
           text: 'File Name',
           value: 'name'
         },{

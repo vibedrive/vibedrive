@@ -43,7 +43,6 @@
 </template>
 
 <script>
-  import PouchDB from 'pouchdb'
   import storage from 'local-storage'
 
   import router from '@/router'
@@ -51,7 +50,6 @@
 
   export default {
     mounted () {
-      this.db = new PouchDB('vibedrive')
       this.router = router
       this.storage = storage
       this.store = store

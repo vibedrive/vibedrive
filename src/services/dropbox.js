@@ -5,10 +5,10 @@ class DropboxService {
   constructor () {
     this.$dbx = new Dropbox({ clientId: constants.DROPBOX_CLIENT_ID })
 
-    this.authenticationURL = this.$dbx.getAuthenticationUrl('http://localhost:8080/dbx')
+    this.authenticationURL = this.$dbx.getAuthenticationUrl(constants.URL + '/dbx')
 
     this.folders = {
-      list: () => this.$dbx.filesListFolder({ path: '' })
+      list: () => this.$dbx.filesListFolder({ path: '/Inbox' })
     }
   }
 
