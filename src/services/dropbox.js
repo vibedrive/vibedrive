@@ -6,10 +6,6 @@ class DropboxService {
     this.$dbx = new Dropbox({ clientId: constants.DROPBOX_CLIENT_ID })
 
     this.authenticationURL = this.$dbx.getAuthenticationUrl(constants.URL + '/dbx')
-
-    this.folders = {
-      list: () => this.$dbx.filesListFolder({ path: '/Inbox' })
-    }
   }
 
   set token (accessToken) {
@@ -18,6 +14,17 @@ class DropboxService {
 
   isConnected () {
     return !!this.$dbx.getAccessToken()
+  }
+
+  upload (file) {
+    return this.$dbx.filesUpload({ 
+      path: '/Inbox' + file.name, 
+      contents: file 
+    })
+  }
+
+  listFiles () {
+    return this.$dbx.filesListFolder({ path: '/Inbox' })
   }
 }
 

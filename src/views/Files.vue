@@ -1,20 +1,43 @@
 <template>
   <v-content>
     <v-container fluid>
-        <v-layout>
-          <v-flex>
+      <v-layout>
+        <v-flex>
 
-            <div class="title mb-3">Dropbox</div>
+          <v-card>
+            <v-card-title>
+              ~/Dropbox/Apps/Vibedrive/Inbox
+
+              <v-spacer></v-spacer>
+
+              <input 
+                type="file"
+                id="upload"
+                @change="onFileChange"
+                style="display: none;"
+                accept
+                multiple>
+
+              <label
+                class="btn"
+                color="teal"
+                for="upload">
+                <div class="btn__content">
+                  Upload
+                </div>
+              </label>
+              
+            </v-card-title>
 
             <v-data-table
+            expand
               :items="files"
               :headers="headers"
               :loading="loading"
               :no-data-text="loading ? '' : 'No files found.' "
-              hide-actions
               dark>
- 
-              <v-progress-linear slot="progress" color="blue" indeterminate></v-progress-linear>
+
+              <v-progress-linear slot="progress" color="teal" indeterminate></v-progress-linear>
 
               <template slot="items" slot-scope="props">
                 <td class="text-xs-left">
@@ -37,11 +60,17 @@
               </template>
 
             </v-data-table>
+          </v-card>
 
-          </v-flex>
-        </v-layout>
+          
+
+        </v-flex>
+      </v-layout>
+
     </v-container>
   </v-content>
+
+
 </template>
 
 <script>
@@ -52,6 +81,9 @@
     name: 'Files',
     props: {
       state: Object
+    },
+    components: {
+      
     },
     mounted: function () {
       this.$nextTick(function () {
@@ -64,8 +96,11 @@
       }
     },
     methods: {
+      onFileChange: function ($event) {
+
+      },
       fetchFiles: async function () {
-        var { entries } = await dropbox.folders.list()
+        var { entries } = await dropbox.listFiles()
         var tracks = await db.tracks.list()
 
         var tracksByDropboxId = {}
@@ -89,6 +124,7 @@
     data () {
       return {
         loading: true,
+        modal: true,
         headers: [{
           text: 'Id',
           value: 'id'
