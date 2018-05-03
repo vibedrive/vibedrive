@@ -1,8 +1,11 @@
 <template>
-  <v-content>
-    <v-container fluid>
-        <v-layout>
-          <v-flex xs8 offset-xs2>
+  <v-dialog v-model="visibility" lazy max-width="640" origin="top right" dark>
+    <slot slot="activator"></slot>
+    <v-card>
+     
+      <v-card-title class="headline">Preferences</v-card-title>
+
+        <v-card-text>
 
             <div v-if="!dropboxIsConnected">
               <v-btn color="info" :href="authenticationURL">
@@ -16,10 +19,11 @@
               </p>
             </div>
 
-          </v-flex>
-        </v-layout>
-    </v-container>
-  </v-content>
+        </v-card-text>
+
+
+    </v-card>
+  </v-dialog>
 </template>
 
 <script>
@@ -27,11 +31,20 @@
   import dropbox from '@/services/dropbox'
 
   export default {
-    name: 'Profile',
+    name: 'Preferences',
     props: {
+      visible: Boolean,
       state: Object
     },
     computed: {
+      visibility: {
+        get: function () {
+          return this.visible
+        },
+        set: function () {
+          this.$emit('close')
+        }
+      },
       dropboxIsConnected: () => {
         return dropbox.isConnected()
       }
@@ -43,3 +56,4 @@
     }
   }
 </script>
+

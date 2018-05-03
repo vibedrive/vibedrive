@@ -5,7 +5,6 @@ import storage from 'local-storage'
 
 import Tracks from './views/Tracks.vue'
 import Files from './views/Files.vue'
-import Profile from './views/Profile.vue'
 
 import store from './store'
 
@@ -27,11 +26,6 @@ var router = new Router({
       path: '/tracks',
       name: 'tracks',
       component: Tracks
-    },
-    {
-      path: '/profile',
-      name: 'profile',
-      component: Profile
     },
     {
       path: '/dbx',

@@ -19,8 +19,8 @@
                 multiple>
 
               <label
-                class="btn"
-                color="teal"
+                id="upload-btn"
+                class="btn teal accent-4 "
                 for="upload">
                 <div class="btn__content">
                   Upload
@@ -69,9 +69,12 @@
 
     </v-container>
   </v-content>
-
-
 </template>
+
+<style lang="stylus">
+  #upload-btn:hover
+    cursor: pointer
+</style>
 
 <script>
   import dropbox from '@/services/dropbox'
