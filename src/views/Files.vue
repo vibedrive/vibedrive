@@ -39,7 +39,7 @@
 </template>
 
 <script>
-  import { Dropbox } from 'dropbox'
+  import dropbox from '@/services/dropbox'
 
   export default {
     name: 'Files',
@@ -47,16 +47,14 @@
       state: Object
     },
     mounted: function () {
-      var dbx = new Dropbox({ 
-        accessToken: this.state.plugins.dropbox.token
+      this.$nextTick(function () {
+        dropbox.folders.list()
+          .then(res => {
+            this.loading = false
+            this.files = res.entries
+          })
+          .catch(console.error)
       })
-
-      dbx.filesListFolder({ path: '' }).then(res => {
-        this.loading = false
-        this.files = res.entries
-      }).catch(console.error)
-    },
-    computed: {
     },
     filters: {
       toMB: function (value) {
@@ -81,9 +79,6 @@
         }],
         files: []
       }
-    },
-    components: {
-      
     }
   }
 </script>

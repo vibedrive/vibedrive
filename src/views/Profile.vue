@@ -4,13 +4,13 @@
         <v-layout>
           <v-flex xs8 offset-xs2>
 
-            <div v-if="!state.plugins.dropbox.token">
+            <div v-if="!dropboxIsConnected">
               <v-btn color="info" :href="authenticationURL">
                 Connect to Dropbox
               </v-btn>
             </div v-if>
 
-            <div v-if="state.plugins.dropbox.token">
+            <div v-if="dropboxIsConnected">
               <p> 
                 Connected to Dropbox ( <a :href="authenticationURL">reconnect?</a> )
               </p>
@@ -24,26 +24,22 @@
 
 <script>
   import storage from 'local-storage'
+  import dropbox from '@/services/dropbox'
 
   export default {
-    name: 'home',
+    name: 'Profile',
     props: {
       state: Object
     },
-    mounted: function () {
-    },
     computed: {
-      authenticationURL: function () {
-        return this.dbx.getAuthenticationUrl('http://localhost:8080/dbx') 
+      dropboxIsConnected: () => {
+        return dropbox.isConnected()
       }
     },
     data () {
       return {
-        
+        authenticationURL: dropbox.authenticationURL
       }
-    },
-    components: {
-      
     }
   }
 </script>

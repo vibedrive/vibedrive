@@ -1,3 +1,3 @@
-module.exports = {
-  CLIENT_ID: 'meithbfm8oh5v50'
+export default {
+  DROPBOX_CLIENT_ID: 'meithbfm8oh5v50'
 }

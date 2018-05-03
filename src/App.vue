@@ -29,8 +29,8 @@
     </v-toolbar>
 
     <v-snackbar
+      :timeout="error.timeout"
       color="red"
-      timeout="3000"
       top right
       multi-line vertical
       v-model="error.visible"
@@ -45,6 +45,7 @@
 <script>
   import PouchDB from 'pouchdb'
   import storage from 'local-storage'
+
   import router from '@/router'
   import store from '@/store'
 
@@ -55,7 +56,7 @@
       this.storage = storage
       this.store = store
 
-      var token = this.storage.get('vibedrive:dropbox-token', token)
+      var token = this.storage.get('vibedrive:dropbox-token')
       if (token) this.store.dispatch('auth:save-dropbox-token', token)
     },
     computed: {
@@ -67,7 +68,8 @@
       drawer: true,
       error: {
         visible: false,
-        text: ''
+        text: '',
+        timeout: 3000
       },
       items: [
         { title: 'Profile', href: '/profile' }
@@ -82,12 +84,4 @@
     font-weight: 500
     -webkit-font-smoothing antialiased
     -moz-osx-font-smoothing grayscale
-
-  #nav
-    padding 30px
-    a
-      font-weight bold
-      color #2c3e50
-      &.router-link-exact-active
-        color #42b983
 </style>
