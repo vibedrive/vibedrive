@@ -1,18 +1,18 @@
-import io from 'socket.io-client'
+var io = require('socket.io-client')
+var promisify = require('util-promisify')
 
 class FileServerService {
   constructor () {
     var socket = io('http://localhost:9753')
 
-    socket.on('connect', function () {
+    this.emit = promisify(socket.emit).bind(socket)
+    this.files = {
+      list: this.listFiles.bind(this)
+    }
+  }
 
-    })
-
-    socket.on('folders:inbox:list', function (data) {
-      console.log(data)
-    })
-
-    socket.on('disconnect', function () {})
+  listFiles () {
+    return this.emit('folders:inbox:list')
   }
 }
 

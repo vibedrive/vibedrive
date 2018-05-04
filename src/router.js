@@ -63,7 +63,7 @@ var router = new Router({
           storage.set('vibedrive:soundcloud-token', access_token)
           store.dispatch('auth:save-soundcloud-token', access_token)
 
-          window.close()
+          window.setTimeout(window.opener.SC.connectCallback, 1)
         }
 
         return homeRouteURLObject

@@ -8,15 +8,7 @@ var parallel = require('run-parallel')
 io.on('connection', function (socket) {
   console.log('a user connected')
 
-  listFiles((err, files) => {
-    console.log(err, files)
-    socket.emit('folders:inbox:list', files)
-  })
-
-  socket.on('folders:inbox:list', function () {
-
-  })
-
+  socket.on('folders:inbox:list', callback => listFiles(callback))
   socket.on('disconnect', function () {})
 })
 

@@ -3,20 +3,11 @@
     <v-container fluid>
       <v-layout>
         <v-flex>
-
           <v-card>
             <v-card-title>
               ~/Dropbox/Apps/Vibedrive/Inbox
 
               <v-spacer></v-spacer>
-
-              <input 
-                type="file"
-                id="upload"
-                @change="onFileChange"
-                style="display: none;"
-                accept
-                multiple>
 
               <label
                 id="upload-btn"
@@ -53,21 +44,33 @@
                   {{ props.item.size | toMB }} MB
                 </td>
                 <td class="justify-center layout px-0">
-                  <v-btn icon class="mx-0">
-                    <v-icon>more_vert</v-icon>
-                  </v-btn>
+
+                  <v-menu bottom left offset-y dark>
+                    <v-btn icon class="mx-0" slot="activator">
+                      <v-icon>more_vert</v-icon>
+                    </v-btn>
+                    <v-list>
+                      <v-list-tile @click="">
+                        <v-list-tile-title>Import As Track</v-list-tile-title>
+                      </v-list-tile>
+                    </v-list>
+                  </v-menu>
+
                 </td>
               </template>
 
             </v-data-table>
           </v-card>
-
-          
-
         </v-flex>
       </v-layout>
-
     </v-container>
+    <input 
+      type="file"
+      id="upload"
+      @change="onFileChange"
+      style="display: none;"
+      accept
+      multiple>
   </v-content>
 </template>
 
@@ -79,6 +82,7 @@
 <script>
   import dropbox from '@/services/dropbox'
   import db from '@/services/db'
+  import fileserver from '@/services/fileserver'
 
   export default {
     name: 'Files',
@@ -103,8 +107,12 @@
 
       },
       fetchFiles: async function () {
+        var localFiles = await fileserver.files.list()
         var { entries } = await dropbox.listFiles()
         var tracks = await db.tracks.list()
+
+        console.log('dropbox entries', entries)
+        console.log('localFiles', localFiles)
 
         var tracksByDropboxId = {}
 
@@ -112,14 +120,17 @@
           tracksByDropboxId[track.identifiers.dropbox] = track
         })
 
-        var found
+        var found, local
 
         this.files = entries.map(file => {
           found = tracksByDropboxId[file.id]
-          file.status = found ? found.status : 'Untracked'
+          local = localFiles.find(localFile => localFile.name === file.name)
+          
+          if (local) file.status = 'Available'
 
           return file
         })
+
 
         this.loading = false
       }
