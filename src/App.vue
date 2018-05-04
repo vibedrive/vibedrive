@@ -44,6 +44,7 @@
 
 <script>
   import storage from 'local-storage'
+  import fileserver from '@/services/fileserver'
 
   import router from '@/router'
   import store from '@/store'
