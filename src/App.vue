@@ -10,6 +10,7 @@
       <v-toolbar-items>
         <v-btn flat to="/files">Files</v-btn>
         <v-btn flat to="/tracks">Tracks</v-btn>
+        <v-btn flat to="/stream">Stream</v-btn>
       </v-toolbar-items>
 
       <v-spacer></v-spacer>
