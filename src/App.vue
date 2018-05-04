@@ -53,6 +53,7 @@
 
 <script>
   import storage from 'local-storage'
+  import fileserver from '@/services/fileserver'
 
   import Notifications from '@/components/Notifications'
   import Preferences from '@/components/Preferences'
