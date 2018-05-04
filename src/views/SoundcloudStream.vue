@@ -51,10 +51,14 @@
     computed: {},
     methods: {
       authenticate () {
-        soundcloud.connect().then(res => {
-          console.log('cool', res)
-          soundcloudIsConnected = true
-        }).catch(err => console.log('oops'))
+        soundcloud.connect()
+          .then(options => {
+            if ( SC.isConnected ) {
+              console.log(options)
+              soundcloudIsConnected = true
+            }
+          })
+          .catch(err => console.error(err))
       }
     }
   }
