@@ -4,22 +4,20 @@ import constants from '@/constants'
 class DropboxService {
   constructor () {
     this.$dbx = new Dropbox({ clientId: constants.DROPBOX_CLIENT_ID })
+    this.connected = false
 
     this.authenticationURL = this.$dbx.getAuthenticationUrl(constants.URL + '/dbx')
   }
 
   set token (accessToken) {
     this.$dbx.setAccessToken(accessToken)
-  }
-
-  isConnected () {
-    return !!this.$dbx.getAccessToken()
+    this.connected = true
   }
 
   upload (file) {
-    return this.$dbx.filesUpload({ 
-      path: '/Inbox' + file.name, 
-      contents: file 
+    return this.$dbx.filesUpload({
+      path: '/Inbox' + file.name,
+      contents: file
     })
   }
 

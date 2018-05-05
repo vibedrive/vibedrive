@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import dropbox from '@/services/dropbox'
+import dropbox from '@/Shared/services/dropbox'
 
 Vue.use(Vuex)
 

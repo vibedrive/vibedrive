@@ -28,7 +28,7 @@
 
 <script>
   import storage from 'local-storage'
-  import dropbox from '@/services/dropbox'
+  import dropbox from '@/Shared/services/dropbox'
 
   export default {
     name: 'Preferences',
@@ -38,20 +38,20 @@
     },
     computed: {
       visibility: {
-        get: function () {
+        get: function onOpen () {
+          this.dropboxIsConnected = dropbox.connected
+
           return this.visible
         },
-        set: function () {
+        set: function onClose () {
           this.$emit('close')
         }
-      },
-      dropboxIsConnected: () => {
-        return dropbox.isConnected()
       }
     },
     data () {
       return {
-        authenticationURL: dropbox.authenticationURL
+        dropboxIsConnected: false,
+        authenticationURL: dropbox.authenticationURL,
       }
     }
   }

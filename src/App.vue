@@ -10,7 +10,6 @@
       <v-toolbar-items>
         <v-btn flat to="/files">Files</v-btn>
         <v-btn flat to="/tracks">Tracks</v-btn>
-        <v-btn flat to="/stream">Stream</v-btn>
       </v-toolbar-items>
 
       <v-spacer></v-spacer>
@@ -55,11 +54,11 @@
 
 <script>
   import storage from 'local-storage'
-  import fileserver from '@/services/fileserver'
+  import fileserver from '@/Shared/services/fileserver'
 
-  import Notifications from '@/components/Notifications'
-  import Preferences from '@/components/Preferences'
-  import AudioPlayer from '@/components/AudioPlayer'
+  import Notifications from '@/Layout/components/Notifications'
+  import Preferences from '@/Layout/components/PreferencesModal'
+  import AudioPlayer from '@/Layout/components/AudioPlayer'
 
   import store from '@/store'
 

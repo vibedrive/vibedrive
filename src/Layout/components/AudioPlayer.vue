@@ -13,7 +13,7 @@
 </template>
 
 <script>
-  import dropbox from '@/services/dropbox'
+  import dropbox from '@/Shared/services/dropbox'
 
   export default {
     name: 'AudioPlayer',

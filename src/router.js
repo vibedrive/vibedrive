@@ -3,11 +3,10 @@ import Router from 'vue-router'
 import queryString from 'query-string'
 import storage from 'local-storage'
 
-import Tracks from './views/Tracks.vue'
-import Files from './views/Files.vue'
-import SoundcloudStream from './views/SoundcloudStream.vue'
+import Tracks from '@/Tracks/pages/Tracks.vue'
+import Files from '@/Files/pages/Files.vue'
 
-import store from './store'
+import store from '@/store'
 
 Vue.use(Router)
 
@@ -35,11 +34,6 @@ var router = new Router({
       component: Tracks
     },
     {
-      path: '/stream',
-      name: 'stream',
-      component: SoundcloudStream
-    },
-    {
       path: '/dbx',
       name: 'dbx',
       redirect: to => {
@@ -48,22 +42,6 @@ var router = new Router({
         if (access_token) {
           storage.set('vibedrive:dropbox-token', access_token)
           store.dispatch('auth:save-dropbox-token', access_token)
-        }
-
-        return homeRouteURLObject
-      }
-    },
-    {
-      path: '/callback.html',
-      name: 'sc',
-      redirect: to => {
-        var { code, access_token, scope, state } = queryString.parse(to.hash)
-
-        if (access_token) {
-          storage.set('vibedrive:soundcloud-token', access_token)
-          store.dispatch('auth:save-soundcloud-token', access_token)
-
-          window.setTimeout(window.opener.SC.connectCallback, 1)
         }
 
         return homeRouteURLObject

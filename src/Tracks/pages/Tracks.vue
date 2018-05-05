@@ -10,7 +10,7 @@
 </template>
 
 <script>
-  import PlaylistsMenu from '@/components/PlaylistsMenu'
+  import PlaylistsMenu from '@/Tracks/components/PlaylistsMenu'
 
   export default {
     name: 'Tracks',
