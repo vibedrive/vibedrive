@@ -53,11 +53,18 @@ export default {
     Preferences
   },
   props: {
+    state: Object
   },
   data: () => ({
-
+    preferences: false
   }),
   methods: {
+    openPreferences: function () {
+      this.preferences = true
+    },
+    closePreferences: function () {
+      this.preferences = false
+    }
   }
 }
 </script>

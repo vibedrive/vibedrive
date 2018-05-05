@@ -37,7 +37,6 @@
 
       <v-progress-linear slot="progress" color="teal" indeterminate></v-progress-linear>
 
-      
       <template slot="items" slot-scope="props">
         <td style="width: 32px">
           <v-checkbox
@@ -74,17 +73,16 @@
         </td>
       </template>
     </v-data-table>
-<!--     <input 
+    <input 
       type="file"
       id="upload"
       @change="onFileChange"
-      style="display: none;"
-      accept multiple> -->
+      accept multiple>
   </v-card>
 </template>
 
 <script>
-import dropbox from '@/Shared/services/dropbox'
+import fileserver from '@/Files/services/fileserver'
 
 export default {
   name: 'InboxTable',
@@ -102,15 +100,15 @@ export default {
       sortable: false,
       width: 32,
       value: 'name'
-    },{
+    }, {
       text: 'File Name',
       value: 'name'
-    },{
+    }, {
       text: 'Size',
       width: 128,
       align: 'right',
       value: 'size'
-    },{
+    }, {
       sortable: false,
       width: 32,
       value: 'name'
@@ -123,23 +121,20 @@ export default {
   },
   methods: {
     fetchFiles: async function () {
-      if (dropbox.connected) {
-        this.loading = true
-        this.files = []
+      console.log('fetchFiles')
+      this.loading = true
+      this.files = []
 
-        var { entries } = await dropbox.listFiles()
-
-        this.files = entries
-        this.loading = false
+      try {
+        this.files = await fileserver.listFiles()
+      } catch (err) {
+        console.error(err)
       }
+
+      this.loading = false
     },
     onFileChange: function ($event) {
 
-    }
-  },
-  filters: {
-    toMB: function (value) {
-      return ( value / (1000 * 1000) ).toFixed(2)
     }
   }
 }
@@ -148,4 +143,7 @@ export default {
 <style lang="stylus">
   #upload-btn:hover
     cursor: pointer
+
+  input[type="file"]
+    display: none
 </style>

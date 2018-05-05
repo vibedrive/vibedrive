@@ -1,23 +1,25 @@
 var fs = require('fs')
-var os = require('os')
 var path = require('path')
-var http = require('http').Server()
-var io = require('socket.io')(http)
+var http = require('http')
+var socketIO = require('socket.io')
 var parallel = require('run-parallel')
 
+const { PORT, VIBEDRIVE_HOME, DIRECTORY } = require('./constants')
+
+var server = http.Server()
+var io = socketIO(http)
+
 io.on('connection', function (socket) {
-  console.log('a user connected')
-
-  socket.on('folders:inbox:list', callback => listFiles(callback))
-  socket.on('disconnect', function () {})
+  socket.on('folders:inbox:list', cb => listFiles(DIRECTORY.INBOX, cb))
+  socket.on('folders:archives:list', cb => listFiles(DIRECTORY.ARCHIVES, cb))
 })
 
-http.listen(9753, function () {
-  console.log('listening on *:9753')
+server.listen(PORT, function () {
+  console.log('Vibedrive File Server listening on', PORT)
 })
 
-function listFiles (cb) {
-  var dir = path.join(os.homedir(), '/Dropbox/Apps/Vibedrive/Inbox')
+function listFiles (key, cb) {
+  var dir = dirPath(key)
   var statFiles = []
 
   fs.readdir(dir, (err, files) => {
@@ -29,8 +31,10 @@ function listFiles (cb) {
   })
 
   function statTask (file) {
-    return function (done) {
+    return done => {
       fs.stat(path.join(dir, file), (err, stats) => {
+        if (err) return done(err)
+
         statFiles.push({
           name: file,
           filesize: stats.size,
@@ -41,4 +45,8 @@ function listFiles (cb) {
       })
     }
   }
+}
+
+function dirPath (directory) {
+  return path.join(VIBEDRIVE_HOME, directory)
 }

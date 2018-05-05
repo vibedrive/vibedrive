@@ -1,11 +1,11 @@
 <template>
   <div id="app">
     <v-app dark>
-      <Navbar></Navbar>
+      <Navbar :state="state"></Navbar>
       <main class="scroll-y my-5">
         <router-view :state="state"></router-view>
       </main>
-      <AudioPlayer></AudioPlayer>
+      <AudioPlayer :state="state.player"></AudioPlayer>
     </v-app>
 
     <Notifications :error="state.notifications.error"></Notifications>
@@ -39,17 +39,8 @@ export default {
       return store.state
     }
   },
-  methods: {
-    openPreferences: function () {
-      this.preferences = true
-    },
-    closePreferences: function () {
-      this.preferences = false
-    }
-  },
   data: () => ({
     drawer: true,
-    preferences: false,
     error: {
       visible: false,
       text: '',

@@ -1,4 +1,4 @@
-import('isomorphic-fetch')
+import 'isomorphic-fetch'
 
 import Vue from 'vue'
 import Vuetify from 'vuetify'
@@ -9,6 +9,8 @@ import '@/assets/fonts/WorkSans.css'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+
+import '@/Shared/filters'
 import './registerServiceWorker'
 
 Vue.use(Vuetify)
@@ -20,5 +22,3 @@ new Vue({
   store,
   render: h => h(App)
 }).$mount('#app')
-
-
