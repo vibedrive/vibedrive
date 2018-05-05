@@ -23,6 +23,8 @@
 
     </v-card-title>
 
+    <!-- <v-card-text> -->
+
     <v-data-table
       :items="files"
       :headers="headers"
@@ -82,65 +84,65 @@
 </template>
 
 <script>
-  import dropbox from '@/Shared/services/dropbox'
+import dropbox from '@/Shared/services/dropbox'
 
-  export default {
-    name: 'InboxTable',
-    props: {
-      
-    },
-    data: () => ({
-      search: '',
-      loading: true,
-      modal: true,
-      selected: [],
-      rowsPerPage: [9],
-      files: [],
-      headers: [{
-        sortable: false,
-        width: 32,
-        value: 'name'
-      },{
-        text: 'File Name',
-        value: 'name'
-      },{
-        text: 'Size',
-        width: 128,
-        align: 'right',
-        value: 'size'
-      },{
-        sortable: false,
-        width: 32,
-        value: 'name'
-      }]
-    }),
-    mounted: function () {
-      this.$nextTick(function () {
-        this.fetchFiles()
-      })
-    },
-    methods: {
-      fetchFiles: async function () {
-        if (dropbox.connected) {
-          this.loading = true
-          this.files = []
+export default {
+  name: 'InboxTable',
+  props: {
+    
+  },
+  data: () => ({
+    search: '',
+    loading: true,
+    modal: true,
+    selected: [],
+    rowsPerPage: [9],
+    files: [],
+    headers: [{
+      sortable: false,
+      width: 32,
+      value: 'name'
+    },{
+      text: 'File Name',
+      value: 'name'
+    },{
+      text: 'Size',
+      width: 128,
+      align: 'right',
+      value: 'size'
+    },{
+      sortable: false,
+      width: 32,
+      value: 'name'
+    }]
+  }),
+  mounted: function () {
+    this.$nextTick(function () {
+      this.fetchFiles()
+    })
+  },
+  methods: {
+    fetchFiles: async function () {
+      if (dropbox.connected) {
+        this.loading = true
+        this.files = []
 
-          var { entries } = await dropbox.listFiles()
+        var { entries } = await dropbox.listFiles()
 
-          this.files = entries
-          this.loading = false
-        }
-      },
-      onFileChange: function ($event) {
-
+        this.files = entries
+        this.loading = false
       }
     },
-    filters: {
-      toMB: function (value) {
-        return ( value / (1000 * 1000) ).toFixed(2)
-      }
+    onFileChange: function ($event) {
+
+    }
+  },
+  filters: {
+    toMB: function (value) {
+      return ( value / (1000 * 1000) ).toFixed(2)
     }
   }
+}
 </script>
 
 <style lang="stylus">

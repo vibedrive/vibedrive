@@ -29,7 +29,7 @@
 <script>
   import storage from 'local-storage'
   import dropbox from '@/Shared/services/dropbox'
-
+ 
   export default {
     name: 'Preferences',
     props: {

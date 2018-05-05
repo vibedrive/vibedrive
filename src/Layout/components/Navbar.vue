@@ -1,0 +1,64 @@
+<template>
+  <v-toolbar app fixed dense clipped-left>
+    <v-toolbar-title>
+      <span>Vibedrive</span>
+    </v-toolbar-title>
+
+    <v-spacer></v-spacer>
+
+    <v-toolbar-items>
+      <v-btn flat to="/files">Files</v-btn>
+      <v-btn flat to="/tracks">Tracks</v-btn>
+    </v-toolbar-items>
+
+    <v-spacer></v-spacer>
+
+    <v-menu bottom lazy offset-y min-width="240">
+      <v-btn icon slot="activator" dark>
+        <v-icon>account_circle</v-icon>
+      </v-btn>
+      <v-list>
+        <v-list-tile v-on:click="openPreferences">
+          <v-list-tile-title >
+            Preferences
+          </v-list-tile-title>
+        </v-list-tile>
+        <v-list-tile to="/login">
+          <v-list-tile-title>
+            Log In
+          </v-list-tile-title>
+        </v-list-tile>
+        <v-list-tile to="/upgrade">
+          <v-list-tile-title>
+            Upgrade to Plus 
+            <v-icon small color="white">star</v-icon>
+          </v-list-tile-title>
+        </v-list-tile>
+      </v-list>
+    </v-menu>
+    <Preferences 
+      :state="state" 
+      :visible="preferences" 
+      v-on:close="closePreferences">
+    </Preferences>
+  </v-toolbar>
+</template>
+
+<script>
+import Preferences from '@/Layout/components/PreferencesModal'
+
+export default {
+  name: 'Navbar',
+  components: {
+    Preferences
+  },
+  props: {
+  },
+  data: () => ({
+
+  }),
+  methods: {
+  }
+}
+</script>
+

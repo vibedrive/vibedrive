@@ -11,19 +11,19 @@
 </template>
 
 <script>
-  export default {
-    name: 'Notifications',
-    props: {
-      error: Object
-    },
-    data: () => ({
+export default {
+  name: 'Notifications',
+  props: {
+    error: Object
+  },
+  data: () => ({
 
-    }),
-    methods: {
-      close () {
-        this.error.visible = false
-      }
+  }),
+  methods: {
+    close () {
+      this.error.visible = false
     }
   }
+}
 </script>
 

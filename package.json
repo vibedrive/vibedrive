@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "npm run serve",
+    "start": "npm run serve --fix",
     "serve": "run-p serve:*",
     "serve:client": "vue-cli-service serve",
     "serve:fileserver": "nodemon fileserver",
@@ -56,6 +56,9 @@
     "plugins": {
       "autoprefixer": {}
     }
+  },
+  "vue": {
+    "lintOnSave": true
   },
   "browserslist": [
     "> 1%",
