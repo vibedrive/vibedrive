@@ -48,6 +48,8 @@
     </Preferences>
 
     <router-view :state="state"/>
+
+    <AudioPlayer></AudioPlayer>
   </v-app>
 </template>
 
@@ -57,12 +59,15 @@
 
   import Notifications from '@/components/Notifications'
   import Preferences from '@/components/Preferences'
+  import AudioPlayer from '@/components/AudioPlayer'
+
   import store from '@/store'
 
   export default {
     components: {
       Notifications,
-      Preferences
+      Preferences,
+      AudioPlayer
     },
     mounted () {
       this.storage = storage
