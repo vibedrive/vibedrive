@@ -7,7 +7,13 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    
+    notifications: {
+      error: {
+        timeout: 3000,
+        visible: false,
+        text: ''
+      }
+    }
   },
   mutations: {
 

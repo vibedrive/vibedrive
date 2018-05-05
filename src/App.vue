@@ -10,6 +10,7 @@
       <v-toolbar-items>
         <v-btn flat to="/files">Files</v-btn>
         <v-btn flat to="/tracks">Tracks</v-btn>
+        <v-btn flat to="/stream">Stream</v-btn>
       </v-toolbar-items>
 
       <v-spacer></v-spacer>
@@ -19,38 +20,56 @@
           <v-icon>account_circle</v-icon>
         </v-btn>
         <v-list>
-          <v-list-tile v-for="(item, i) in items" :key="i" @click="router.push(item.href)">
+          <v-list-tile v-on:click="openPreferences">
+            <v-list-tile-title >
+              Preferences
+            </v-list-tile-title>
+          </v-list-tile>
+          <v-list-tile to="/login">
             <v-list-tile-title>
-              {{ item.title }}
+              Log In
+            </v-list-tile-title>
+          </v-list-tile>
+          <v-list-tile to="/upgrade">
+            <v-list-tile-title>
+              Upgrade to Plus 
+              <v-icon small color="white">star</v-icon>
             </v-list-tile-title>
           </v-list-tile>
         </v-list>
       </v-menu>
     </v-toolbar>
 
-    <v-snackbar
-      :timeout="error.timeout"
-      color="red"
-      top right
-      multi-line vertical
-      v-model="error.visible"
-      @click.native="error.visible = false">
-      {{ error.text }}
-    </v-snackbar>
+    <Notifications :error="state.notifications.error"></Notifications>
+    <Preferences 
+      :state="state" 
+      :visible="preferences" 
+      v-on:close="closePreferences">
+    </Preferences>
 
     <router-view :state="state"/>
+
+    <AudioPlayer></AudioPlayer>
   </v-app>
 </template>
 
 <script>
   import storage from 'local-storage'
+  import fileserver from '@/services/fileserver'
 
-  import router from '@/router'
+  import Notifications from '@/components/Notifications'
+  import Preferences from '@/components/Preferences'
+  import AudioPlayer from '@/components/AudioPlayer'
+
   import store from '@/store'
 
   export default {
+    components: {
+      Notifications,
+      Preferences,
+      AudioPlayer
+    },
     mounted () {
-      this.router = router
       this.storage = storage
       this.store = store
 
@@ -62,8 +81,17 @@
         return store.state
       }
     },
+    methods: {
+      openPreferences: function () {
+        this.preferences = true
+      },
+      closePreferences: function () {
+        this.preferences = false
+      }
+    },
     data: () => ({
       drawer: true,
+      preferences: false,
       error: {
         visible: false,
         text: '',
