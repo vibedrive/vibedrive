@@ -29,7 +29,7 @@
       :items="files"
       :headers="headers"
       :loading="loading"
-      :no-data-text="loading ? '' : 'No files found.' "
+      :no-data-text="noDataText"
       :rows-per-page-items="rowsPerPage"
       v-model="selected"
       item-key="name"
@@ -55,7 +55,7 @@
           {{ props.item.name }}
         </td>
         <td class="text-xs-right">
-          {{ props.item.size | toMB }} MB
+          {{ props.item.filesize | toMB }} MB
         </td>
         <td class="justify-center layout px-0">
 
@@ -89,8 +89,16 @@ export default {
   props: {
     
   },
+  computed: {
+    noDataText () {
+      if (this.error) return this.error
+
+      return 'No files found.' 
+    }
+  },
   data: () => ({
     search: '',
+    error: '',
     loading: true,
     modal: true,
     selected: [],
@@ -107,7 +115,7 @@ export default {
       text: 'Size',
       width: 128,
       align: 'right',
-      value: 'size'
+      value: 'filesize'
     }, {
       sortable: false,
       width: 32,
@@ -120,18 +128,22 @@ export default {
     })
   },
   methods: {
-    fetchFiles: async function () {
-      console.log('fetchFiles')
+    fetchFiles: function () {
       this.loading = true
       this.files = []
 
-      try {
-        this.files = await fileserver.listFiles()
-      } catch (err) {
-        console.error(err)
-      }
-
-      this.loading = false
+      fileserver.listFiles()
+        .then(files => {
+          console.log(files)
+          this.files = files
+          this.loading = false
+        })
+        .catch(err => {
+          console.error(err)
+          this.files = []
+          this.error = 'Trouble connecting to file server.'
+          this.loading = false
+        })
     },
     onFileChange: function ($event) {
 

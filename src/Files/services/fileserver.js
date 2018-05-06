@@ -33,12 +33,6 @@ class FileServerService {
         resolve()
       })
 
-      this.socket.on('disconnect', () => {
-        console.log('disconnected')
-
-        this._connect()
-      })
-
       this.emit = promisify(this.socket.emit).bind(this.socket)
     })
   }
@@ -47,14 +41,13 @@ class FileServerService {
     console.log('delay')
     if (this.socket.connected) return Promise.resolve()
 
+    console.log('not connected')
     return this.promiseOfConnection
   }
 
   listFiles () {
-    return this.delay().then(() => {
-      console.log('emit listFiles')
-      this.emit('folders:inbox:list')
-    })
+    return this.delay()
+      .then(() => this.emit('folders:inbox:list'))
   }
 }
 

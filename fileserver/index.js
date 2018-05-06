@@ -7,11 +7,12 @@ var parallel = require('run-parallel')
 const { PORT, VIBEDRIVE_HOME, DIRECTORY } = require('./constants')
 
 var server = http.Server()
-var io = socketIO(http)
+var io = socketIO(server)
 
 io.on('connection', function (socket) {
-  socket.on('folders:inbox:list', cb => listFiles(DIRECTORY.INBOX, cb))
-  socket.on('folders:archives:list', cb => listFiles(DIRECTORY.ARCHIVES, cb))
+  console.log('on connection')
+  socket.on('folders:inbox:list', (cb) => listFiles(DIRECTORY.INBOX, cb))
+  socket.on('folders:archives:list', (cb) => listFiles(DIRECTORY.ARCHIVES, cb))
 })
 
 server.listen(PORT, function () {
@@ -19,6 +20,7 @@ server.listen(PORT, function () {
 })
 
 function listFiles (key, cb) {
+  console.log('key, cb', key, cb)
   var dir = dirPath(key)
   var statFiles = []
 
