@@ -1,29 +1,37 @@
 <template>
   <v-card flat>
     <v-card-title>
+        <v-select
+          label="~/Dropbox/Apps/Vibedrive/Inbox"
+          disabled
+        ></v-select>
+        
+        <v-spacer></v-spacer>
 
-      <v-select
-        label="~/Dropbox/Apps/Vibedrive/Inbox"
-        disabled
-      ></v-select>
+        <v-tooltip top color="black">
+          <v-btn  slot="activator" @click="fetchFiles">
+            <v-icon>cached</v-icon>
+            <span>Refresh</span>
+          </v-btn>
+          <span>Refresh</span>
+        </v-tooltip>
+
       
-      <v-spacer></v-spacer>
+        <v-menu offset-y light>
+          <v-btn color="white"  slot="activator"  light>
+            Action
+            <v-icon>arrow_drop_down</v-icon>
+          </v-btn>
+          <v-list light dense>
+            <v-list-tile @click="cleanInbox">
+              <v-list-tile-title>Clean</v-list-tile-title>
+            </v-list-tile>
+          </v-list>
+        </v-menu>
 
-      <v-tooltip top color="black">
-        <v-btn icon  color="white" depressed light slot="activator" @click="fetchFiles">
-          <v-icon>cached</v-icon>
-        </v-btn>
-        <span>Refresh</span>
-      </v-tooltip>
-
-
-   <!--    <label small for="upload" id="upload-btn" class="btn teal accent-4">
-        <div class="btn__content">Upload</div>
-      </label> -->
+      
 
     </v-card-title>
-
-    <!-- <v-card-text> -->
 
     <v-data-table
       :items="files"
@@ -46,19 +54,22 @@
             hide-details
           ></v-checkbox>
         </td>
+
         <td class="px-0">
           <v-btn icon>
             <v-icon>play_circle_filled</v-icon>
           </v-btn>
         </td>
-        <td class="text-xs-left">
+
+        <td class="text-xs-left" >
           {{ props.item.name }}
         </td>
+
         <td class="text-xs-right">
           {{ props.item.filesize | toMB }} MB
         </td>
-        <td class="justify-center layout px-0">
 
+        <td class="justify-center layout px-0">
           <v-menu bottom left offset-y dark>
             <v-btn icon class="mx-0" slot="activator">
               <v-icon>more_vert</v-icon>
@@ -69,7 +80,6 @@
               </v-list-tile>
             </v-list>
           </v-menu>
-
         </td>
       </template>
     </v-data-table>
@@ -86,14 +96,12 @@ import fileserver from '@/Files/services/fileserver'
 
 export default {
   name: 'InboxTable',
-  props: {
-    
-  },
+  props: {},
   computed: {
     noDataText () {
       if (this.error) return this.error
 
-      return 'No files found.' 
+      return 'No files found.'
     }
   },
   data: () => ({
@@ -101,6 +109,8 @@ export default {
     error: '',
     loading: true,
     modal: true,
+    action: null,
+    dropdown_font: ['Clean'],
     selected: [],
     rowsPerPage: [9],
     files: [],
@@ -128,13 +138,24 @@ export default {
     })
   },
   methods: {
+    onSelectAction: function (action) {
+      if (action) {
+        console.log(action)
+        this.$refs.form.reset()
+      }
+    },
+    cleanInbox: function () {
+      fileserver.cleanInbox()
+        .then(() => {
+          console.log('done')
+        })
+    },
     fetchFiles: function () {
       this.loading = true
       this.files = []
 
       fileserver.listFiles()
         .then(files => {
-          console.log(files)
           this.files = files
           this.loading = false
         })

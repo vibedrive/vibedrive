@@ -5,7 +5,8 @@ const PORT = 9753
 const VIBEDRIVE_HOME = path.join(os.homedir(), '/Dropbox/Apps/Vibedrive')
 const DIRECTORY = {
   INBOX: 'Inbox',
-  ARCHIVES: 'Archives'
+  ARCHIVES: 'Archives',
+  UNSUPPORTED: 'Unsupported'
 }
 
 module.exports = {
