@@ -6,9 +6,8 @@
           disabled
         ></v-select>
         
-        <v-btn style="opacity: 0" slot="activator" @click="fetchFiles"color="white" light :ripple="false">
-          <v-icon>cached</v-icon>
-          <span>Refresh</span>
+        <v-btn class="invisible">
+          <span></span>
         </v-btn>
 
         <v-tooltip top color="black">
@@ -68,12 +67,15 @@
               <v-icon>more_vert</v-icon>
             </v-btn>
             <v-list>
+
               <v-list-tile @click="">
                 <v-list-tile-title>Import As Track</v-list-tile-title>
               </v-list-tile>
-              <v-list-tile @click="trashFile(props.item.name)">
+
+              <v-list-tile @click="promptBeforeTrash(props.item)">
                 <v-list-tile-title>Move to Trash</v-list-tile-title>
               </v-list-tile>
+
             </v-list>
           </v-menu>
         </td>
@@ -84,6 +86,21 @@
       id="upload"
       @change="onFileChange"
       accept multiple>
+
+    <v-dialog v-model="modal" max-width="320" lazy>
+      <v-card>
+        <v-card-title class="headline">Move to trash?</v-card-title>
+        <v-card-text>
+          {{ fileToDelete.filename }} 
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="black" dark @click.native="closeTrashModal(fileToDelete)">Confirm</v-btn>
+          <v-btn color="white" light @click.native="closeTrashModal()">Cancel</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
   </v-card>
 </template>
 
@@ -104,8 +121,9 @@ export default {
     search: '',
     error: '',
     loading: true,
-    modal: true,
+    modal: false,
     action: null,
+    fileToDelete: {},
     dropdown_font: ['Clean'],
     selected: [],
     rowsPerPage: [9],
@@ -167,11 +185,20 @@ export default {
         .then(() => {
           var index = this.files.find(file => file.filename === filename)
 
-          // this.files.splice(index, 1)
+          this.files.splice(index, 1)
         })
         .catch(err => {
           console.error(err)
         })
+    },
+    promptBeforeTrash: function (file) {
+      this.fileToDelete = file
+      this.modal = true
+    },
+    closeTrashModal: function (file) {
+      if (file) this.trashFile(file.name)
+      this.fileToDelete = {}
+      this.modal = false
     },
     onFileChange: function ($event) {
 
@@ -186,4 +213,7 @@ export default {
 
   input[type="file"]
     display: none
+    
+  .invisible
+    opacity: 0
 </style>
