@@ -6,6 +6,7 @@ var parallel = require('run-parallel')
 var { promisify } = require('util')
 var cp = promisify(require('cp'))
 var mv = promisify(require('mv'))
+var trash = require('trash')
 
 var readdir = promisify(fs.readdir)
 
@@ -23,6 +24,7 @@ io.on('connection', function (socket) {
   socket.on('folders:inbox:clean', cb => cleanInbox(cb))
   socket.on('folders:inbox:list', cb => listFiles(DIRECTORY.INBOX, cb))
   socket.on('folders:archives:list', cb => listFiles(DIRECTORY.ARCHIVES, cb))
+  socket.on('files:trash', trashFile)
 })
 
 server.listen(PORT, function () {
@@ -81,6 +83,16 @@ function cleanInbox (cb) {
     Promise.all(promises).then(() => {
       cb(null)
     })
+  })
+}
+
+function trashFile (filepath, cb) {
+  var fullpath = path.join(VIBEDRIVE_HOME, filepath)
+
+  console.log(fullpath)
+
+  return trash([ fullpath ]).then(() => {
+    cb(null, trashFile, { status: 200 })
   })
 }
 

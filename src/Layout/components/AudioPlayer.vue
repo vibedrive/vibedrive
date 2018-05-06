@@ -1,18 +1,5 @@
 <template>
-<!--   <v-toolbar dense fixed bottom>
-    <v-btn icon>
-      <v-icon>play_circle_filled</v-icon>
-      
-    </v-btn>
-    <v-btn icon>
-      <v-icon>pause_circle_filled</v-icon>
-    </v-btn>
-    <v-toolbar-title>No track</v-toolbar-title>
-    <v-spacer></v-spacer>
-  </v-toolbar> -->
-
   <div class="text-xs-center">
-
     <v-bottom-sheet value="true" hide-overlay full-width persistent>
       <v-card tile>
         <v-progress-linear :value="50" height="3" class="my-0" color="teal accent-4"></v-progress-linear>

@@ -1,15 +1,12 @@
 <template>
-  <v-card flat color="grey darken-3">
+  <v-card>
     <v-card-title>
         <v-select
           label="~/Dropbox/Apps/Vibedrive/Inbox"
           disabled
         ></v-select>
         
-        <v-btn style="opacity: 0" slot="activator" @click="fetchFiles"color="white" light :ripple="false">
-          <v-icon>cached</v-icon>
-          <span>Refresh</span>
-        </v-btn>
+        <v-spacer></v-spacer>
 
         <v-tooltip top color="black">
           <v-btn slot="activator" @click="fetchFiles"color="white" light :ripple="false">
@@ -20,70 +17,18 @@
         </v-tooltip>
 
       
-        <v-menu offset-y light full-width>
+        <v-menu offset-y light>
           <v-btn slot="activator" color="white"  light :ripple="false">
-            Actions
+            Action
             <v-icon>arrow_drop_down</v-icon>
           </v-btn>
           <v-list light dense>
             <v-list-tile @click="cleanInbox">
-              <v-list-tile-title>Clean Folder</v-list-tile-title>
+              <v-list-tile-title>Clean</v-list-tile-title>
             </v-list-tile>
           </v-list>
         </v-menu>
 
-    </v-card-title>
-
-    <v-data-table
-      :items="files"
-      :headers="headers"
-      :loading="loading"
-      :no-data-text="noDataText"
-      :rows-per-page-items="rowsPerPage"
-      v-model="selected"
-      item-key="name"
-      :ripple="false">
-
-      <v-progress-linear slot="progress" color="teal" indeterminate></v-progress-linear>
-
-      <template slot="items" slot-scope="props">
-
-        <td class="px-0">
-          <v-btn icon :ripple="false">
-            <v-icon>play_circle_filled</v-icon>
-          </v-btn>
-        </td>
-
-        <td class="text-xs-left" >
-          {{ props.item.name }}
-        </td>
-
-        <td class="text-xs-right">
-          {{ props.item.filesize | toMB }} MB
-        </td>
-
-        <td class="justify-center layout px-0">
-          <v-menu bottom left offset-y dark>
-            <v-btn icon class="mx-0" slot="activator">
-              <v-icon>more_vert</v-icon>
-            </v-btn>
-            <v-list>
-              <v-list-tile @click="">
-                <v-list-tile-title>Import As Track</v-list-tile-title>
-              </v-list-tile>
-              <v-list-tile @click="trashFile(props.item.name)">
-                <v-list-tile-title>Move to Trash</v-list-tile-title>
-              </v-list-tile>
-            </v-list>
-          </v-menu>
-        </td>
-      </template>
-    </v-data-table>
-    <input 
-      type="file"
-      id="upload"
-      @change="onFileChange"
-      accept multiple>
   </v-card>
 </template>
 
@@ -91,7 +36,7 @@
 import fileserver from '@/Files/services/fileserver'
 
 export default {
-  name: 'InboxTable',
+  name: 'TableToolbar',
   props: {},
   computed: {
     noDataText () {
@@ -162,17 +107,6 @@ export default {
           this.loading = false
         })
     },
-    trashFile: function (filename) {
-      fileserver.files.trash('inbox', filename)
-        .then(() => {
-          var index = this.files.find(file => file.filename === filename)
-
-          // this.files.splice(index, 1)
-        })
-        .catch(err => {
-          console.error(err)
-        })
-    },
     onFileChange: function ($event) {
 
     }
@@ -181,9 +115,5 @@ export default {
 </script>
 
 <style lang="stylus">
-  #upload-btn:hover
-    cursor: pointer
 
-  input[type="file"]
-    display: none
 </style>

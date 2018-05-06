@@ -8,7 +8,8 @@ class FileServerService {
     this.promiseOfConnection = null
 
     this.files = {
-      list: this.listFiles.bind(this)
+      list: this.listFiles.bind(this),
+      trash: this.trashFile.bind(this)
     }
 
     this._connect()
@@ -41,6 +42,13 @@ class FileServerService {
 
   listFiles () {
     return this.delay().then(() => this.emit('folders:inbox:list'))
+  }
+
+  trashFile (folder, filename) {
+    console.log(folder, filename)
+    var filepath = folder + '/' + filename
+
+    return this.delay().then(() => this.emit('files:trash', filepath))
   }
 }
 

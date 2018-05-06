@@ -1,17 +1,16 @@
 <template>
-  <v-toolbar app fixed dense clipped-left>
+  <v-toolbar app fixed dense clipped-left class="black">
     <v-toolbar-title>
       <span>Vibedrive</span>
     </v-toolbar-title>
 
-    <v-spacer></v-spacer>
 
+    <v-spacer></v-spacer>
     <v-toolbar-items>
       <v-btn flat to="/files" :ripple="false">Files</v-btn>
       <v-btn flat to="/tracks" :ripple="false">Tracks</v-btn>
     </v-toolbar-items>
 
-    <v-spacer></v-spacer>
 
     <v-menu bottom lazy offset-y min-width="240">
       <v-btn icon slot="activator" dark  :ripple="false">

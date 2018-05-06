@@ -3,7 +3,7 @@
     <v-container fluid class="py-0 px-0">
       <v-layout>
         <v-flex>
-          <v-tabs height="48" v-model="active" color="grey darken-4"  dark slider-color="teal accent-4">
+          <v-tabs height="48" v-model="active" color="grey darken-3"  dark slider-color="teal accent-4">
 
             <v-tab key="inbox"  :ripple="false">Inbox</v-tab>
             <v-tab-item key="inbox">
