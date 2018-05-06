@@ -27,33 +27,18 @@ io.on('connection', function (socket) {
   socket.on('folders:inbox:list', cb => listFiles(DIRECTORY.INBOX, cb))
   socket.on('folders:archives:list', cb => listFiles(DIRECTORY.ARCHIVES, cb))
   socket.on('files:trash', trashFile)
-  socket.on('files:buffer', (filepath, offset, cb) => {
+
+  ss(socket).on('files:buffer', bufferFile)
+
+  function bufferFile (filepath, cb) {
     var fullpath = path.join(VIBEDRIVE_HOME, filepath)
-    var buffers = []
-
     var source = fs.createReadStream(fullpath)
-    var sink = concat(source, data => {
-      console.log('full length:', data.length)
-      // cb(null, data)
-    })
+    var sink = ss.createStream()
 
-    source.on('data', buf => {
-      if (buffers.length < 20) return buffers.push(buf)
-      console.log(buffers)
-      var data = Buffer.concat(buffers)
-      console.log(data.length)
-      cb(null, data)
-      // cb(null, buf)
-    })
+    cb(null, sink)
 
     source.pipe(sink)
-  })
-
-  ss(socket).on('files:play', function (filepath, stream) {
-    var fullpath = path.join(VIBEDRIVE_HOME, filepath)
-
-    fs.createReadStream(fullpath).pipe(stream)
-  })
+  }
 
   function listFiles (key, cb) {
     var dir = dirPath(key)

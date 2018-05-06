@@ -111,6 +111,7 @@
 
 <script>
 import fileserver from '@/Files/services/fileserver'
+import renderAudio from '@/lib/render-audio'
 
 export default {
   name: 'InboxTable',
@@ -215,13 +216,13 @@ export default {
       this.buffering = file.name
       this.playing = ''
 
-      fileserver.files.buffer('inbox', file.name).then(data => {
-        this.buffering = ''
-        this.playing = file.name
-
-        this.$refs.audio.src = (window.URL).createObjectURL(new Blob([data]))
-        this.$refs.audio.play()
-      })
+      fileserver.files.buffer('inbox', file.name)
+        .then(stream => renderAudio(file.name, stream, this.$refs.audio))
+        .then(() => {
+          this.buffering = ''
+          this.playing = file.name
+        })
+        .catch(console.error)
     },
     pause: function () {
       this.$refs.audio.pause()

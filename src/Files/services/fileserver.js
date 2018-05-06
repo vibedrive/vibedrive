@@ -54,11 +54,22 @@ class FileServerService {
   }
 
   bufferFile (folder, filename, callback) {
-    var filepath = folder + '/' + filename
-    var offset = 0
+    return new Promise((resolve, reject) => {
+      var filepath = folder + '/' + filename
 
-    return this.emit('files:buffer', filepath, offset)
+      ss(this.socket).emit('files:buffer', filepath, (err, stream) => {
+        if (err) return reject(err)
+        resolve(stream)
+      })
+    })
   }
+
+  // bufferFile (folder, filename, callback) {
+  //   var filepath = folder + '/' + filename
+  //   var offset = 0
+
+  //   return this.emit('files:buffer', filepath, offset)
+  // }
 }
 
 export default new FileServerService()
