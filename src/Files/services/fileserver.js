@@ -1,4 +1,5 @@
 var io = require('socket.io-client')
+var ss = require('socket.io-stream')
 var promisify = require('util-promisify')
 
 const platform = 'browser'
@@ -9,7 +10,8 @@ class FileServerService {
 
     this.files = {
       list: this.listFiles.bind(this),
-      trash: this.trashFile.bind(this)
+      trash: this.trashFile.bind(this),
+      buffer: this.bufferFile.bind(this)
     }
 
     this._connect()
@@ -49,6 +51,13 @@ class FileServerService {
     var filepath = folder + '/' + filename
 
     return this.delay().then(() => this.emit('files:trash', filepath))
+  }
+
+  bufferFile (folder, filename, callback) {
+    var filepath = folder + '/' + filename
+    var offset = 0
+
+    return this.emit('files:buffer', filepath, offset)
   }
 }
 

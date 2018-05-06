@@ -18,7 +18,6 @@
           <span>Refresh</span>
         </v-tooltip>
 
-      
         <v-menu offset-y light full-width>
           <v-btn slot="activator" color="white"  light :ripple="false">
             Actions
@@ -48,8 +47,12 @@
       <template slot="items" slot-scope="props">
 
         <td class="px-0">
-          <v-btn icon :ripple="false">
-            <v-icon>play_circle_filled</v-icon>
+          <v-btn icon
+            :ripple="false" 
+            @click="play(props.item)" 
+            :loading="buffering === props.item.name"
+            :class="{ 'playing': playing === props.item.name }">
+            <v-icon>{{ playing === props.item.name ? 'pause_circle_filled' : 'play_circle_filled' }} </v-icon>
           </v-btn>
         </td>
 
@@ -101,6 +104,8 @@
       </v-card>
     </v-dialog>
 
+    <audio ref="audio"></audio>
+
   </v-card>
 </template>
 
@@ -120,6 +125,8 @@ export default {
   data: () => ({
     search: '',
     error: '',
+    buffering: '',
+    playing: '',
     loading: true,
     modal: false,
     action: null,
@@ -200,6 +207,25 @@ export default {
       this.fileToDelete = {}
       this.modal = false
     },
+    play: function (file) {
+      if (file.name === this.playing) {
+        return this.$refs.audio.paused ? this.$refs.audio.play() : this.pause()
+      }
+
+      this.buffering = file.name
+      this.playing = ''
+
+      fileserver.files.buffer('inbox', file.name).then(data => {
+        this.buffering = ''
+        this.playing = file.name
+
+        this.$refs.audio.src = (window.URL).createObjectURL(new Blob([data]))
+        this.$refs.audio.play()
+      })
+    },
+    pause: function () {
+      this.$refs.audio.pause()
+    },
     onFileChange: function ($event) {
 
     }
@@ -216,4 +242,15 @@ export default {
     
   .invisible
     opacity: 0
+    
+  .playing
+    animation: 1s flashing infinite linear
+    
+  @keyframes flashing
+    0%
+      opacity: 1
+    50%
+      opacity: 0
+    100%
+      opacity: 1
 </style>
