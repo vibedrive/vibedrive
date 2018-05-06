@@ -9,7 +9,7 @@
         <v-spacer></v-spacer>
 
         <v-tooltip top color="black">
-          <v-btn  slot="activator" @click="fetchFiles">
+          <v-btn slot="activator" @click="fetchFiles"color="white" light :ripple="false">
             <v-icon>cached</v-icon>
             <span>Refresh</span>
           </v-btn>
@@ -18,7 +18,7 @@
 
       
         <v-menu offset-y light>
-          <v-btn color="white"  slot="activator"  light>
+          <v-btn slot="activator" color="white"  light :ripple="false">
             Action
             <v-icon>arrow_drop_down</v-icon>
           </v-btn>
@@ -41,7 +41,8 @@
       :rows-per-page-items="rowsPerPage"
       v-model="selected"
       item-key="name"
-      select-all="white">
+      select-all="white" 
+      :ripple="false">
 
       <v-progress-linear slot="progress" color="teal" indeterminate></v-progress-linear>
 
@@ -52,11 +53,12 @@
             primary
             color="white"
             hide-details
+            :ripple="false"
           ></v-checkbox>
         </td>
 
         <td class="px-0">
-          <v-btn icon>
+          <v-btn icon :ripple="false">
             <v-icon>play_circle_filled</v-icon>
           </v-btn>
         </td>

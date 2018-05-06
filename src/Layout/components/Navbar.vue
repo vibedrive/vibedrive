@@ -7,14 +7,14 @@
     <v-spacer></v-spacer>
 
     <v-toolbar-items>
-      <v-btn flat to="/files">Files</v-btn>
-      <v-btn flat to="/tracks">Tracks</v-btn>
+      <v-btn flat to="/files" :ripple="false">Files</v-btn>
+      <v-btn flat to="/tracks" :ripple="false">Tracks</v-btn>
     </v-toolbar-items>
 
     <v-spacer></v-spacer>
 
     <v-menu bottom lazy offset-y min-width="240">
-      <v-btn icon slot="activator" dark>
+      <v-btn icon slot="activator" dark  :ripple="false">
         <v-icon>account_circle</v-icon>
       </v-btn>
       <v-list>

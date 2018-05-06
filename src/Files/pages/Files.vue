@@ -4,16 +4,27 @@
       <v-layout>
         <v-flex>
           <v-tabs height="48" v-model="active" color="grey darken-4"  dark slider-color="teal accent-4">
-            <v-tab key="inbox" ripple>Inbox</v-tab>
-            <v-tab key="archives" ripple>Archives</v-tab>
 
+            <v-tab key="inbox"  :ripple="false">Inbox</v-tab>
             <v-tab-item key="inbox">
               <InboxTable></InboxTable>
             </v-tab-item>
 
+            <v-tab key="library"  :ripple="false">Library</v-tab>
+            <v-tab-item key="library">
+              <div></div>
+            </v-tab-item>
+
+            <v-tab key="archives"  :ripple="false">Archives</v-tab>
             <v-tab-item key="archives">
               <ArchivesTable></ArchivesTable>
             </v-tab-item>
+
+            <v-tab key="unsupported"  :ripple="false">Unsupported</v-tab>
+            <v-tab-item key="unsupported">
+              <div></div>
+            </v-tab-item>
+
           </v-tabs>
         </v-flex>
       </v-layout>

@@ -19,17 +19,17 @@
         <v-list class="grey darken-4">
           <v-list-tile >
             <v-list-tile-action>
-              <v-btn icon>
+              <v-btn icon :ripple="false">
                 <v-icon>fast_rewind</v-icon>
               </v-btn>
             </v-list-tile-action>
             <v-list-tile-action :class="{ 'mx-5': $vuetify.breakpoint.mdAndUp }">
-              <v-btn icon>
+              <v-btn icon :ripple="false">
                 <v-icon>pause</v-icon>
               </v-btn>
             </v-list-tile-action>
             <v-list-tile-action :class="{ 'mr-3': $vuetify.breakpoint.mdAndUp }">
-              <v-btn icon>
+              <v-btn icon :ripple="false">
                 <v-icon>fast_forward</v-icon>
               </v-btn>
             </v-list-tile-action>
