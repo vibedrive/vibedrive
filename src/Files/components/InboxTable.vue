@@ -13,7 +13,7 @@
         <v-tooltip top color="black">
           <v-btn slot="activator" @click="fetchFiles"color="white" light :ripple="false">
             <v-icon>cached</v-icon>
-            <span>Refresh</span>
+            <span> </span>
           </v-btn>
           <span>Refresh</span>
         </v-tooltip>
