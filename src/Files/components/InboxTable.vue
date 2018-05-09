@@ -38,9 +38,9 @@
       :loading="loading"
       :no-data-text="noDataText"
       :rows-per-page-items="rowsPerPage"
-      v-model="selected"
+      :ripple="false"
       item-key="name"
-      :ripple="false">
+      v-model="selected">
 
       <v-progress-linear slot="progress" color="teal" indeterminate></v-progress-linear>
 
@@ -48,15 +48,15 @@
 
         <td class="px-0">
           <v-btn icon
+            @click="bus.$emit('audio:play', props.item)" 
             :ripple="false" 
-            @click="play(props.item)" 
-            :loading="buffering === props.item.name"
-            :class="{ 'playing': playing === props.item.name }">
-            <v-icon>{{ playing === props.item.name ? 'pause_circle_filled' : 'play_circle_filled' }} </v-icon>
+            :loading="state.audio.buffering.id === props.item.id"
+            :class="{ 'playing': state.audio.playing.id === props.item.id }">
+            <v-icon>{{ state.audio.playing.id === props.item.id ? 'pause_circle_filled' : 'play_circle_filled' }}</v-icon>
           </v-btn>
         </td>
 
-        <td class="text-xs-left" >
+        <td class="text-xs-left">
           {{ props.item.name }}
         </td>
 
@@ -104,14 +104,14 @@
       </v-card>
     </v-dialog>
 
-    <audio ref="audio"></audio>
-
   </v-card>
 </template>
 
 <script>
 import fileserver from '@/Files/services/fileserver'
 import renderAudio from '@/lib/render-audio'
+import bus from '@/bus'
+import store from '@/store'
 
 export default {
   name: 'InboxTable',
@@ -124,13 +124,12 @@ export default {
     }
   },
   data: () => ({
+    bus,
     search: '',
     error: '',
-    buffering: '',
-    playing: '',
-    loading: true,
     modal: false,
     action: null,
+    loading: true,
     fileToDelete: {},
     dropdown_font: ['Clean'],
     selected: [],
@@ -208,25 +207,6 @@ export default {
       this.fileToDelete = {}
       this.modal = false
     },
-    play: function (file) {
-      if (file.name === this.playing) {
-        return this.$refs.audio.paused ? this.$refs.audio.play() : this.pause()
-      }
-
-      this.buffering = file.name
-      this.playing = ''
-
-      fileserver.files.buffer('inbox', file.name)
-        .then(stream => renderAudio(file.name, stream, this.$refs.audio))
-        .then(() => {
-          this.buffering = ''
-          this.playing = file.name
-        })
-        .catch(console.error)
-    },
-    pause: function () {
-      this.$refs.audio.pause()
-    },
     onFileChange: function ($event) {
 
     }
@@ -240,9 +220,6 @@ export default {
 
   input[type="file"]
     display: none
-    
-  .invisible
-    opacity: 0
     
   .playing
     animation: 1s flashing infinite linear

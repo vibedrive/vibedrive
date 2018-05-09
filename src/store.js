@@ -7,6 +7,11 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    audio: {
+      loading: false,
+      playing: {},
+      buffering: {}
+    },
     notifications: {
       error: {
         timeout: 3000,

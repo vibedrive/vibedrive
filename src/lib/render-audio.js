@@ -14,7 +14,7 @@ export default function renderAudio (filename, stream, target) {
     var ext = path.extname(filename).toLowerCase()
 
     // MediaSource can't parse .m4a, so buffer the whole track
-    if (ext === '.m4a') {
+    if (ext === '.m4a' || ext === '.wav') {
       return toBlobURL(stream, (err, url) => {
         if (err) return reject(err)
 
@@ -29,7 +29,7 @@ export default function renderAudio (filename, stream, target) {
     var writeStream = new MediaStream(target, { type })
 
     stream.pipe(writeStream)
-
+    target.pause()
     resolve()
   })
 }

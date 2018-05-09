@@ -8,9 +8,8 @@
           <router-view :state="state"></router-view>
         </main>
       
-      <AudioPlayer :state="state.player"></AudioPlayer>
+      <AudioToolbar :state="state"></AudioToolbar>
         
-    
     </v-app>
 
     <Notifications :error="state.notifications.error"></Notifications>
@@ -22,7 +21,7 @@ import storage from 'local-storage'
 
 import Navbar from '@/Layout/components/Navbar'
 import Notifications from '@/Layout/components/Notifications'
-import AudioPlayer from '@/Layout/components/AudioPlayer'
+import AudioToolbar from '@/Layout/components/AudioToolbar'
 
 import store from '@/store'
 
@@ -30,7 +29,7 @@ export default {
   components: {
     Navbar,
     Notifications,
-    AudioPlayer
+    AudioToolbar
   },
   mounted () {
     this.storage = storage
@@ -71,5 +70,8 @@ export default {
     
   main
     // max-height: calc(100vh - 8rem)
+      
+  .invisible
+    opacity: 0
 
 </style>
