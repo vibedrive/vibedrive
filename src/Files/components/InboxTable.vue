@@ -112,8 +112,6 @@
 <script>
 import fileserver from '@/Files/services/fileserver'
 import renderAudio from '@/lib/render-audio'
-import bus from '@/bus'
-import store from '@/store'
 
 export default {
   name: 'InboxTable',
@@ -158,7 +156,6 @@ export default {
   }),
   mounted: function () {
     this.$nextTick(function () {
-     console.log(this)
       this.fetchFiles()
     })
   },

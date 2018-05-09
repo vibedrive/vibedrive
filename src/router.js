@@ -6,8 +6,6 @@ import storage from 'local-storage'
 import Tracks from '@/Tracks/pages/Tracks.vue'
 import Files from '@/Files/pages/Files.vue'
 
-import store from '@/store'
-
 Vue.use(Router)
 
 var homeRouteURLObject = {
@@ -37,11 +35,11 @@ var router = new Router({
       path: '/dbx',
       name: 'dbx',
       redirect: to => {
-        var { access_token } = queryString.parse(to.hash)
+        var token = queryString.parse(to.hash).access_token
 
-        if (access_token) {
-          storage.set('vibedrive:dropbox-token', access_token)
-          store.dispatch('auth:save-dropbox-token', access_token)
+        if (token) {
+          storage.set('vibedrive:dropbox-token', token)
+          this.$store.dispatch('auth:save-dropbox-token', token)
         }
 
         return homeRouteURLObject

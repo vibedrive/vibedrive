@@ -16,6 +16,25 @@
   </div>
 </template>
 
+<style lang="stylus">
+  .w
+    max-width: 60em
+    margin: 0 auto
+  
+  #app
+    font-family: 'Work Sans', sans-serif
+    font-weight: 500
+    -webkit-font-smoothing antialiased
+    -moz-osx-font-smoothing grayscale
+    
+  main
+    // max-height: calc(100vh - 8rem)
+      
+  .invisible
+    opacity: 0
+
+</style>
+
 <script>
 import storage from 'local-storage'
 
@@ -48,22 +67,3 @@ export default {
   })
 }
 </script>
-
-<style lang="stylus">
-  .w
-    max-width: 60em
-    margin: 0 auto
-  
-  #app
-    font-family: 'Work Sans', sans-serif
-    font-weight: 500
-    -webkit-font-smoothing antialiased
-    -moz-osx-font-smoothing grayscale
-    
-  main
-    // max-height: calc(100vh - 8rem)
-      
-  .invisible
-    opacity: 0
-
-</style>
