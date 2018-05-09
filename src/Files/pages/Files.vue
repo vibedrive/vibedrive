@@ -5,22 +5,22 @@
         <v-flex>
           <v-tabs height="48" v-model="active" color="grey darken-3"  dark slider-color="teal accent-4">
 
-            <v-tab key="inbox"  :ripple="false">Inbox</v-tab>
+            <v-tab key="inbox" :ripple="false">Inbox</v-tab>
             <v-tab-item key="inbox">
               <InboxTable></InboxTable>
             </v-tab-item>
 
-            <v-tab key="library"  :ripple="false">Library</v-tab>
+            <v-tab key="library" :ripple="false">Library</v-tab>
             <v-tab-item key="library">
               <div></div>
             </v-tab-item>
 
-            <v-tab key="archives"  :ripple="false">Archives</v-tab>
+            <v-tab key="archives" :ripple="false">Archives</v-tab>
             <v-tab-item key="archives">
               <ArchivesTable></ArchivesTable>
             </v-tab-item>
 
-            <v-tab key="unsupported"  :ripple="false">Unsupported</v-tab>
+            <v-tab key="unsupported" :ripple="false">Unsupported</v-tab>
             <v-tab-item key="unsupported">
               <div></div>
             </v-tab-item>
@@ -45,13 +45,16 @@ import ArchivesTable from '@/Files/components/ArchivesTable'
 export default {
   name: 'Files',
   props: {
-    state: Object
+    
   },
   components: {
     InboxTable,
     ArchivesTable
   },
   methods: {
+  },
+  mounted: function () {
+    console.log('files', this)
   },
   data () {
     return {

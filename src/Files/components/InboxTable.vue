@@ -48,11 +48,13 @@
 
         <td class="px-0">
           <v-btn icon
-            @click="bus.$emit('audio:play', props.item)" 
+            @click="playOrPause(props.item)" 
             :ripple="false" 
-            :loading="state.audio.buffering.id === props.item.id"
-            :class="{ 'playing': state.audio.playing.id === props.item.id }">
-            <v-icon>{{ state.audio.playing.id === props.item.id ? 'pause_circle_filled' : 'play_circle_filled' }}</v-icon>
+            :loading="fileIsBuffering(props.item.id)"
+            :class="{ 'playing': fileIsLoaded(props.item.id) }">
+            <v-icon>
+              {{ fileIsLoaded(props.item.id) ? 'pause_circle_filled' : 'play_circle_filled' }}
+            </v-icon>
           </v-btn>
         </td>
 
@@ -115,7 +117,8 @@ import store from '@/store'
 
 export default {
   name: 'InboxTable',
-  props: {},
+  props: {
+  },
   computed: {
     noDataText () {
       if (this.error) return this.error
@@ -155,10 +158,27 @@ export default {
   }),
   mounted: function () {
     this.$nextTick(function () {
+     console.log(this)
       this.fetchFiles()
     })
   },
   methods: {
+    fileIsLoaded (file) {
+      if (!this.$store.state.audio.file) return false
+
+      return this.$store.state.audio.file.ino === file.ino
+    },
+    fileIsBuffering (file) {
+      if (this.$store.state.audio.status !== 'playing') return false
+
+      return this.$store.state.audio.file
+        ? this.$store.state.audio.file.ino === file.ino
+        : false
+    },
+    playOrPause (file) {
+      console.log('playorpause', file)
+      this.$store.dispatch('audio/load', file)
+    },
     onSelectAction: function (action) {
       if (action) {
         console.log(action)
