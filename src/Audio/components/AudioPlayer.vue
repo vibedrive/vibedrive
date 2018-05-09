@@ -55,7 +55,7 @@ export default {
     file: function (file, oldFile) {
       fileserver.files.buffer('inbox', file.name)
         .then(stream => renderAudio(file.name, stream, this.$refs.audio))
-        .then(() => this.$store.dispatch('audio:loaded'))
+        .then(() => this.$store.dispatch('audio/el:loaded'))
         .catch(console.error)
     },
     status: function (value, oldValue) {

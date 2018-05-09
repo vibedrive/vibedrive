@@ -26,20 +26,20 @@ export default {
     load: function (context, file) {
       this.commit('audio/load', { file })
     },
-    'play': function (context) {
+    play: function (context) {
       if (!this.state.file) return
       this.commit('audio/setStatus', 'playing')
     },
-    'pause': function (context) {
+    pause: function (context) {
       this.commit('audio/setStatus', 'paused')
     },
-    'prev': function (context) {
+    prev: function (context) {
       var index = this.state.index - 1
       var file = this.state.queue[index]
 
       this.commit('load', {file, index})
     },
-    'next': function (context) {
+    next: function (context) {
       var index = this.state.index + 1
       var file = this.state.queue[index]
 
@@ -53,6 +53,9 @@ export default {
     },
     'el:loaded': function (context) {
       this.dispatch('audio/play')
+    },
+    'el:paused': function (context) {
+
     },
     'el:ended': function (context) {
       this.dispatch('audio/next')
