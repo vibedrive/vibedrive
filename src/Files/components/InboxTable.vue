@@ -48,7 +48,7 @@
 
         <td class="px-0">
           <v-btn icon
-            @click="playOrPause(props.item)" 
+            @click="preview(props.item)" 
             :ripple="false" 
             :loading="fileIsBuffering(props.item)"
             :class="{ 'playing': fileIsLoaded(props.item) }">
@@ -159,21 +159,13 @@ export default {
   },
   methods: {
     fileIsLoaded (file) {
-      if (!this.$store.state.audio.file) return false
-
-      return this.$store.state.audio.file.ino === file.ino
+      return false
     },
     fileIsBuffering (file) {
-      return this.$store.state.audio.file
-        ? this.$store.state.audio.file.ino === file.ino && this.$store.state.audio.status === 'loading'
-        : false
+      return false
     },
-    playOrPause (file) {
-      this.$store.state.audio.status === 'playing'
-        ? this.$store.dispatch('audio/pause')
-        : this.$store.state.audio.file &&  this.$store.state.audio.file.ino === file.ino   
-          ? this.$store.dispatch('audio/play')
-          : this.$store.dispatch('audio/load', file)
+    preview (file) {
+      this.$store.dispatch('audio/preview', file)
     },
     onSelectAction: function (action) {
       if (action) {

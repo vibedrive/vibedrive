@@ -2,18 +2,26 @@ export default {
   namespaced: true,
   state: {
     status: 'paused',
+    active: {
+      playerId: 0,
+      file: null
+    },
+    queued: {
+      file: null,
+      index: 0
+    },
     file: null,
-    index: 0,
     queue: []
   },
   mutations: {
     setStatus (state, status) {
       state.status = status
     },
-    load (state, { file, index }) {
-      state.file = file
-      state.index = index
-      state.status = 'playing'
+    load (state, { file }) {
+      state.queue.file = file
+    },
+    swap (state) {
+      state.active.playerId = state.active.playerId === 0 ? 1 : 0
     },
     setQueue (state, queue) {
       state.queue = queue
@@ -24,41 +32,53 @@ export default {
   },
   actions: {
     load: function (context, file) {
-      this.commit('audio/load', { file })
+      context.commit('load', { file })
     },
     play: function (context) {
-      if (!this.state.file) return
-      this.commit('audio/setStatus', 'playing')
+      if (!context.state.file) return
+
+      context.commit('setStatus', 'playing')
     },
     pause: function (context) {
-      this.commit('audio/setStatus', 'paused')
+      if (!context.state.file) return
+
+      context.commit('setStatus', 'paused')
     },
     prev: function (context) {
-      var index = this.state.index - 1
-      var file = this.state.queue[index]
+      var index = context.state.index - 1
+      var file = context.state.queue[index]
 
-      this.commit('load', {file, index})
+      context.commit('load', { file })
     },
     next: function (context) {
-      var index = this.state.index + 1
-      var file = this.state.queue[index]
+      var index = context.state.index + 1
+      var file = context.state.queue[index]
 
-      this.commit('load', file, index)
+      context.commit('load', { file })
+    },
+    preview: function (context, file) {
+      if (context.state.active.file && file.ino === context.state.active.file.ino) {
+        return context.state.status === 'paused'
+          ? context.dispatch('play')
+          : context.dispatch('pause')
+      }
+
+      context.dispatch('load', file)
     },
     'queue:set': function (context, queue) {
-      this.commit('audio/setQueue', queue)
+      context.commit('setQueue', queue)
     },
     'queue:push': function (context, item) {
-      this.commit('audio/pushToQueue', item)
+      context.commit('pushToQueue', item)
     },
     'el:loaded': function (context) {
-      this.dispatch('audio/play')
+      context.dispatch('play')
     },
     'el:paused': function (context) {
 
     },
     'el:ended': function (context) {
-      this.dispatch('audio/next')
+      context.dispatch('next')
     }
   }
 }

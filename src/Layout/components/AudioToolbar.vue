@@ -2,8 +2,8 @@
   <div class="text-xs-center">
     <v-bottom-sheet value="true" hide-overlay full-width persistent>
       <AudioPlayer 
-        :player-state="$store.state.audio.status"
-        :file="$store.state.audio.file">
+        :active="$store.state.audio.active"
+        :status="$store.state.audio.status">
           
         </AudioPlayer>
     </v-bottom-sheet>

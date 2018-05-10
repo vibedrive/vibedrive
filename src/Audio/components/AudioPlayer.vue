@@ -33,9 +33,8 @@
         <v-spacer></v-spacer>
       </v-list-tile>
     </v-list>
-    <audio ref="audio" 
-      @pause="onPaused()"
-      @ended="onEnded()"></audio>
+    <audio ref="0" @canplay="onCanPlay()" @ended="onEnded()"></audio>
+    <audio ref="1" @canplay="onCanPlay()" @ended="onEnded()"></audio>
   </v-card>
 </template>
 
@@ -46,12 +45,12 @@ import renderAudio from '@/lib/render-audio'
 export default {
   name: 'AudioPlayer',
   props: {
-    file: Object,
+    active: Object,
     status: String
   },
-  data () {
-    return {
-
+  computed: {
+    $active: function () {
+      return this.$refs[this.active.playerId]
     }
   },
   watch: {
@@ -62,9 +61,11 @@ export default {
         .catch(console.error)
     },
     status: function (value, oldValue) {
-      return value === 'playing'
-        ? this.play()
-        : this.pause()
+      if (value === 'playing') {
+        this.$active.play()
+      } else {
+        this.$active.pause()
+      }
     }
   },
   methods: {
@@ -77,11 +78,11 @@ export default {
     playOrPause: function () {
       this.status === 'paused' ? this.play() : this.pause()
     },
-    onPaused: function () {
-      this.$store.dispatch('audio/el:paused')
+    onCanPlay: function (e) {
+      this.$store.dispatch('audio/el:canplay', e.target.ref)
     },
     onEnded: function (e) {
-      this.$store.dispatch('audio/el:ended')
+      this.$store.dispatch('audio/el:ended', e.target.ref)
     }
   }
 }
