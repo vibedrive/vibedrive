@@ -50,10 +50,10 @@
           <v-btn icon
             @click="playOrPause(props.item)" 
             :ripple="false" 
-            :loading="fileIsBuffering(props.item.id)"
-            :class="{ 'playing': fileIsLoaded(props.item.id) }">
+            :loading="fileIsBuffering(props.item)"
+            :class="{ 'playing': fileIsLoaded(props.item) }">
             <v-icon>
-              {{ fileIsLoaded(props.item.id) ? 'pause_circle_filled' : 'play_circle_filled' }}
+              {{ fileIsLoaded(props.item) ? 'pause_circle_filled' : 'play_circle_filled' }}
             </v-icon>
           </v-btn>
         </td>
@@ -111,7 +111,6 @@
 
 <script>
 import fileserver from '@/Files/services/fileserver'
-import renderAudio from '@/lib/render-audio'
 
 export default {
   name: 'InboxTable',
@@ -125,7 +124,6 @@ export default {
     }
   },
   data: () => ({
-    bus,
     search: '',
     error: '',
     modal: false,
@@ -166,19 +164,19 @@ export default {
       return this.$store.state.audio.file.ino === file.ino
     },
     fileIsBuffering (file) {
-      if (this.$store.state.audio.status !== 'playing') return false
-
       return this.$store.state.audio.file
-        ? this.$store.state.audio.file.ino === file.ino
+        ? this.$store.state.audio.file.ino === file.ino && this.$store.state.audio.status === 'loading'
         : false
     },
     playOrPause (file) {
-      console.log('playorpause', file)
-      this.$store.dispatch('audio/load', file)
+      this.$store.state.audio.status === 'playing'
+        ? this.$store.dispatch('audio/pause')
+        : this.$store.state.audio.file &&  this.$store.state.audio.file.ino === file.ino   
+          ? this.$store.dispatch('audio/play')
+          : this.$store.dispatch('audio/load', file)
     },
     onSelectAction: function (action) {
       if (action) {
-        console.log(action)
         this.$refs.form.reset()
       }
     },

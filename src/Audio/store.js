@@ -2,7 +2,6 @@ export default {
   namespaced: true,
   state: {
     status: 'paused',
-    buffering: false,
     file: null,
     index: 0,
     queue: []
@@ -14,6 +13,7 @@ export default {
     load (state, { file, index }) {
       state.file = file
       state.index = index
+      state.status = 'playing'
     },
     setQueue (state, queue) {
       state.queue = queue

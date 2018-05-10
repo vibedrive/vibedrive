@@ -40,6 +40,9 @@
 </template>
 
 <script>
+import fileserver from '@/Files/services/fileserver'
+import renderAudio from '@/lib/render-audio'
+
 export default {
   name: 'AudioPlayer',
   props: {

@@ -12,7 +12,7 @@
         
     </v-app>
 
-    <Notifications :error="$store.state.notifications.error"></Notifications>
+    <Notifications :error="$store.state.shared.notifications.error"></Notifications>
   </div>
 </template>
 
