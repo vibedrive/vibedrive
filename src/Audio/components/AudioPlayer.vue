@@ -55,9 +55,11 @@ export default {
   },
   watch: {
     file: function (file, oldFile) {
+      var target = this.$active
+
       fileserver.files.buffer('inbox', file.name)
-        .then(stream => renderAudio(file.name, stream, this.$refs.audio))
-        .then(() => this.$store.dispatch('audio/el:loaded'))
+        .then(stream => renderAudio(file.name, stream, target))
+        .then(() => this.$store.dispatch('audio/el:loaded', target))
         .catch(console.error)
     },
     status: function (value, oldValue) {

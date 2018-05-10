@@ -17,7 +17,7 @@ export default {
     setStatus (state, status) {
       state.status = status
     },
-    load (state, { file }) {
+    load (state, file) {
       state.queue.file = file
     },
     swap (state) {
@@ -32,7 +32,7 @@ export default {
   },
   actions: {
     load: function (context, file) {
-      context.commit('load', { file })
+      context.commit('load', file)
     },
     play: function (context) {
       if (!context.state.file) return
@@ -72,7 +72,7 @@ export default {
       context.commit('pushToQueue', item)
     },
     'el:loaded': function (context) {
-      context.dispatch('play')
+      context.commit('swap')
     },
     'el:paused': function (context) {
 
