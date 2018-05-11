@@ -6,7 +6,7 @@ export default {
     file: null,
     queue: [],
     history: [],
-    time: 0
+    progress: 0
   },
   mutations: {
     play (state) {
@@ -17,7 +17,7 @@ export default {
       state.status = 'paused'
     },
     timeupdate (state, value) {
-      state.time = value
+      state.progress = value
     },
     setDuration (state, duration) {
       state.file.duration = duration
@@ -25,6 +25,18 @@ export default {
     load (state, file) {
       state.buffering = true
       state.file = file
+    },
+    prev (state) {
+      state.status = 'paused'
+      state.buffering = true
+      state.queue.unshift(state.file)
+      state.file = state.history.pop()
+    },
+    next (state) {
+      state.status = 'paused'
+      state.buffering = true
+      state.history.push(state.file)
+      state.file = state.queue.shift()
     },
     swap (state) {
       state.active.playerId = state.active.playerId === 0 ? 1 : 0
@@ -37,19 +49,6 @@ export default {
     },
     concatQueue (state, queue) {
       state.queue = state.queue.concat(queue)
-    },
-    shiftQueue (state) {
-      var first = state.queue.shift()
-
-      state.history.push(first)
-    },
-    unshiftQueue (state) {
-      var last = state.history.pop()
-      var file = state.file
-
-      state.queue.push(file)
-
-      state.file = null
     }
   },
   actions: {
@@ -67,22 +66,19 @@ export default {
       context.commit('pause')
     },
     prev: function (context) {
-      var file = context.state.history[context.state.history.length - 1]
-      console.log(file)
+      if (!context.state.history.length) return
 
-      context.commit('unshiftQueue')
-      context.dispatch('preview', file)
+      context.commit('prev')
     },
     next: function (context) {
-      var file = context.state.queue[0]
+      if (!context.state.queue.length) return
 
-      context.commit('shiftQueue')
-      context.dispatch('preview', file)
+      context.commit('next')
     },
     'set-duration': function (context, duration) {
       context.commit('setDuration', parseInt(duration))
     },
-    preview: function (context, file, queue = []) {
+    preview: function (context, file) {
       if (context.state.file && file.ino === context.state.file.ino) {
         return context.state.status === 'paused'
           ? context.dispatch('play')

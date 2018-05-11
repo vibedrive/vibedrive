@@ -1,7 +1,7 @@
 <template>
   <v-card tile>
     <v-progress-linear 
-      :value="$store.state.audio.time" 
+      :value="$store.state.audio.progress" 
       height="3" 
       class="my-0" 
       color="teal accent-4">  
@@ -18,7 +18,7 @@
         </v-list-tile-action>
         <v-list-tile-action>
 
-          <v-btn @click="playOrPause()" :ripple="false" icon>
+          <v-btn @click="playOrPause()" :loading="$store.state.audio.buffering" :ripple="false" icon>
             <v-icon>{{ status === 'paused' ? 'play_arrow' : 'pause' }}</v-icon>
           </v-btn>
 
