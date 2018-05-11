@@ -37,6 +37,42 @@
 
         </v-list-tile-content>
         <v-spacer></v-spacer>
+        <v-list-tile-action>
+
+<!--           <v-menu
+            transition="scale-y-transition"
+            :value="true"
+           class="invisible"
+            top offset-y>
+            <v-btn  slot="activator" :ripple="false" icon >
+              <v-icon>view_list</v-icon>
+            </v-btn>
+
+            <v-card>
+              <v-toolbar  dark>
+                <v-toolbar-title>Next up</v-toolbar-title>
+                <v-spacer></v-spacer>
+                <v-btn slot="activator" icon>
+                  <v-icon>more_vert</v-icon>
+                </v-btn>
+              </v-toolbar>
+              <v-list>
+                <v-list-tile v-for="item in $store.state.audio.queue" :key="item.title" avatar @click="">
+
+                  <v-list-tile-avatar>
+                    <img :src="item.avatar">
+                  </v-list-tile-avatar>
+
+                  <v-list-tile-content>
+                    <v-list-tile-title v-text="item.name"></v-list-tile-title>
+                  </v-list-tile-content>
+
+                </v-list-tile>
+              </v-list>
+            </v-card>
+          </v-menu>
+ -->
+        </v-list-tile-action>
       </v-list-tile>
     </v-list>
     <audio ref="audio" 
@@ -46,6 +82,13 @@
     </audio>
   </v-card>
 </template>
+
+<style lang="stylus" scoped>
+  .playback-history
+    max-width: 40rem
+    max-height: 40rem
+  
+</style>
 
 <script>
 import fileserver from '@/Files/services/fileserver'
