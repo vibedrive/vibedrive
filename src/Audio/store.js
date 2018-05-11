@@ -5,6 +5,7 @@ export default {
     buffering: false,
     file: null,
     queue: [],
+    history: [],
     time: 0
   },
   mutations: {
@@ -33,6 +34,22 @@ export default {
     },
     pushToQueue (state, item) {
       state.queue.push(item)
+    },
+    concatQueue (state, queue) {
+      state.queue = state.queue.concat(queue)
+    },
+    shiftQueue (state) {
+      var first = state.queue.shift()
+
+      state.history.push(first)
+    },
+    unshiftQueue (state) {
+      var last = state.history.pop()
+      var file = state.file
+
+      state.queue.push(file)
+
+      state.file = null
     }
   },
   actions: {
@@ -50,21 +67,22 @@ export default {
       context.commit('pause')
     },
     prev: function (context) {
-      var index = context.state.index - 1
-      var file = context.state.queue[index]
+      var file = context.state.history[context.state.history.length - 1]
+      console.log(file)
 
-      context.commit('load', { file })
+      context.commit('unshiftQueue')
+      context.dispatch('preview', file)
     },
     next: function (context) {
-      var index = context.state.index + 1
-      var file = context.state.queue[index]
+      var file = context.state.queue[0]
 
-      context.commit('load', { file })
+      context.commit('shiftQueue')
+      context.dispatch('preview', file)
     },
     'set-duration': function (context, duration) {
       context.commit('setDuration', parseInt(duration))
     },
-    preview: function (context, file) {
+    preview: function (context, file, queue = []) {
       if (context.state.file && file.ino === context.state.file.ino) {
         return context.state.status === 'paused'
           ? context.dispatch('play')
@@ -73,6 +91,9 @@ export default {
 
       context.dispatch('pause')
       context.dispatch('load', file)
+    },
+    'queue:concat': function (context, queue) {
+      context.commit('concatQueue', queue)
     },
     'queue:set': function (context, queue) {
       context.commit('setQueue', queue)

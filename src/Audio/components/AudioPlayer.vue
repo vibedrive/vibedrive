@@ -11,7 +11,7 @@
       <v-list-tile >
         <v-list-tile-action>
 
-          <v-btn @click="prev()" :ripple="false" icon>
+          <v-btn @click="$store.dispatch('audio/prev')" :ripple="false" icon>
             <v-icon>fast_rewind</v-icon>
           </v-btn>
 
@@ -25,7 +25,7 @@
         </v-list-tile-action>
         <v-list-tile-action>
 
-          <v-btn @click="playOrPause()" :ripple="false" icon >
+          <v-btn @click="$store.dispatch('audio/next')" :ripple="false" icon >
             <v-icon>fast_forward</v-icon>
           </v-btn>
 
@@ -79,14 +79,10 @@ export default {
     }
   },
   methods: {
-    play: function (file) {
-      this.$store.dispatch('audio/play')
-    },
-    pause: function () {
-      this.$store.dispatch('audio/pause')
-    },
     playOrPause: function () {
-      this.status === 'paused' ? this.play() : this.pause()
+      this.status === 'paused' 
+        ? this.$store.dispatch('audio/play') 
+        : this.$store.dispatch('audio/pause')
     }
   }
 }

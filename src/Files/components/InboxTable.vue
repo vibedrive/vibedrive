@@ -33,6 +33,7 @@
     </v-card-title>
 
     <v-data-table
+      :disable-initial-sort="true"
       :items="files"
       :headers="headers"
       :loading="loading"
@@ -171,6 +172,11 @@ export default {
     },
     preview (file) {
       this.$store.dispatch('audio/preview', file)
+
+      var index = this.files.findIndex(f => f.ino === file.ino)
+      var queue = this.files.slice(index + 1)
+
+      this.$store.dispatch('audio/queue:set', queue)
     },
     onSelectAction: function (action) {
       if (action) {
