@@ -51,9 +51,14 @@
             @click="preview(props.item)" 
             :ripple="false" 
             :loading="fileIsBuffering(props.item)"
-            :class="{ 'playing': fileIsLoaded(props.item) }">
+            :class="{ 'playing': $store.state.audio.status === 'playing' && fileIsPlaying(props.item) }">
             <v-icon>
-              {{ fileIsLoaded(props.item) ? 'pause_circle_filled' : 'play_circle_filled' }}
+              {{ fileIsPlaying(props.item) 
+                  ? $store.state.audio.status === 'paused'
+                    ? 'play_circle_filled' 
+                    : 'pause_circle_filled'
+                  : 'play_circle_filled' 
+              }}
             </v-icon>
           </v-btn>
         </td>
@@ -158,11 +163,11 @@ export default {
     })
   },
   methods: {
-    fileIsLoaded (file) {
-      return false
+    fileIsPlaying (file) {
+      return this.$store.state.audio.file && this.$store.state.audio.file.ino === file.ino
     },
     fileIsBuffering (file) {
-      return false
+      return this.$store.state.audio.buffering && this.fileIsPlaying(file)
     },
     preview (file) {
       this.$store.dispatch('audio/preview', file)

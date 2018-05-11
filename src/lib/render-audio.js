@@ -19,7 +19,6 @@ export default function renderAudio (filename, stream, target) {
         if (err) return reject(err)
 
         target.src = url
-        target.play()
 
         resolve()
       })
@@ -29,7 +28,7 @@ export default function renderAudio (filename, stream, target) {
     var writeStream = new MediaStream(target, { type })
 
     stream.pipe(writeStream)
-    target.pause()
+
     resolve()
   })
 }

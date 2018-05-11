@@ -1,11 +1,7 @@
 <template>
   <div class="text-xs-center">
     <v-bottom-sheet value="true" hide-overlay full-width persistent>
-      <AudioPlayer 
-        :active="$store.state.audio.active"
-        :status="$store.state.audio.status">
-          
-        </AudioPlayer>
+      <AudioPlayer></AudioPlayer>
     </v-bottom-sheet>
   </div>
 </template>

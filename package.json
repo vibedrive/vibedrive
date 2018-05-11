@@ -21,6 +21,8 @@
     "debug": "^3.1.0",
     "deep-freeze": "0.0.1",
     "dropbox": "^4.0.3",
+    "ffprobe": "^1.1.0",
+    "ffprobe-static": "^2.0.0",
     "inherits": "^2.0.3",
     "isomorphic-fetch": "^2.2.1",
     "local-storage": "^1.4.2",

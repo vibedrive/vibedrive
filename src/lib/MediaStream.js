@@ -15,7 +15,7 @@ inherits(MediaStream, stream.Writable)
 function MediaStream (el, opts) {
   var self = this
   if (!(self instanceof MediaStream)) return new MediaStream(el, opts)
-  console.log(el, opts)
+
   stream.Writable.call(self, opts)
 
   self.el = el
@@ -63,10 +63,10 @@ MediaStream.prototype._write = function (chunk, encoding, cb) {
   self._sourceBuffer.appendBuffer(chunk)
   debug('appendBuffer %s', chunk.length)
   self._cb = cb
-  if (!self._playing) {
-    self.el.play()
-    self._playing = true
-  }
+  // if (!self._playing) {
+  //   self.el.play()
+  //   self._playing = true
+  // }
 }
 
 MediaStream.prototype._flow = function () {

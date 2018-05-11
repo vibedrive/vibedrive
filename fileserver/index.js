@@ -9,6 +9,8 @@ var cp = promisify(require('cp'))
 var mv = promisify(require('mv'))
 var trash = require('trash')
 var concat = require('concat-stream')
+var ffprobe = require('ffprobe')
+var ffprobeStatic = require('ffprobe-static')
 
 var readdir = promisify(fs.readdir)
 
@@ -26,6 +28,7 @@ io.on('connection', function (socket) {
   socket.on('folders:inbox:clean', cb => cleanInbox(cb))
   socket.on('folders:inbox:list', cb => listFiles(DIRECTORY.INBOX, cb))
   socket.on('folders:archives:list', cb => listFiles(DIRECTORY.ARCHIVES, cb))
+  socket.on('files:info', getFileInfo)
   socket.on('files:trash', trashFile)
 
   ss(socket).on('files:buffer', bufferFile)
@@ -98,21 +101,29 @@ io.on('connection', function (socket) {
   function trashFile (filepath, cb) {
     var fullpath = path.join(VIBEDRIVE_HOME, filepath)
 
-    console.log(fullpath)
-
     return trash([ fullpath ]).then(() => {
       cb(null, trashFile, { status: 200 })
+    })
+  }
+
+  function getFileInfo (filepath, cb) {
+    var fullpath = path.join(VIBEDRIVE_HOME, filepath)
+
+    ffprobe(fullpath, { path: ffprobeStatic.path }, (err, info) => {
+      if (err) return cb(err)
+
+      info = info.streams.find(stream => stream.codec_type === 'audio')
+
+      cb(null, info)
     })
   }
 
   function playFile (filepath, cb) {
     var fullpath = path.join(VIBEDRIVE_HOME, filepath)
 
-    console.log(fullpath)
-
     var stream = ss.createStream()
 
-    ss(socket).emit('ack', stream, { name: fullpath })
+    ss(socket).emit('ack', stream)
 
     fs.createReadStream(fullpath).pipe(stream)
   }

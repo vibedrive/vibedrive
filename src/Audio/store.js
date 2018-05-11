@@ -2,23 +2,28 @@ export default {
   namespaced: true,
   state: {
     status: 'paused',
-    active: {
-      playerId: 0,
-      file: null
-    },
-    queued: {
-      file: null,
-      index: 0
-    },
+    buffering: false,
     file: null,
-    queue: []
+    queue: [],
+    time: 0
   },
   mutations: {
-    setStatus (state, status) {
-      state.status = status
+    play (state) {
+      state.buffering = false
+      state.status = 'playing'
+    },
+    pause (state) {
+      state.status = 'paused'
+    },
+    timeupdate (state, value) {
+      state.time = value
+    },
+    setDuration (state, duration) {
+      state.file.duration = duration
     },
     load (state, file) {
-      state.queue.file = file
+      state.buffering = true
+      state.file = file
     },
     swap (state) {
       state.active.playerId = state.active.playerId === 0 ? 1 : 0
@@ -37,12 +42,12 @@ export default {
     play: function (context) {
       if (!context.state.file) return
 
-      context.commit('setStatus', 'playing')
+      context.commit('play')
     },
     pause: function (context) {
       if (!context.state.file) return
 
-      context.commit('setStatus', 'paused')
+      context.commit('pause')
     },
     prev: function (context) {
       var index = context.state.index - 1
@@ -56,13 +61,17 @@ export default {
 
       context.commit('load', { file })
     },
+    'set-duration': function (context, duration) {
+      context.commit('setDuration', parseInt(duration))
+    },
     preview: function (context, file) {
-      if (context.state.active.file && file.ino === context.state.active.file.ino) {
+      if (context.state.file && file.ino === context.state.file.ino) {
         return context.state.status === 'paused'
           ? context.dispatch('play')
           : context.dispatch('pause')
       }
 
+      context.dispatch('pause')
       context.dispatch('load', file)
     },
     'queue:set': function (context, queue) {
@@ -71,14 +80,20 @@ export default {
     'queue:push': function (context, item) {
       context.commit('pushToQueue', item)
     },
-    'el:loaded': function (context) {
-      context.commit('swap')
-    },
-    'el:paused': function (context) {
+    'el:timeupdate': function (context, $target) {
+      var percent = ($target.currentTime / context.state.file.duration) * 100
 
+      context.commit('timeupdate', percent)
     },
     'el:ended': function (context) {
       context.dispatch('next')
+    },
+    'el:canplay': function (context, id) {
+      context.dispatch('play')
     }
+  },
+  getters: {
+    status: state => state.status,
+    file: state => state.file
   }
 }

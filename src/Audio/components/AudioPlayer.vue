@@ -1,6 +1,12 @@
 <template>
   <v-card tile>
-    <v-progress-linear :value="50" height="3" class="my-0" color="teal accent-4"></v-progress-linear>
+    <v-progress-linear 
+      :value="$store.state.audio.time" 
+      height="3" 
+      class="my-0" 
+      color="teal accent-4">  
+    </v-progress-linear>
+
     <v-list class="grey darken-4">
       <v-list-tile >
         <v-list-tile-action>
@@ -13,7 +19,7 @@
         <v-list-tile-action>
 
           <v-btn @click="playOrPause()" :ripple="false" icon>
-            <v-icon>{{ status === 'paused' ? 'pause' : 'play_arrow' }}</v-icon>
+            <v-icon>{{ status === 'paused' ? 'play_arrow' : 'pause' }}</v-icon>
           </v-btn>
 
         </v-list-tile-action>
@@ -33,40 +39,42 @@
         <v-spacer></v-spacer>
       </v-list-tile>
     </v-list>
-    <audio ref="0" @canplay="onCanPlay()" @ended="onEnded()"></audio>
-    <audio ref="1" @canplay="onCanPlay()" @ended="onEnded()"></audio>
+    <audio ref="audio" 
+      @canplay="$store.dispatch('audio/el:canplay')" 
+      @ended="$store.dispatch('audio/el:ended')"
+      @timeupdate="$store.dispatch('audio/el:timeupdate', $event.target)">  
+    </audio>
   </v-card>
 </template>
 
 <script>
 import fileserver from '@/Files/services/fileserver'
 import renderAudio from '@/lib/render-audio'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'AudioPlayer',
-  props: {
-    active: Object,
-    status: String
-  },
   computed: {
-    $active: function () {
-      return this.$refs[this.active.playerId]
-    }
+    ...mapGetters({
+      file: 'audio/file',
+      status: 'audio/status'
+    })
   },
   watch: {
     file: function (file, oldFile) {
-      var target = this.$active
-
       fileserver.files.buffer('inbox', file.name)
-        .then(stream => renderAudio(file.name, stream, target))
-        .then(() => this.$store.dispatch('audio/el:loaded', target))
+        .then(({stream, info}) => {
+          this.$store.dispatch('audio/set-duration', info.duration)
+
+          renderAudio(file.name, stream, this.$refs.audio)
+        })
         .catch(console.error)
     },
     status: function (value, oldValue) {
       if (value === 'playing') {
-        this.$active.play()
+        this.$refs.audio.play()
       } else {
-        this.$active.pause()
+        this.$refs.audio.pause()
       }
     }
   },
@@ -79,12 +87,6 @@ export default {
     },
     playOrPause: function () {
       this.status === 'paused' ? this.play() : this.pause()
-    },
-    onCanPlay: function (e) {
-      this.$store.dispatch('audio/el:canplay', e.target.ref)
-    },
-    onEnded: function (e) {
-      this.$store.dispatch('audio/el:ended', e.target.ref)
     }
   }
 }

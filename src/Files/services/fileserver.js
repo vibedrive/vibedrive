@@ -47,7 +47,6 @@ class FileServerService {
   }
 
   trashFile (folder, filename) {
-    console.log(folder, filename)
     var filepath = folder + '/' + filename
 
     return this.delay().then(() => this.emit('files:trash', filepath))
@@ -57,19 +56,15 @@ class FileServerService {
     return new Promise((resolve, reject) => {
       var filepath = folder + '/' + filename
 
-      ss(this.socket).emit('files:buffer', filepath, (err, stream) => {
-        if (err) return reject(err)
-        resolve(stream)
+      this.socket.emit('files:info', filepath, (err, info) => {
+        ss(this.socket).emit('files:buffer', filepath, (err, stream) => {
+          if (err) return reject(err)
+
+          resolve({stream, info})
+        })
       })
     })
   }
-
-  // bufferFile (folder, filename, callback) {
-  //   var filepath = folder + '/' + filename
-  //   var offset = 0
-
-  //   return this.emit('files:buffer', filepath, offset)
-  // }
 }
 
 export default new FileServerService()
