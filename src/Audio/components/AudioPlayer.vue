@@ -7,7 +7,7 @@
       color="teal accent-4">  
     </v-progress-linear>
 
-    <v-list class="grey darken-4">
+    <v-list class="black">
       <v-list-tile >
         <v-list-tile-action>
 

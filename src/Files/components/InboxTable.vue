@@ -1,6 +1,7 @@
 <template>
-  <v-card flat color="grey darken-3">
-    <v-card-title>
+  <v-container class="py-0">
+  <v-card flat color="">
+    <v-card-title class="px-0">
         <v-select
           label="~/Dropbox/Apps/Vibedrive/Inbox"
           disabled
@@ -11,7 +12,7 @@
         </v-btn>
 
         <v-tooltip top color="black">
-          <v-btn slot="activator" @click="fetchFiles"color="white" light :ripple="false">
+          <v-btn slot="activator" @click="fetchFiles" color="white" light :ripple="false">
             <v-icon>cached</v-icon>
             <span> </span>
           </v-btn>
@@ -19,7 +20,7 @@
         </v-tooltip>
 
         <v-menu offset-y light full-width>
-          <v-btn slot="activator" color="white"  light :ripple="false">
+          <v-btn slot="activator"  color="white" light :ripple="false">
             Actions
             <v-icon>arrow_drop_down</v-icon>
           </v-btn>
@@ -38,17 +39,20 @@
       :headers="headers"
       :loading="loading"
       :no-data-text="noDataText"
-      :rows-per-page-items="rowsPerPage"
       :ripple="false"
       item-key="name"
-      v-model="selected">
+      :total-items="Infinity"
+      v-model="selected"
+      hide-actions>
+      <!-- :rows-per-page-items="rowsPerPage" -->
 
       <v-progress-linear slot="progress" color="teal" indeterminate></v-progress-linear>
 
       <template slot="items" slot-scope="props">
 
-        <td class="px-0">
+        <td class="file-row px-0">
           <v-btn icon
+            class="play-btn"
             @click="preview(props.item)" 
             :ripple="false" 
             :loading="fileIsBuffering(props.item)"
@@ -113,6 +117,7 @@
     </v-dialog>
 
   </v-card>
+</v-container>
 </template>
 
 <script>
@@ -138,7 +143,7 @@ export default {
     fileToDelete: {},
     dropdown_font: ['Clean'],
     selected: [],
-    rowsPerPage: [9],
+    rowsPerPage: [300],
     files: [],
     headers: [{
       sortable: false,
@@ -232,13 +237,13 @@ export default {
 }
 </script>
 
-<style lang="stylus">
+<style lang="stylus" scope>
   #upload-btn:hover
     cursor: pointer
 
   input[type="file"]
     display: none
-    
+
   .playing
     animation: 1s flashing infinite linear
     
@@ -248,5 +253,12 @@ export default {
     50%
       opacity: 0
     100%
+      opacity: 1
+      
+  .play-btn
+    opacity: 0
+        
+  tr:hover 
+    .play-btn
       opacity: 1
 </style>

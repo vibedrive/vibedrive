@@ -1,13 +1,19 @@
 <template>
   <v-content class="py-0">
-    <v-container fluid class="py-0 px-0">
+    <v-container fluid class="py-0 px-0 grey darken-3">
       <v-layout>
         <v-flex>
-          <v-tabs height="48" v-model="active" color="grey darken-3"  dark slider-color="teal accent-4">
+          <v-tabs 
+            v-model="active" 
+            height="48" 
+            color="grey darken-4"
+            class="tabs-bar"  
+            slider-color="teal accent-4"
+            dark >
 
             <v-tab key="inbox" :ripple="false">Inbox</v-tab>
             <v-tab-item key="inbox">
-              <InboxTable></InboxTable>
+              <InboxTable class="mt-5"></InboxTable>
             </v-tab-item>
 
             <v-tab key="library" :ripple="false">Library</v-tab>
@@ -33,9 +39,11 @@
   </v-content>
 </template>
 
-<style lang="stylus" scoped>
-  .tabs__bar 
+<style lang="stylus">
+  .tabs-bar .tabs__bar
     position: fixed
+    width: 100%
+    z-index: 3
 </style>
 
 <script>

@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar app fixed dense clipped-left class="black">
+  <v-toolbar app fixed dense clipped-left flat class="black">
     <v-toolbar-title>
       <span>Vibedrive</span>
     </v-toolbar-title>

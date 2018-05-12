@@ -17,8 +17,12 @@
 </template>
 
 <style lang="stylus">
+
+  html, body 
+    height: 100%
+    overflow: hidden
+    
   .w
-    max-width: 60em
     margin: 0 auto
   
   #app
@@ -26,6 +30,12 @@
     font-weight: 500
     -webkit-font-smoothing antialiased
     -moz-osx-font-smoothing grayscale
+    position: absolute
+    top: 0
+    bottom: 0
+    left: 0
+    right: 0
+    overflow: auto
     
   main
     // max-height: calc(100vh - 8rem)
