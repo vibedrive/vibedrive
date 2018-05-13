@@ -40,11 +40,11 @@ class FileServerService {
   }
 
   cleanInbox () {
-    return this.delay().then(() => this.emit('folders:inbox:clean'))
+    return this.emit('folders:clean')
   }
 
   listFiles () {
-    return this.delay().then(() => this.emit('folders:inbox:list'))
+    return this.emit('folders:list', 'inbox')
   }
 
   trashFile (folder, filename) {

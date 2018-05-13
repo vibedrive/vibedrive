@@ -105,8 +105,8 @@ export default {
     preview (file) {
       this.$store.dispatch('audio/preview', file)
 
-      var index = this.files.findIndex(f => f.ino === file.ino)
-      var queue = this.files.slice(index + 1)
+      var index = this.items.findIndex(f => f.ino === file.ino)
+      var queue = this.items.slice(index + 1)
 
       this.$store.dispatch('audio/queue:set', queue)
     }

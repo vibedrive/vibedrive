@@ -2,15 +2,22 @@ var path = require('path')
 var os = require('os')
 
 const PORT = 9753
-const VIBEDRIVE_HOME = path.join(os.homedir(), '/Dropbox/Apps/Vibedrive')
+const HOME = path.join(os.homedir(), '/Dropbox/Apps/Vibedrive')
+
 const DIRECTORY = {
-  INBOX: 'Inbox',
-  ARCHIVES: 'Archives',
-  UNSUPPORTED: 'Unsupported'
+  inbox: path.join(HOME, 'Inbox'),
+  archives: path.join(HOME, 'Archives'),
+  unsupported: path.join(HOME, 'Unsupported')
+}
+
+const FORMATS = {
+  ARCHIVE: ['.rar', '.zip', '.tar', '.gz', '7z'],
+  AUDIO: ['.mp3', '.wav', '.opus', '.ogg', '.flac', '.m4a']
 }
 
 module.exports = {
   PORT,
-  VIBEDRIVE_HOME,
-  DIRECTORY
+  HOME,
+  DIRECTORY,
+  FORMATS
 }
