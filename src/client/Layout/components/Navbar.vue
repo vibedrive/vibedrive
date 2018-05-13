@@ -13,7 +13,7 @@
     </v-toolbar-items>
 
 
-    <v-menu color="white" light flat bottom lazy offset-y :nudge-top="-6" min-width="240" :close-delay="0">
+    <v-menu color="white" light flat bottom lazy  min-width="240" :close-delay="0">
       <v-btn icon slot="activator" dark  :ripple="false">
         <v-icon>account_circle</v-icon>
       </v-btn>

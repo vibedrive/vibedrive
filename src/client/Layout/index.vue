@@ -1,19 +1,16 @@
 <template>
-  <div id="app" class="grey darken-4">
-    <v-app dark class="w">
+  <v-app dark class="w">
 
-      <Navbar></Navbar>
+    <Navbar></Navbar>
 
-        <main class="scroll-y my-5">
-          <router-view></router-view>
-        </main>
-      
-      <AudioToolbar></AudioToolbar>
-        
-    </v-app>
+    <router-view></router-view>
+          
+    <AudioToolbar></AudioToolbar>
 
     <Notifications :error="$store.state.shared.notifications.error"></Notifications>
-  </div>
+      
+  </v-app>
+
 </template>
 
 <style lang="stylus">  
@@ -27,6 +24,9 @@
     
   .w
     margin: 0 auto
+    
+  .application
+    margin-top: 48px
   
   #app
     font-family: 'Work Sans', sans-serif
@@ -38,10 +38,13 @@
     bottom: 0
     left: 0
     right: 0
-    overflow: auto
     
-  main
-    // max-height: calc(100vh - 8rem)
+  // main
+  //   border: 1px solid red
+  //   margin-top: 48px
+  //   padding-top: 0
+    
+  //   overflow-y: scroll
       
   .invisible
     opacity: 0

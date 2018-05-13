@@ -1,131 +1,72 @@
 <template>
-  <v-container class="py-0">
-  <v-card flat color="">
-    <v-card-title class="px-0">
-        <v-select
-          label="~/Dropbox/Apps/Vibedrive/Inbox"
-          disabled
-        ></v-select>
-        
-        <v-btn class="invisible">
-          <span></span>
+  <v-data-table
+    :disable-initial-sort="true"
+    :items="items"
+    :headers="headers"
+    :loading="loading"
+    :no-data-text="noDataText"
+    :ripple="false"
+    item-key="name"
+    :rows-per-page-items="rowsPerPage">
+
+    <v-progress-linear slot="progress" color="teal" indeterminate></v-progress-linear>
+
+    <template slot="items" slot-scope="props">
+
+      <td class="file-row px-0">
+        <v-btn icon
+          class="play-btn"
+          @click="preview(props.item)" 
+          :ripple="false" 
+          :loading="fileIsBuffering(props.item)"
+          :class="{ 'playing': $store.state.audio.status === 'playing' && fileIsPlaying(props.item) }">
+          <v-icon>
+            {{ fileIsPlaying(props.item) 
+                ? $store.state.audio.status === 'paused'
+                  ? 'play_circle_filled' 
+                  : 'pause_circle_filled'
+                : 'play_circle_filled' 
+            }}
+          </v-icon>
         </v-btn>
+      </td>
 
-        <v-tooltip top color="black">
-          <v-btn slot="activator" @click="fetchFiles" color="white" light :ripple="false">
-            <v-icon>cached</v-icon>
-            <span> </span>
-          </v-btn>
-          <span>Refresh</span>
-        </v-tooltip>
+      <td class="text-xs-left">
+        {{ props.item.name }}
+      </td>
 
-        <v-menu offset-y light full-width>
-          <v-btn slot="activator"  color="white" light :ripple="false">
-            Actions
-            <v-icon>arrow_drop_down</v-icon>
+      <td class="text-xs-right">
+        {{ props.item.filesize | toMB }} MB
+      </td>
+
+      <td class="justify-center layout px-0">
+        <v-menu bottom left offset-y dark>
+          <v-btn icon class="mx-0" slot="activator">
+            <v-icon>more_vert</v-icon>
           </v-btn>
-          <v-list light dense>
-            <v-list-tile @click="cleanInbox">
-              <v-list-tile-title>Clean Folder</v-list-tile-title>
+          <v-list>
+
+            <v-list-tile @click="">
+              <v-list-tile-title>Import As Track</v-list-tile-title>
             </v-list-tile>
+
+            <v-list-tile @click="promptBeforeTrash(props.item)">
+              <v-list-tile-title>Move to Trash</v-list-tile-title>
+            </v-list-tile>
+
           </v-list>
         </v-menu>
-
-    </v-card-title>
-
-    <v-data-table
-      :disable-initial-sort="true"
-      :items="files"
-      :headers="headers"
-      :loading="loading"
-      :no-data-text="noDataText"
-      :ripple="false"
-      item-key="name"
-      :total-items="Infinity"
-      v-model="selected"
-      hide-actions>
-      <!-- :rows-per-page-items="rowsPerPage" -->
-
-      <v-progress-linear slot="progress" color="teal" indeterminate></v-progress-linear>
-
-      <template slot="items" slot-scope="props">
-
-        <td class="file-row px-0">
-          <v-btn icon
-            class="play-btn"
-            @click="preview(props.item)" 
-            :ripple="false" 
-            :loading="fileIsBuffering(props.item)"
-            :class="{ 'playing': $store.state.audio.status === 'playing' && fileIsPlaying(props.item) }">
-            <v-icon>
-              {{ fileIsPlaying(props.item) 
-                  ? $store.state.audio.status === 'paused'
-                    ? 'play_circle_filled' 
-                    : 'pause_circle_filled'
-                  : 'play_circle_filled' 
-              }}
-            </v-icon>
-          </v-btn>
-        </td>
-
-        <td class="text-xs-left">
-          {{ props.item.name }}
-        </td>
-
-        <td class="text-xs-right">
-          {{ props.item.filesize | toMB }} MB
-        </td>
-
-        <td class="justify-center layout px-0">
-          <v-menu bottom left offset-y dark>
-            <v-btn icon class="mx-0" slot="activator">
-              <v-icon>more_vert</v-icon>
-            </v-btn>
-            <v-list>
-
-              <v-list-tile @click="">
-                <v-list-tile-title>Import As Track</v-list-tile-title>
-              </v-list-tile>
-
-              <v-list-tile @click="promptBeforeTrash(props.item)">
-                <v-list-tile-title>Move to Trash</v-list-tile-title>
-              </v-list-tile>
-
-            </v-list>
-          </v-menu>
-        </td>
-      </template>
-    </v-data-table>
-    <input 
-      type="file"
-      id="upload"
-      @change="onFileChange"
-      accept multiple>
-
-    <v-dialog v-model="modal" max-width="320" lazy>
-      <v-card>
-        <v-card-title class="headline">Move to trash?</v-card-title>
-        <v-card-text>
-          {{ fileToDelete.filename }} 
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="black" dark @click.native="closeTrashModal(fileToDelete)">Confirm</v-btn>
-          <v-btn color="white" light @click.native="closeTrashModal()">Cancel</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-
-  </v-card>
-</v-container>
+      </td>
+    </template>
+  </v-data-table>
 </template>
 
 <script>
-import fileserver from '@/Services/fileserver'
-
 export default {
   name: 'InboxTable',
   props: {
+    items: Array,
+    loading: Boolean
   },
   computed: {
     noDataText () {
@@ -135,19 +76,10 @@ export default {
     }
   },
   data: () => ({
-    search: '',
-    error: '',
-    modal: false,
-    action: null,
-    loading: true,
-    fileToDelete: {},
-    dropdown_font: ['Clean'],
-    selected: [],
-    rowsPerPage: [300],
-    files: [],
+    rowsPerPage: [24],
     headers: [{
       sortable: false,
-      width: 32,
+      width: 20,
       value: 'name'
     }, {
       text: 'File Name',
@@ -163,11 +95,6 @@ export default {
       value: 'name'
     }]
   }),
-  mounted: function () {
-    this.$nextTick(function () {
-      this.fetchFiles()
-    })
-  },
   methods: {
     fileIsPlaying (file) {
       return this.$store.state.audio.file && this.$store.state.audio.file.ino === file.ino
@@ -182,56 +109,6 @@ export default {
       var queue = this.files.slice(index + 1)
 
       this.$store.dispatch('audio/queue:set', queue)
-    },
-    onSelectAction: function (action) {
-      if (action) {
-        this.$refs.form.reset()
-      }
-    },
-    cleanInbox: function () {
-      fileserver.cleanInbox()
-        .then(() => {
-          console.log('done')
-        })
-    },
-    fetchFiles: function () {
-      this.loading = true
-      this.files = []
-
-      fileserver.listFiles()
-        .then(files => {
-          this.files = files
-          this.loading = false
-        })
-        .catch(err => {
-          console.error(err)
-          this.files = []
-          this.error = 'Trouble connecting to file server.'
-          this.loading = false
-        })
-    },
-    trashFile: function (filename) {
-      fileserver.files.trash('inbox', filename)
-        .then(() => {
-          var index = this.files.find(file => file.filename === filename)
-
-          this.files.splice(index, 1)
-        })
-        .catch(err => {
-          console.error(err)
-        })
-    },
-    promptBeforeTrash: function (file) {
-      this.fileToDelete = file
-      this.modal = true
-    },
-    closeTrashModal: function (file) {
-      if (file) this.trashFile(file.name)
-      this.fileToDelete = {}
-      this.modal = false
-    },
-    onFileChange: function ($event) {
-
     }
   }
 }

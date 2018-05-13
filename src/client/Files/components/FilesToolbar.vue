@@ -1,58 +1,46 @@
 <template>
-  <v-content class="mt-5 files-page py-0">
+  <v-toolbar dense flat fixed color="mt-5">
+    <v-select
+      label="~/Dropbox/Apps/Vibedrive/Inbox"
+      disabled
+    ></v-select>
+    
+    <v-spacer></v-spacer>
 
-    <FilesToolbar></FilesToolbar>
+    <v-tooltip top color="black">
+      <v-btn slot="activator" @click="fetchFiles" color="white" small light :ripple="false">
+        <v-icon>cached</v-icon>
+        <span> </span>
+      </v-btn>
+      <span>Refresh</span>
+    </v-tooltip>
 
-    <v-container fluid class="px-0 py-0">
-         
-      <InboxTable :items="files" :loading="loading"></InboxTable>
-
-    </v-container>
-
-    <v-dialog v-model="modal" max-width="320" lazy>
-      <v-card>
-        <v-card-title class="headline">Move to trash?</v-card-title>
-        <v-card-text>
-          {{ fileToDelete.filename }} 
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn color="black" dark @click.native="closeTrashModal(fileToDelete)">Confirm</v-btn>
-          <v-btn color="white" light @click.native="closeTrashModal()">Cancel</v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-dialog>
-
-    <input 
-      type="file"
-      id="upload"
-      @change="onFileChange"
-      accept multiple>
-  </v-content>
+    <v-menu attach="toolbar" offset-y light full-width>
+      <v-btn slot="activator"  ref="toolbar" color="white" small light :ripple="false">
+        Actions
+        <v-icon>arrow_drop_down</v-icon>
+      </v-btn>
+      <v-list light dense>
+        <v-list-tile @click="cleanInbox">
+          <v-list-tile-title>Clean Folder</v-list-tile-title>
+        </v-list-tile>
+      </v-list>
+    </v-menu>
+  </v-toolbar>
 </template>
 
 <style lang="stylus" scoped>
-  .files-page
-    max-height: calc(100vh - 163px)
-    overflow-y: scroll
-    
-
-  .tabs-bar .tabs__bar
-    position: fixed
-    width: 100%
-    z-index: 3
 
 </style>
 
 <script>
 import fileserver from '@/Services/fileserver'
 
-import FilesToolbar from '@/Files/components/FilesToolbar'
 import InboxTable from '@/Files/components/InboxTable'
 import ArchivesTable from '@/Files/components/ArchivesTable'
 
 export default {
-  name: 'Files',
+  name: 'FilesToolbar',
   props: {
     
   },
@@ -63,12 +51,12 @@ export default {
       files: [],
       dropdown_font: ['Clean'],
       selected: [],
+      rowsPerPage: [3],
       modal: false,
       fileToDelete: {}
     }
   },
   components: {
-    FilesToolbar,
     InboxTable,
     ArchivesTable
   },
