@@ -15,28 +15,20 @@ class FileServerService {
       locateNML: this.locateNML.bind(this)
     }
 
+    this.inbox = {
+      import: this.importFile.bind(this),
+      finishImport: this.finishImport.bind(this)
+    }
+
     this._connect()
   }
 
-  _connect () {
-    this.promiseOfConnection = new Promise((resolve, reject) => {
-      if (this.connected) return resolve()
-      if (platform === 'electron') return reject(new Error('Wrong platform.'))
-
-      this.socket = io('http://localhost:9753')
-
-      this.socket.on('connect', () => {
-        resolve()
-      })
-
-      this.emit = promisify(this.socket.emit).bind(this.socket)
-    })
+  importFile (filename) {
+    return this.emit('files:import', filename)
   }
 
-  delay (cb) {
-    if (this.socket.connected) return Promise.resolve()
-
-    return this.promiseOfConnection
+  finishImport (filename) {
+    return this.emit('files:finish-import', filename)
   }
 
   cleanInbox () {
@@ -75,6 +67,27 @@ class FileServerService {
         resolve(filepath)
       })
     })
+  }
+
+  _connect () {
+    this.promiseOfConnection = new Promise((resolve, reject) => {
+      if (this.connected) return resolve()
+      if (platform === 'electron') return reject(new Error('Wrong platform.'))
+
+      this.socket = io('http://localhost:9753')
+
+      this.socket.on('connect', () => {
+        resolve()
+      })
+
+      this.emit = promisify(this.socket.emit).bind(this.socket)
+    })
+  }
+
+  delay (cb) {
+    if (this.socket.connected) return Promise.resolve()
+
+    return this.promiseOfConnection
   }
 }
 

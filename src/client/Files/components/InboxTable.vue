@@ -40,20 +40,19 @@
       </td>
 
       <td class="justify-center layout px-0">
-        <v-menu bottom left offset-y dark>
+        <v-menu bottom lazy close-delay="0"> 
           <v-btn icon class="mx-0" slot="activator">
             <v-icon>more_vert</v-icon>
           </v-btn>
-          <v-list>
 
-            <v-list-tile @click="">
+          <v-list light color="white">
+            <v-list-tile @click="importFile(props.item)">
               <v-list-tile-title>Import As Track</v-list-tile-title>
             </v-list-tile>
 
             <v-list-tile @click="promptBeforeTrash(props.item)">
               <v-list-tile-title>Move to Trash</v-list-tile-title>
             </v-list-tile>
-
           </v-list>
         </v-menu>
       </td>
@@ -62,6 +61,9 @@
 </template>
 
 <script>
+import fileserver from '@/Services/fileserver'
+import db from '@/Services/db'
+
 export default {
   name: 'InboxTable',
   props: {
@@ -96,6 +98,13 @@ export default {
     }]
   }),
   methods: {
+    importFile (file) {
+      fileserver.inbox.import(file.name)
+        .then(track => db.tracks.create(track))
+        .then(() => fileserver.inbox.finishImport(file.name))
+        .then(() => this.$emit('remove', file))
+        .catch(console.error)
+    },
     fileIsPlaying (file) {
       return this.$store.state.audio.file && this.$store.state.audio.file.ino === file.ino
     },

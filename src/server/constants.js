@@ -6,6 +6,7 @@ const HOME = path.join(os.homedir(), '/Dropbox/Apps/Vibedrive')
 
 const DIRECTORY = {
   inbox: path.join(HOME, 'Inbox'),
+  library: path.join(HOME, 'Library'),
   archives: path.join(HOME, 'Archives'),
   unsupported: path.join(HOME, 'Unsupported')
 }

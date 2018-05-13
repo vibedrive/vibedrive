@@ -21,6 +21,8 @@ io.on('connection', function (socket) {
   socket.on('folders:list', folders.list)
   socket.on('files:info', files.info)
   socket.on('files:trash', files.trash)
+  socket.on('files:import', files.import)
+  socket.on('files:finish-import', files.finishImporting)
   ss(socket).on('files:buffer', files.buffer)
 })
 

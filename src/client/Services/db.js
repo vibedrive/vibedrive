@@ -11,10 +11,22 @@ class DB {
         startkey: 'track::',
         endkey: 'track::\ufff0'
       }).then((response) => {
-        return []
-      })
+        return response.rows.map(row => row.doc)
+      }),
+
+      create: track => {
+        for (var key in track._attachments) {
+          track._attachments[key].data = new Blob([track._attachments[key.data]])
+        }
+
+        return this.local.put(track)
+      }
     }
   }
 }
 
-export default new DB()
+var db = new DB()
+
+global.db = db
+
+export default db

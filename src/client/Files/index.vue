@@ -5,7 +5,7 @@
 
     <v-container fluid class="px-0 py-0">
          
-      <InboxTable :items="files" :loading="loading"></InboxTable>
+      <InboxTable :items="files" :loading="loading" @remove="onRemove"></InboxTable>
 
     </v-container>
 
@@ -73,6 +73,11 @@ export default {
     ArchivesTable
   },
   methods: {
+    onRemove: function (file) {
+      var index = this.files.findIndex(f => f.ino === file.ino)
+
+      this.files.splice(index, 1)
+    },
     onSelectAction: function (action) {
       if (action) {
         this.$refs.form.reset()
