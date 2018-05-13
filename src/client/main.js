@@ -1,23 +1,29 @@
 import 'isomorphic-fetch'
-import 'vuetify/dist/vuetify.min.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
-import '@/assets/fonts/WorkSans.css'
-import '@/Shared/filters'
-import '@/registerServiceWorker'
+import '@/Assets/fonts/WorkSans.css'
 
 import Vue from 'vue'
 import Vuex from 'vuex'
 import Vuetify from 'vuetify'
 
-import Layout from '@/Layout/Layout.vue'
 import router from '@/router'
+import Layout from '@/Layout'
+
 import audioStore from '@/Audio/store'
 import sharedStore from '@/Shared/store'
 
-Vue.use(Vuetify)
+Vue.filter('toMB', value => (value / (1000 * 1000)).toFixed(2))
+
+Vue.use(Vuetify, {
+  theme: {
+    black: '#202123',
+    grey: '#2A2E33',
+    teal: '#00D6F6'
+  }
+})
 Vue.use(Vuex)
 
-Vue.config.productionTip = false
+Vue.config.productionTip = true
 
 new Vue({
   router,

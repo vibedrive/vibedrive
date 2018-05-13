@@ -8,15 +8,16 @@
     <v-spacer></v-spacer>
     <v-toolbar-items>
       <v-btn flat to="/files" :ripple="false">Files</v-btn>
+      <v-btn flat to="/plugins" :ripple="false">Plugins</v-btn>
       <v-btn flat to="/tracks" :ripple="false">Tracks</v-btn>
     </v-toolbar-items>
 
 
-    <v-menu bottom lazy offset-y min-width="240">
+    <v-menu color="white" light flat bottom lazy offset-y :nudge-top="-6" min-width="240" :close-delay="0">
       <v-btn icon slot="activator" dark  :ripple="false">
         <v-icon>account_circle</v-icon>
       </v-btn>
-      <v-list>
+      <v-list  class="white" light>
         <v-list-tile v-on:click="openPreferences">
           <v-list-tile-title >
             Preferences

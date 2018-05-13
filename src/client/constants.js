@@ -1,5 +1,5 @@
 import deepFreeze from 'deep-freeze'
-import env from '../env'
+import env from '../../env'
 
 const constants = {}
 

@@ -16,7 +16,10 @@
   </div>
 </template>
 
-<style lang="stylus">
+<style lang="stylus">  
+  // $color-pack = false
+
+  @import '~vuetify/src/stylus/main'
 
   html, body 
     height: 100%

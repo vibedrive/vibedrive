@@ -28,7 +28,7 @@
 
 <script>
   import storage from 'local-storage'
-  import dropbox from '@/Shared/services/dropbox'
+  import dropbox from '@/Services/dropbox'
  
   export default {
     name: 'Preferences',

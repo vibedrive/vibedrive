@@ -121,7 +121,7 @@
 </template>
 
 <script>
-import fileserver from '@/Files/services/fileserver'
+import fileserver from '@/Services/fileserver'
 
 export default {
   name: 'InboxTable',

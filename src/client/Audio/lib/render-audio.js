@@ -1,6 +1,6 @@
 import path from 'path'
 import toBlobURL from 'stream-to-blob-url'
-import MediaStream from '@/lib/MediaStream'
+import MediaStream from '@/Audio/lib/MediaStream'
 
 var mimeTypes = {
   '.aac': 'audio/aac',

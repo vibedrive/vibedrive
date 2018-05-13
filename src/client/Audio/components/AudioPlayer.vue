@@ -91,8 +91,8 @@
 </style>
 
 <script>
-import fileserver from '@/Files/services/fileserver'
-import renderAudio from '@/lib/render-audio'
+import fileserver from '@/Services/fileserver'
+import renderAudio from '@/Audio/lib/render-audio'
 import { mapGetters } from 'vuex'
 
 export default {

@@ -11,7 +11,8 @@ class FileServerService {
     this.files = {
       list: this.listFiles.bind(this),
       trash: this.trashFile.bind(this),
-      buffer: this.bufferFile.bind(this)
+      buffer: this.bufferFile.bind(this),
+      locateNML: this.locateNML.bind(this)
     }
 
     this._connect()
@@ -62,6 +63,16 @@ class FileServerService {
 
           resolve({stream, info})
         })
+      })
+    })
+  }
+
+  locateNML () {
+    return new Promise((resolve, reject) => {
+      this.socket.emit('traktor:locate', (err, filepath) => {
+        if (err) return reject(err)
+
+        resolve(filepath)
       })
     })
   }

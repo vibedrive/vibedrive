@@ -11,6 +11,7 @@ var trash = require('trash')
 var concat = require('concat-stream')
 var ffprobe = require('ffprobe')
 var ffprobeStatic = require('ffprobe-static')
+var traktor = require('node-traktor')
 
 var readdir = promisify(fs.readdir)
 
@@ -25,6 +26,7 @@ var io = socketIO(server)
 io.on('connection', function (socket) {
   console.log('Connected to the browser')
 
+  socket.on('traktor:locate', traktor.locate)
   socket.on('folders:inbox:clean', cb => cleanInbox(cb))
   socket.on('folders:inbox:list', cb => listFiles(DIRECTORY.INBOX, cb))
   socket.on('folders:archives:list', cb => listFiles(DIRECTORY.ARCHIVES, cb))

@@ -4,7 +4,8 @@ import queryString from 'query-string'
 import storage from 'local-storage'
 
 import Tracks from '@/Tracks/pages/Tracks.vue'
-import Files from '@/Files/pages/Files.vue'
+import Files from '@/Files/index.vue'
+import Plugins from '@/Plugins/index.vue'
 
 Vue.use(Router)
 
@@ -19,7 +20,7 @@ var router = new Router({
     {
       path: '/',
       name: 'home',
-      redirect: '/files'
+      redirect: '/integrations'
     },
     {
       path: '/files',
@@ -30,6 +31,11 @@ var router = new Router({
       path: '/tracks',
       name: 'tracks',
       component: Tracks
+    },
+    {
+      path: '/plugins',
+      name: 'plugins',
+      component: Plugins
     },
     {
       path: '/dbx',

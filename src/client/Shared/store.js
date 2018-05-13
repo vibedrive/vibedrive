@@ -1,4 +1,4 @@
-import dropbox from '@/Shared/services/dropbox'
+import dropbox from '@/Services/dropbox'
 
 export default {
   state: {
