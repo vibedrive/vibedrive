@@ -4,8 +4,27 @@
       <span>Vibedrive</span>
     </v-toolbar-title>
 
+    <v-spacer></v-spacer>
+    <v-spacer></v-spacer>
+    <v-spacer></v-spacer>
+
+
+      <v-text-field
+        light
+        solo
+        hide-details
+        prepend-icon="search" 
+
+        style="min-width: 24rem;"
+
+        
+        
+        single-line
+      ></v-text-field>
+    
 
     <v-spacer></v-spacer>
+
     <v-toolbar-items>
       <v-btn flat to="/files" :ripple="false">Files</v-btn>
       <v-btn flat to="/plugins" :ripple="false">Plugins</v-btn>
