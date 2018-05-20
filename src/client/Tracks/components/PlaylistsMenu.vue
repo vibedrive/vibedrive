@@ -1,7 +1,7 @@
 <template>
-  <v-list dense> 
+  <v-list dense color="blue" style="background: none;"> 
 
-    <v-list-tile @click="" >
+    <v-list-tile @click="">
       <v-list-tile-content>
         <v-list-tile-title>
           All tracks
@@ -24,11 +24,9 @@
         </v-list-tile-content>
       </v-list-tile>
 
-      <v-list-tile v-for="subItem in group.items" :key="subItem.title" @click="">
-
-        <v-list-tile-action>
-          <v-icon>star</v-icon>
-        </v-list-tile-action>
+      <v-list-tile v-for="subItem in group.items" 
+        :key="subItem.title" 
+        @click="">
 
         <v-list-tile-content>
           <v-list-tile-title>
@@ -36,10 +34,8 @@
           </v-list-tile-title>
         </v-list-tile-content>
 
-        <v-list-tile-action>
-          <v-icon></v-icon>
-        </v-list-tile-action>
-        
+        <v-spacer></v-spacer>
+
       </v-list-tile>
     </v-list-group>
 
@@ -55,10 +51,14 @@
     data: () => ({
       groups: [{
         active: true,
-        title: 'Group',
+        title: 'Podcast Playlists',
         items: [
-          { title: 'Item A' }, 
-          { title: 'Item B' }
+          { title: 'Untrapped', tags: ['Trap', 'Hip Hop'] }, 
+          { title: 'Impossible Illusions', tags: ['Techno', 'Dub', 'Electro'] }, 
+          { title: 'Headphone Grooves', tags: ['Disco', 'House', 'Funk'] }, 
+          { title: 'Tiny Dreamworlds', tags: ['Future', 'Chill', 'Experimental'] }, 
+          { title: 'All Systems Online', tags: ['8-bit', 'Electro', 'House'] }, 
+          { title: 'This Raw Self', tags: ['Whatever I feel like'] }
         ]
       }]
     })

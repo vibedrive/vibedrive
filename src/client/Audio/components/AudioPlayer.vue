@@ -1,5 +1,5 @@
 <template>
-  <v-card tile>
+  <v-card tile id="audio-player">
     <v-progress-linear 
       :value="$store.state.audio.progress" 
       height="3" 
@@ -8,7 +8,11 @@
     </v-progress-linear>
 
     <v-list class="black">
-      <v-list-tile >
+      <v-list-tile>
+        <v-list-tile-action >
+          <div class="cover-art"></div>
+
+        </v-list-tile-action>
         <v-list-tile-action>
 
           <v-btn @click="$store.dispatch('audio/prev')" :ripple="false" icon>
@@ -84,6 +88,7 @@
 </template>
 
 <style lang="stylus" scoped>
+      
   .playback-history
     max-width: 40rem
     max-height: 40rem

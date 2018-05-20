@@ -1,4 +1,11 @@
 <template>
+  <v-layout>
+  <v-flex style="min-width: 270px;">
+    <v-container>
+      <PlaylistsMenu></PlaylistsMenu>
+    </v-container>
+  </v-flex>
+  <v-flex>
   <v-data-table
     :disable-initial-sort="true"
     :items="tracks"
@@ -14,15 +21,9 @@
     <template slot="items" slot-scope="props">
 
       <td class="file-row px-0">
-        <v-btn icon
-          class="play-btn"
-          @click="preview(props.item)" 
-          :ripple="false" 
-          
-          :class="{ 'playing': $store.state.audio.status === 'playing' && trackIsPlaying(props.item) }">
-          <v-icon>
-          </v-icon>
-        </v-btn>
+        <div class="cover-img text-xs-center pa-1 mx-2">
+          <div></div>
+        </div>
       </td>
 
       <td class="text-xs-left">
@@ -54,6 +55,8 @@
       </td>
     </template>
   </v-data-table>
+  </v-flex>
+  </v-layout>
 </template>
 
 <script>
@@ -65,6 +68,9 @@ export default {
   props: {
     items: Array,
     loading: Boolean
+  },
+  components: {
+    PlaylistsMenu
   },
   mounted: function () {
     db.tracks.list().then(tracks => {
@@ -122,6 +128,17 @@ export default {
 </script>
 
 <style lang="stylus" scope>
+  .cover-img
+    width: 32px
+    height: 32px
+    display: flex
+    
+    div
+      width: 100%
+      height: 100%
+      background-color: turquoise
+      
+    
   #upload-btn:hover
     cursor: pointer
 
@@ -140,7 +157,7 @@ export default {
       opacity: 1
       
   .play-btn
-    opacity: 0
+    // opacity: 0
         
   tr:hover 
     .play-btn
