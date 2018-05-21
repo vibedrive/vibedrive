@@ -1,6 +1,6 @@
 <template>
   <v-layout>
-  <v-flex style="min-width: 270px;">
+  <v-flex style="min-width: 270px; max-width: 270px;">
     <v-container>
       <PlaylistsMenu></PlaylistsMenu>
     </v-container>

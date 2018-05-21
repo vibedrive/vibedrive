@@ -1,12 +1,11 @@
 <template>
   <v-toolbar app fixed dense clipped-left flat class="black">
     <v-toolbar-title>
-      <span>Vibedrive</span>
+      <div>
+        <span>Vibedrive</span>
+      </div>
     </v-toolbar-title>
 
-    <v-spacer></v-spacer>
-    <v-spacer></v-spacer>
-    <v-spacer></v-spacer>
 
 
       <v-text-field
@@ -62,6 +61,14 @@
     </Preferences>
   </v-toolbar>
 </template>
+
+<style lang="stylus" scoped>
+  .toolbar__title
+    display: inline-block 
+    min-width: 254px
+    user-select: none
+
+</style>
 
 <script>
 import Preferences from '@/Layout/components/PreferencesModal'

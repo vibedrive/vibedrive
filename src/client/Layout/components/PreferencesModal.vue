@@ -1,11 +1,16 @@
 <template>
-  <v-dialog v-model="visibility" lazy max-width="640" origin="top right" dark>
+  <v-dialog v-model="visibility" lazy  origin="top right" full-width dark>
     <slot slot="activator"></slot>
     <v-card>
      
-      <v-card-title class="headline">Preferences</v-card-title>
+      <v-card-title class="headline">
+        Preferences
+      </v-card-title>
 
-        <v-card-text>
+      <v-card-text>
+        <v-list>
+          
+          <v-list-tile>
 
             <div v-if="!dropboxIsConnected">
               <v-btn color="info" :href="authenticationURL">
@@ -19,8 +24,19 @@
               </p>
             </div>
 
-        </v-card-text>
+          </v-list-tile>
 
+          <v-list-tile>
+          </v-list-tile>
+          <v-list-tile>
+          </v-list-tile>
+          <v-list-tile>
+          </v-list-tile>
+          <v-list-tile>
+          </v-list-tile>
+
+        </v-list>
+      </v-card-text>
 
     </v-card>
   </v-dialog>
