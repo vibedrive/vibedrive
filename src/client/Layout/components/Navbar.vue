@@ -6,19 +6,10 @@
       </div>
     </v-toolbar-title>
 
-
-
       <v-text-field
-        light
-        solo
-        hide-details
+        light flat solo hide-details single-line
         prepend-icon="search" 
-
         style="min-width: 24rem;"
-
-        
-        
-        single-line
       ></v-text-field>
     
 
@@ -67,6 +58,9 @@
     display: inline-block 
     min-width: 254px
     user-select: none
+    
+  .input-group.input-group--solo
+    border-radius: 0
 
 </style>
 

@@ -1,9 +1,9 @@
 <template>
   <v-layout>
-  <v-flex style="min-width: 270px; max-width: 270px;">
-    <v-container>
+  <v-flex style="min-width: 270px; max-width: 270px; padding-top: 12px">
+    <!-- <v-container> -->
       <PlaylistsMenu></PlaylistsMenu>
-    </v-container>
+    <!-- </v-container> -->
   </v-flex>
   <v-flex>
   <v-data-table
