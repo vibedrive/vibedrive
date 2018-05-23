@@ -20,7 +20,7 @@ var router = new Router({
     {
       path: '/',
       name: 'home',
-      redirect: '/plugins'
+      redirect: '/tracks'
     },
     {
       path: '/files',

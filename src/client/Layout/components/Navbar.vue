@@ -17,7 +17,6 @@
 
     <v-toolbar-items>
       <v-btn flat to="/files" :ripple="false">Files</v-btn>
-      <v-btn flat to="/plugins" :ripple="false">Plugins</v-btn>
       <v-btn flat to="/tracks" :ripple="false">Tracks</v-btn>
     </v-toolbar-items>
 

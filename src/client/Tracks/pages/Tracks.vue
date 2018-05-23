@@ -1,12 +1,14 @@
 <template>
   <v-layout>
-  <v-flex style="min-width: 270px; max-width: 270px; padding-top: 12px">
+  <v-flex style="min-width: 270px; max-width: 270px">
     <!-- <v-container> -->
       <PlaylistsMenu></PlaylistsMenu>
     <!-- </v-container> -->
   </v-flex>
-  <v-flex>
+  <v-flex >
   <v-data-table
+
+    id="tracks-table"
     :disable-initial-sort="true"
     :items="tracks"
     :headers="headers"
@@ -55,6 +57,7 @@
       </td>
     </template>
   </v-data-table>
+  
   </v-flex>
   </v-layout>
 </template>
@@ -128,6 +131,7 @@ export default {
 </script>
 
 <style lang="stylus" scope>
+
   .cover-img
     width: 32px
     height: 32px
@@ -137,8 +141,7 @@ export default {
       width: 100%
       height: 100%
       background-color: turquoise
-      
-    
+
   #upload-btn:hover
     cursor: pointer
 
@@ -159,6 +162,14 @@ export default {
   .play-btn
     // opacity: 0
         
+  .theme--dark .datatable thead th.column.sortable
+    padding-top: 12px
+    vertical-align: top
+    height: 24px
+
+  #tracks-table table.table thead tr
+    height: 40px
+
   tr:hover 
     .play-btn
       opacity: 1

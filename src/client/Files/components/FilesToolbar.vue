@@ -1,11 +1,14 @@
 <template>
-  <v-toolbar dense flat fixed color="mt-5">
+  <v-toolbar dense flat color="grey darken-3">
     <v-select
+      style="display: inline-block;"
+
       label="~/Dropbox/Apps/Vibedrive/Inbox"
       disabled
     ></v-select>
-    
+
     <v-spacer></v-spacer>
+    
 
     <v-tooltip top color="black">
       <v-btn slot="activator" @click="fetchFiles" color="white" small light :ripple="false">
