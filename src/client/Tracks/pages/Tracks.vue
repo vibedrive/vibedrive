@@ -1,69 +1,70 @@
 <template>
   <v-layout>
-  <v-flex style="min-width: 270px; max-width: 270px">
-    <!-- <v-container> -->
+    <v-flex style="min-width: 270px; max-width: 270px">
       <PlaylistsMenu></PlaylistsMenu>
-    <!-- </v-container> -->
-  </v-flex>
-  <v-flex >
-  <v-data-table
-    id="tracks-table"
-    :disable-initial-sort="true"
-    :items="tracks"
-    :headers="headers"
-    :loading="loading"
-    :no-data-text="noDataText"
-    :ripple="false"
-    item-key="name"
-    :rows-per-page-items="rowsPerPage">
+    </v-flex>
 
-    <v-progress-linear slot="progress" color="teal" indeterminate></v-progress-linear>
+    <v-flex >
+      <PlaylistToolbar></PlaylistToolbar>
 
-    <template slot="items" slot-scope="props">
+      <v-data-table
+        id="tracks-table"
+        :disable-initial-sort="true"
+        :items="tracks"
+        :headers="headers"
+        :loading="loading"
+        :no-data-text="noDataText"
+        :ripple="false"
+        item-key="name"
+        :rows-per-page-items="rowsPerPage">
 
-      <td class="file-row px-0">
-        <div class="cover-img text-xs-center pa-1 mx-2">
-          <div></div>
-        </div>
-      </td>
+        <v-progress-linear slot="progress" color="teal" indeterminate></v-progress-linear>
 
-      <td class="text-xs-left">
-        {{ props.item.metadata.title }}
-      </td>
+        <template slot="items" slot-scope="props">
 
-      <td class="text-xs-left">
-        {{ props.item.metadata.artist }}
-        
-      </td>
+          <td class="file-row px-0">
+            <div class="cover-img text-xs-center pa-1 mx-2">
+              <div></div>
+            </div>
+          </td>
 
-      <td class="text-xs-left">
-        
-        
-      </td>
+          <td class="text-xs-left">
+            {{ props.item.metadata.title }}
+          </td>
 
-      <td class="justify-center layout px-0">
-        <v-menu bottom lazy close-delay="0"> 
-          <v-btn icon class="mx-0" slot="activator">
-            <v-icon>more_vert</v-icon>
-          </v-btn>
+          <td class="text-xs-left">
+            {{ props.item.metadata.artist }}
+            
+          </td>
 
-          <v-list light color="white">
-            <v-list-tile @click="">
-              <v-list-tile-title></v-list-tile-title>
-            </v-list-tile>
-          </v-list>
-        </v-menu>
-      </td>
-    </template>
-  </v-data-table>
-  
-  </v-flex>
+          <td class="text-xs-left">
+            
+            
+          </td>
+
+          <td class="justify-center layout px-0">
+            <v-menu bottom lazy close-delay="0"> 
+              <v-btn icon class="mx-0" slot="activator">
+                <v-icon>more_vert</v-icon>
+              </v-btn>
+
+              <v-list light color="white">
+                <v-list-tile @click="">
+                  <v-list-tile-title></v-list-tile-title>
+                </v-list-tile>
+              </v-list>
+            </v-menu>
+          </td>
+        </template>
+      </v-data-table>
+    </v-flex>
   </v-layout>
 </template>
 
 <script>
 import db from '@/Services/db'
 import PlaylistsMenu from '@/Tracks/components/PlaylistsMenu'
+import PlaylistToolbar from '@/Tracks/components/PlaylistToolbar'
 
 export default {
   name: 'Tracks',
@@ -73,7 +74,8 @@ export default {
     trackId: String
   },
   components: {
-    PlaylistsMenu
+    PlaylistsMenu,
+    PlaylistToolbar
   },
   watch: {
     trackId: function () {
