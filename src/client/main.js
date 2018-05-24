@@ -5,6 +5,7 @@ import '@/Assets/fonts/WorkSans.css'
 import Vue from 'vue'
 import Vuex from 'vuex'
 import Vuetify from 'vuetify'
+import VueVirtualScroller from 'vue-virtual-scroller'
 
 import router from '@/router'
 import Layout from '@/Layout'
@@ -21,7 +22,9 @@ Vue.use(Vuetify, {
     teal: '#00D6F6'
   }
 })
+
 Vue.use(Vuex)
+Vue.use(VueVirtualScroller)
 
 Vue.config.productionTip = true
 
