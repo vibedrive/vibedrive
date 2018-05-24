@@ -7,7 +7,6 @@
   </v-flex>
   <v-flex >
   <v-data-table
-
     id="tracks-table"
     :disable-initial-sort="true"
     :items="tracks"
@@ -70,15 +69,19 @@ export default {
   name: 'Tracks',
   props: {
     items: Array,
-    loading: Boolean
+    loading: Boolean,
+    trackId: String
   },
   components: {
     PlaylistsMenu
   },
+  watch: {
+    trackId: function () {
+      this.loadTracks()
+    }
+  },
   mounted: function () {
-    db.tracks.list().then(tracks => {
-      this.tracks = tracks
-    })
+    this.loadTracks()
   },
   computed: {
     noDataText () {
@@ -113,6 +116,16 @@ export default {
     }]
   }),
   methods: {
+    loadTracks () {
+      db.playlists.get(this.trackId)
+        .then(tracks => {
+          this.tracks = tracks
+        })
+        .catch(err => {
+          console.error(err)
+          this.tracks = []
+        })
+    },
     trackIsPlaying (track) {
       return (
         this.$store.state.audio.file && 
@@ -158,9 +171,6 @@ export default {
       opacity: 0
     100%
       opacity: 1
-      
-  .play-btn
-    // opacity: 0
         
   .theme--dark .datatable thead th.column.sortable
     padding-top: 12px

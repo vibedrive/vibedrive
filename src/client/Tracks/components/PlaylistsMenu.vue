@@ -2,10 +2,7 @@
   <div id="playlists-menu">
     <v-list dense color="blue" style="background: none;"> 
 
-      <v-list-tile 
-        @click="" 
-        active-class="selected-playlist"
-        :value="true"> 
+      <v-list-tile to="/tracks/all"> 
           <v-list-tile-avatar>
             <v-icon>
               queue_music
@@ -21,8 +18,7 @@
       <v-list-group
         v-for="group in groups"
         v-model="group.active"
-        :key="group.title"
-        >
+        :key="group.title">
 
         <v-list-tile slot="activator">
           <v-list-tile-avatar>
@@ -40,7 +36,7 @@
 
         <v-list-tile v-for="subItem in group.items" 
           :key="subItem.title" 
-          @click="">
+          :to="'/tracks/' + subItem.id">
 
           <v-list-tile-avatar>
             <v-icon>
@@ -70,14 +66,16 @@
     .list__tile.list__tile--link,
     .list__group__header
       border: 1px solid rgba(0,0,0,0)
+      
     .theme--dark .list .list__tile--link:hover,
     .theme--dark .list .list__group__header:hover
       border: 1px solid #21A8BF
       background-color: transparent !important
-    .list__tile.list__tile--link.list__tile--active.selected-playlist
+      
+    .list__tile.list__tile--link.list__tile--active
       background-color: #21A8BF
-    // .list__tile.list__tile--link.list__tile--active.selected-playlist:hover
-    //   background-color: #21A8BF !important
+      .list__tile__title
+        color: white
 </style>
 
 <script>
@@ -91,12 +89,12 @@
         active: true,
         title: 'Podcast Playlists',
         items: [
-          { title: 'Untrapped', tags: ['Trap', 'Hip Hop'] }, 
-          { title: 'Impossible Illusions', tags: ['Techno', 'Dub', 'Electro'] }, 
-          { title: 'Headphone Grooves', tags: ['Disco', 'House', 'Funk'] }, 
-          { title: 'Tiny Dreamworlds', tags: ['Future', 'Chill', 'Experimental'] }, 
-          { title: 'All Systems Online', tags: ['8-bit', 'Electro', 'House'] }, 
-          { title: 'This Raw Self', tags: ['Whatever I feel like'] }
+          { id: 1, title: 'Untrapped', tags: ['Trap', 'Hip Hop'] }, 
+          { id: 2, title: 'Impossible Illusions', tags: ['Techno', 'Dub', 'Electro'] }, 
+          { id: 3, title: 'Headphone Grooves', tags: ['Disco', 'House', 'Funk'] }, 
+          { id: 4, title: 'Tiny Dreamworlds', tags: ['Future', 'Chill', 'Experimental'] }, 
+          { id: 5, title: 'All Systems Online', tags: ['8-bit', 'Electro', 'House'] }, 
+          { id: 6, title: 'This Raw Self', tags: ['Whatever I feel like'] }
         ]
       }]
     })

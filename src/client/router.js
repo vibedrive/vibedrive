@@ -33,6 +33,12 @@ var router = new Router({
       component: Tracks
     },
     {
+      path: '/tracks/:trackId',
+      name: 'track',
+      component: Tracks,
+      props: true
+    },
+    {
       path: '/plugins',
       name: 'plugins',
       component: Plugins
