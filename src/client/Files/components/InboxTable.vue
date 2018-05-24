@@ -1,116 +1,55 @@
 <template>
-  <virtual-scroller
-    class="scroller"
-    :items="items"
-    item-height="22"
-    content-tag="table">
-    <template slot-scope="props">
-      <tr>
-        <td class="file-row px-0">
-          <v-btn icon
-            class="play-btn"
-            @click="preview(props.item)" 
-            :ripple="false" 
-            :loading="fileIsBuffering(props.item)"
-            :class="{ 'playing': $store.state.audio.status === 'playing' && fileIsPlaying(props.item) }">
-            <v-icon>
-              {{ fileIsPlaying(props.item) 
-                  ? $store.state.audio.status === 'paused'
-                    ? 'play_circle_filled' 
-                    : 'pause_circle_filled'
-                  : 'play_circle_filled' 
-              }}
-            </v-icon>
-          </v-btn>
-        </td>
-
-        <td class="text-xs-left">
-          {{ props.item.name }}
-        </td>
-
-        <td class="text-xs-right">
-          {{ props.item.filesize | toMB }} MB
-        </td>
-
-        <td class="justify-center layout px-0">
-          <v-menu bottom lazy close-delay="0"> 
-            <v-btn icon class="mx-0" slot="activator">
-              <v-icon>more_vert</v-icon>
+  <div class="table-overflow">
+    <table class="datatable table" slot="activator" >
+      <tbody >
+        <tr v-for="item in items" @contextmenu="openMenu($event, item)">
+          <td class="file-row px-0">
+            <v-btn icon
+              class="play-btn"
+              @click="preview(item)" 
+              :ripple="false" 
+              :loading="fileIsBuffering(item)"
+              :class="{ 'playing': $store.state.audio.status === 'playing' && fileIsPlaying(item) }">
+              <v-icon>
+                {{ fileIsPlaying(item) 
+                    ? $store.state.audio.status === 'paused'
+                      ? 'play_circle_filled' 
+                      : 'pause_circle_filled'
+                    : 'play_circle_filled' 
+                }}
+              </v-icon>
             </v-btn>
+          </td>
 
-            <v-list light color="white">
-              <v-list-tile @click="importFile(props.item)">
-                <v-list-tile-title>Import As Track</v-list-tile-title>
-              </v-list-tile>
+          <td class="text-xs-left">
+            {{ item.name }}
+          </td>
 
-              <v-list-tile @click="promptBeforeTrash(props.item)">
-                <v-list-tile-title>Move to Trash</v-list-tile-title>
-              </v-list-tile>
-            </v-list>
-          </v-menu>
-        </td>
-      </tr>
-    </template>
-  </virtual-scroller>
-<!--   <v-data-table
-    :disable-initial-sort="true"
-    :items="items"
-    :headers="headers"
-    :loading="loading"
-    :no-data-text="noDataText"
-    :ripple="false"
-    item-key="name"
-    :rows-per-page-items="rowsPerPage">
+          <td class="text-xs-right">
+            {{ item.filesize | toMB }} MB
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
-    <v-progress-linear slot="progress" color="teal" indeterminate></v-progress-linear>
+    <v-menu
+      v-model="menu.open"  
+      :position-x="menu.x"
+      :position-y="menu.y" 
+      offset-y absolute 
+      close-delay="0"> 
 
-    <template slot="items" slot-scope="props">
+      <v-list light color="white">
+        <v-list-tile @click="importFile(menu.file)">
+          <v-list-tile-title>Import As Track</v-list-tile-title>
+        </v-list-tile>
 
-      <td class="file-row px-0">
-        <v-btn icon
-          class="play-btn"
-          @click="preview(props.item)" 
-          :ripple="false" 
-          :loading="fileIsBuffering(props.item)"
-          :class="{ 'playing': $store.state.audio.status === 'playing' && fileIsPlaying(props.item) }">
-          <v-icon>
-            {{ fileIsPlaying(props.item) 
-                ? $store.state.audio.status === 'paused'
-                  ? 'play_circle_filled' 
-                  : 'pause_circle_filled'
-                : 'play_circle_filled' 
-            }}
-          </v-icon>
-        </v-btn>
-      </td>
-
-      <td class="text-xs-left">
-        {{ props.item.name }}
-      </td>
-
-      <td class="text-xs-right">
-        {{ props.item.filesize | toMB }} MB
-      </td>
-
-      <td class="justify-center layout px-0">
-        <v-menu bottom lazy close-delay="0"> 
-          <v-btn icon class="mx-0" slot="activator">
-            <v-icon>more_vert</v-icon>
-          </v-btn>
-
-          <v-list light color="white">
-            <v-list-tile @click="importFile(props.item)">
-              <v-list-tile-title>Import As Track</v-list-tile-title>
-            </v-list-tile>
-
-            <v-list-tile @click="promptBeforeTrash(props.item)">
-              <v-list-tile-title>Move to Trash</v-list-tile-title>
-            </v-list-tile>
-          </v-list>
-        </v-menu>
-      </td>
-    </template>
-  </v-data-table> -->
+        <v-list-tile @click="promptBeforeTrash(menu.file)">
+          <v-list-tile-title>Move to Trash</v-list-tile-title>
+        </v-list-tile>
+      </v-list>
+    </v-menu>
+  </div>
 </template>
 
 <script>
@@ -131,6 +70,12 @@ export default {
     }
   },
   data: () => ({
+    menu: {
+      x: 0,
+      y: 0,
+      open: false,
+      file: null
+    },
     rowsPerPage: [24],
     headers: [{
       sortable: false,
@@ -151,6 +96,16 @@ export default {
     }]
   }),
   methods: {
+    openMenu ($event, file) {
+      $event.preventDefault()
+      this.menu.file = file
+      this.menu.open = false
+      this.menu.x = $event.clientX
+      this.menu.y = $event.clientY
+      this.$nextTick(() => {
+        this.menu.open = true
+      })
+    },
     importFile (file) {
       fileserver.inbox.import(file.name)
         .then(track => db.tracks.create(track))

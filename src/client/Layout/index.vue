@@ -3,7 +3,7 @@
 
     <Navbar></Navbar>
 
-    <router-view></router-view>
+    <router-view class="mb-5"></router-view>
           
     <AudioToolbar></AudioToolbar>
 
@@ -20,7 +20,7 @@
 
   html, body 
     height: 100%
-    overflow: hidden
+    // overflow: hidden
     
   .w
     margin: 0 auto
@@ -33,18 +33,11 @@
     font-weight: 500
     -webkit-font-smoothing antialiased
     -moz-osx-font-smoothing grayscale
-    position: absolute
+    // position: absolute
     top: 0
     bottom: 0
     left: 0
     right: 0
-    
-  // main
-  //   border: 1px solid red
-  //   margin-top: 48px
-  //   padding-top: 0
-    
-  //   overflow-y: scroll
       
   .invisible
     opacity: 0

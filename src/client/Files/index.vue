@@ -1,48 +1,32 @@
 <template>
-  <v-layout class="py-0">
-    <v-flex class="" style="min-width: 270px; max-width: 270px">
+  <div>
+    <FilesToolbar></FilesToolbar>
+         
+    <InboxTable :items="files" :loading="loading" @remove="onRemove"></InboxTable>
 
-    </v-flex>
+    <v-dialog v-model="modal" max-width="320" lazy>
+      <v-card>
+        <v-card-title class="headline">Move to trash?</v-card-title>
+        <v-card-text>
+          {{ fileToDelete.filename }} 
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="black" dark @click.native="closeTrashModal(fileToDelete)">Confirm</v-btn>
+          <v-btn color="white" light @click.native="closeTrashModal()">Cancel</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
 
-    <v-flex>
-      <FilesToolbar></FilesToolbar>
-
-      <v-container fluid class="px-0 py-0">
-           
-        <InboxTable :items="files" :loading="loading" @remove="onRemove"></InboxTable>
-
-      </v-container>
-
-      <v-dialog v-model="modal" max-width="320" lazy>
-        <v-card>
-          <v-card-title class="headline">Move to trash?</v-card-title>
-          <v-card-text>
-            {{ fileToDelete.filename }} 
-          </v-card-text>
-          <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn color="black" dark @click.native="closeTrashModal(fileToDelete)">Confirm</v-btn>
-            <v-btn color="white" light @click.native="closeTrashModal()">Cancel</v-btn>
-          </v-card-actions>
-        </v-card>
-      </v-dialog>
-
-      <input 
-        type="file"
-        id="upload"
-        @change="onFileChange"
-        accept multiple>
-    </v-flex>
-
-  </v-layout>
+    <input 
+      type="file"
+      id="upload"
+      @change="onFileChange"
+      accept multiple>
+  </div>
 </template>
 
-<style lang="stylus" scoped>
-  .files-page
-    max-height: calc(100vh - 163px)
-    overflow-y: scroll
-    
-
+<style lang="stylus" scoped> 
   .tabs-bar .tabs__bar
     position: fixed
     width: 100%

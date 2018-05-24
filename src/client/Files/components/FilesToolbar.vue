@@ -2,14 +2,12 @@
   <v-toolbar dense flat color="grey darken-3">
     <v-select
       style="display: inline-block;"
-
       label="~/Dropbox/Apps/Vibedrive/Inbox"
       disabled
     ></v-select>
 
     <v-spacer></v-spacer>
     
-
     <v-tooltip top color="black">
       <v-btn slot="activator" @click="fetchFiles" color="white" small light :ripple="false">
         <v-icon>cached</v-icon>
@@ -19,7 +17,7 @@
     </v-tooltip>
 
     <v-menu attach="toolbar" offset-y light full-width>
-      <v-btn slot="activator"  ref="toolbar" color="white" small light :ripple="false">
+      <v-btn slot="activator" ref="toolbar" color="white" small light :ripple="false">
         Actions
         <v-icon>arrow_drop_down</v-icon>
       </v-btn>
@@ -65,9 +63,9 @@ export default {
   },
   methods: {
     onSelectAction: function (action) {
-      if (action) {
-        this.$refs.form.reset()
-      }
+      // if (action) {
+      //   this.$refs.form.reset()
+      // }
     },
     cleanInbox: function () {
       fileserver.cleanInbox()
