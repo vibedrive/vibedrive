@@ -1,5 +1,5 @@
 <template>
-  <v-app dark class="w">
+  <v-app dark class="w" :ripple="false">
 
     <Navbar></Navbar>
 

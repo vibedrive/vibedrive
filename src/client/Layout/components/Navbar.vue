@@ -6,18 +6,11 @@
       </div>
     </v-toolbar-title>
 
-<!--       <v-text-field
-        light flat solo hide-details single-line
-        prepend-icon="search" 
-        style="min-width: 24rem;"
-      ></v-text-field> -->
-    
-
     <v-spacer></v-spacer>
 
     <v-toolbar-items>
       <v-btn flat to="/files" :ripple="false">Files</v-btn>
-      <v-btn flat to="/tracks" :ripple="false">Tracks</v-btn>
+      <v-btn flat to="/tracks/all" :ripple="false">Tracks</v-btn>
     </v-toolbar-items>
 
 
