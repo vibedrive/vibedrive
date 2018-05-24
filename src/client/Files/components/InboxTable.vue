@@ -1,5 +1,58 @@
 <template>
-  <v-data-table
+  <virtual-scroller
+    class="scroller"
+    :items="items"
+    item-height="22"
+    content-tag="table">
+    <template slot-scope="props">
+      <tr>
+        <td class="file-row px-0">
+          <v-btn icon
+            class="play-btn"
+            @click="preview(props.item)" 
+            :ripple="false" 
+            :loading="fileIsBuffering(props.item)"
+            :class="{ 'playing': $store.state.audio.status === 'playing' && fileIsPlaying(props.item) }">
+            <v-icon>
+              {{ fileIsPlaying(props.item) 
+                  ? $store.state.audio.status === 'paused'
+                    ? 'play_circle_filled' 
+                    : 'pause_circle_filled'
+                  : 'play_circle_filled' 
+              }}
+            </v-icon>
+          </v-btn>
+        </td>
+
+        <td class="text-xs-left">
+          {{ props.item.name }}
+        </td>
+
+        <td class="text-xs-right">
+          {{ props.item.filesize | toMB }} MB
+        </td>
+
+        <td class="justify-center layout px-0">
+          <v-menu bottom lazy close-delay="0"> 
+            <v-btn icon class="mx-0" slot="activator">
+              <v-icon>more_vert</v-icon>
+            </v-btn>
+
+            <v-list light color="white">
+              <v-list-tile @click="importFile(props.item)">
+                <v-list-tile-title>Import As Track</v-list-tile-title>
+              </v-list-tile>
+
+              <v-list-tile @click="promptBeforeTrash(props.item)">
+                <v-list-tile-title>Move to Trash</v-list-tile-title>
+              </v-list-tile>
+            </v-list>
+          </v-menu>
+        </td>
+      </tr>
+    </template>
+  </virtual-scroller>
+<!--   <v-data-table
     :disable-initial-sort="true"
     :items="items"
     :headers="headers"
@@ -57,7 +110,7 @@
         </v-menu>
       </td>
     </template>
-  </v-data-table>
+  </v-data-table> -->
 </template>
 
 <script>
