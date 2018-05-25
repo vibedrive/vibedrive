@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar dense flat color="grey darken-3">
+  <v-toolbar class="mt-5" fixed dense flat color="black">
     <v-select
       style="display: inline-block;"
       label="~/Dropbox/Apps/Vibedrive/Inbox"

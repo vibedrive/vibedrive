@@ -1,9 +1,16 @@
 <template>
   <div class="table-overflow">
-    <table class="datatable table" slot="activator" >
-      <tbody >
-        <tr v-for="item in items" @contextmenu="openMenu($event, item)">
-          <td class="file-row px-0">
+    <table class="datatable table pt-5 mt-5" slot="activator">
+      <tbody>
+        <tr class="black  "  >
+          <th class="file-row px-0"></th>
+          <th class="text-xs-left">File Name</th>
+          <th class="text-xs-right">Size</th>
+        </tr>
+        <tr v-for="item in items" 
+          v-bind:class="{ blackish: fileIsPlaying(item) }"
+          @contextmenu="openMenu($event, item)">
+          <td class="file-row px-0" style="width: 48px;">
             <v-btn icon
               class="play-btn"
               @click="preview(item)" 
@@ -132,6 +139,16 @@ export default {
 </script>
 
 <style lang="stylus" scope>
+  tr
+    background-color: #2B3039
+    
+  .theme--dark .table tbody tr:hover:not(.datatable__expand-row), 
+  .application .theme--dark.table tbody tr:hover:not(.datatable__expand-row)
+    background-color: #242A35 !important
+    
+  .blackish
+    background-color: #212329
+    
   #upload-btn:hover
     cursor: pointer
 
@@ -149,8 +166,8 @@ export default {
     100%
       opacity: 1
       
-  .play-btn
-    opacity: 0
+  // .play-btn
+  //   opacity: 0
         
   tr:hover 
     .play-btn
