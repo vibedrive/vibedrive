@@ -79,7 +79,7 @@ export default {
   },
   data: () => ({
     preferences: false,
-    loginModal: true
+    loginModal: false
   }),
   methods: {
     openLoginModal: function () {

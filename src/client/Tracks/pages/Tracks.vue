@@ -119,9 +119,11 @@ export default {
   }),
   methods: {
     loadTracks () {
-      db.playlists.get(this.trackId)
-        .then(tracks => {
-          this.tracks = tracks
+      var playlistId = 'playlist::' + this.trackId
+
+      db.playlists.get(playlistId)
+        .then(playlist => {
+          this.tracks = playlist.tracks
         })
         .catch(err => {
           console.error(err)

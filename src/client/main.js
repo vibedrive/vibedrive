@@ -5,16 +5,15 @@ import '@/Assets/fonts/WorkSans.css'
 import Vue from 'vue'
 import Vuex from 'vuex'
 import Vuetify from 'vuetify'
-import VueVirtualScroller from 'vue-virtual-scroller'
 
 import router from '@/router'
 import Layout from '@/Layout'
 
 import audioStore from '@/Audio/store'
 import sharedStore from '@/Shared/store'
+import playlistsStore from '@/Tracks/store'
 
-Vue.filter('toMB', value => (value / (1000 * 1000)).toFixed(2))
-
+Vue.use(Vuex)
 Vue.use(Vuetify, {
   theme: {
     black: '#202123',
@@ -23,8 +22,7 @@ Vue.use(Vuetify, {
   }
 })
 
-Vue.use(Vuex)
-Vue.use(VueVirtualScroller)
+Vue.filter('toMB', value => (value / (1000 * 1000)).toFixed(2))
 
 Vue.config.productionTip = true
 
@@ -33,6 +31,7 @@ new Vue({
   store: new Vuex.Store({
     modules: {
       audio: audioStore,
+      playlists: playlistsStore,
       shared: sharedStore
     }
   }),
