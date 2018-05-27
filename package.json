@@ -12,7 +12,8 @@
   },
   "browser": {
     "stream": "stream-browserify",
-    "path": "path-browserify"
+    "path": "path-browserify",
+    "request": "xhr"
   },
   "dependencies": {
     "concat-stream": "^1.6.2",
@@ -38,6 +39,8 @@
     "pouchdb-find": "^6.4.3",
     "query-string": "^6.0.0",
     "register-service-worker": "^1.0.0",
+    "request": "^2.87.0",
+    "request-promise": "^4.2.2",
     "run-parallel": "^1.1.9",
     "socket.io": "^2.1.0",
     "socket.io-client": "^2.1.0",
@@ -52,7 +55,8 @@
     "vue-router": "^3.0.1",
     "vue-virtual-scroller": "^0.11.7",
     "vuetify": "^1.0.17",
-    "vuex": "^3.0.1"
+    "vuex": "^3.0.1",
+    "xhr": "^2.5.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.0-beta.9",

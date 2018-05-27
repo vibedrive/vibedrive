@@ -8,6 +8,7 @@
       </v-card-title>
 
       <v-card-text>
+        <h2>Integrations</h2>
         <v-list>
           
           <v-list-tile>

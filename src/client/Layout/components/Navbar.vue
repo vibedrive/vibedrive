@@ -14,22 +14,22 @@
     </v-toolbar-items>
 
 
-    <v-menu color="white" light flat bottom lazy  min-width="240" :close-delay="0">
+    <v-menu color="white" light flat bottom lazy offset-y :nudge-bottom="12" min-width="240" :close-delay="0">
       <v-btn icon slot="activator" dark  :ripple="false">
         <v-icon>account_circle</v-icon>
       </v-btn>
       <v-list  class="white" light>
         <v-list-tile v-on:click="openPreferences">
-          <v-list-tile-title >
+          <v-list-tile-title>
             Preferences
           </v-list-tile-title>
-        </v-list-tile>
-        <v-list-tile to="/login">
+        </v-list-tile >
+        <v-list-tile v-on:click="openLoginModal">
           <v-list-tile-title>
             Log In
           </v-list-tile-title>
         </v-list-tile>
-        <v-list-tile to="/upgrade">
+        <v-list-tile>
           <v-list-tile-title>
             Upgrade to Plus 
             <v-icon small color="white">star</v-icon>
@@ -37,11 +37,19 @@
         </v-list-tile>
       </v-list>
     </v-menu>
+
+
     <Preferences 
       :state="state" 
       :visible="preferences" 
       v-on:close="closePreferences">
     </Preferences>
+
+    <LoginModal 
+      :visible="loginModal"
+      v-on:close="closeLoginModal">  
+    </LoginModal>
+
   </v-toolbar>
 </template>
 
@@ -58,19 +66,28 @@
 
 <script>
 import Preferences from '@/Layout/components/PreferencesModal'
+import LoginModal from '@/Layout/components/LoginModal'
 
 export default {
   name: 'Navbar',
   components: {
-    Preferences
+    Preferences,
+    LoginModal
   },
   props: {
     state: Object
   },
   data: () => ({
-    preferences: false
+    preferences: false,
+    loginModal: true
   }),
   methods: {
+    openLoginModal: function () {
+      this.loginModal = true
+    },
+    closeLoginModal: function () {
+      this.loginModal = false
+    },
     openPreferences: function () {
       this.preferences = true
     },

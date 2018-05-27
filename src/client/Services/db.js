@@ -1,8 +1,14 @@
 import PouchDB from 'pouchdb'
+import authentication from 'pouchdb-authentication'
+
+PouchDB.plugin(authentication)
+
+const DB_KEY = 'vibedrive1'
+const REMOTE_URL = 'http://localhost:5984'
 
 class DB {
   constructor () {
-    this.local = new PouchDB('vibedrive1')
+    this.local = new PouchDB(DB_KEY)
 
     this.tracks = {
       list: this.listTracks.bind(this),
@@ -12,6 +18,24 @@ class DB {
     this.playlists = {
       get: this.getPlaylist.bind(this)
     }
+  }
+
+  login (username, password) {
+    var url = `${REMOTE_URL}/userdb-${toHex(username)}`
+
+    this.remote = new PouchDB(url, { skip_setup: true })
+
+    return this.remote.logIn(username, password)
+      .then(user => {
+        this.startSyncing()
+        return user
+      })
+  }
+
+  startSyncing () {
+    var opts = { live: true }
+
+    this.sync = PouchDB.sync(this.local, this.remote, opts)
   }
 
   getPlaylist (id) {
@@ -51,6 +75,17 @@ class DB {
 
 function mapToDocs (res) {
   return res.rows.map(row => row.doc)
+}
+
+function toHex (s) {
+  var s = unescape(encodeURIComponent(s))
+  var h = ''
+
+  for (var i = 0; i < s.length; i++) {
+    h += s.charCodeAt(i).toString(16)
+  }
+
+  return h
 }
 
 var db = new DB()
