@@ -8,7 +8,7 @@ var folders = require('@/handlers/folders')
 var files = require('@/handlers/files')
 var plugins = require('@/handlers/plugins')
 
-const { PORT, DIRECTORY } = require('@/constants')
+const { PORT } = require('@/constants')
 
 var server = http.Server()
 var io = socketIO(server)
