@@ -3,7 +3,7 @@
   "compression": "maximum",
   "copyright": "Copyright © 2017-2018 Jonathan Dupré",
   "directories": {
-    "output": "dist"
+    "output": "build"
   },
   "dmg": {
     "contents": [
