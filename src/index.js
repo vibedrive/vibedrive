@@ -1,11 +1,18 @@
+/*
+ *  Vibedrive v0.8
+ *
+ */
+
 require('update-electron-app')({
   repo: 'vibedrive/releases'
 })
 
+var server = require('./server')
+
 var path = require('path')
 var { app, BrowserWindow, Menu, shell } = require('electron')
 
-const INDEX_URL = path.join('file://', __dirname, '../dist/index.html')
+const INDEX_URL = 'http://localhost:8080' // path.join('file://', __dirname, '../dist/index.html')
 const ICON_PATH = path.join(__dirname, 'assets/64.png')
 const WIDTH = 1100
 const HEIGHT = 710
@@ -16,8 +23,12 @@ app.on('ready', onReady)
 app.on('window-all-closed', onWindowsClosed)
 
 function onReady () {
-  createWindow()
-  createMenu()
+  server.on('ready', () => {
+    createWindow()
+    createMenu()
+  })
+
+  server.start()
 }
 
 function onWindowsClosed () {
