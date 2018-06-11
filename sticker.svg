@@ -1,0 +1,37 @@
+<svg width="1077" height="931" viewBox="0 0 1077 931" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<title>sticker</title>
+<desc>Created using Figma</desc>
+<g id="Canvas" transform="translate(1145 1176)">
+<g id="sticker">
+<clipPath id="clip-0" clip-rule="evenodd">
+<path d="M -937 -1038L -276 -1038L -276 -384L -937 -384L -937 -1038Z" fill="#FFFFFF"/>
+</clipPath>
+<g id="Logo - Dark Background" clip-path="url(#clip-0)">
+</g>
+<g id="Hexagon">
+<g id="Vector">
+<use xlink:href="#path0_fill" transform="translate(-1135 -1168)" fill="#202123"/>
+<use xlink:href="#path1_stroke" transform="translate(-1135 -1168)" fill="#202123"/>
+</g>
+</g>
+<g id="logo">
+<g id="v2">
+<use xlink:href="#path2_fill" transform="translate(-602.451 -928)" fill="url(#paint2_linear)"/>
+</g>
+<g id="v1">
+<use xlink:href="#path3_fill" transform="translate(-813 -928)" fill="#FFFFFF"/>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<linearGradient id="paint2_linear" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(-30 420 -202.451 -14.4608 190.676 7.23039)">
+<stop offset="0" stop-color="#EDF3FA"/>
+<stop offset="1" stop-color="#818C9A"/>
+</linearGradient>
+<path id="path0_fill" d="M 1057 457.5L 792.75 915L 264.25 915L 0 457.5L 264.25 -1.74652e-08L 792.75 -1.74652e-08L 1057 457.5Z"/>
+<path id="path1_stroke" d="M 1057 457.5L 1063.93 461.501L 1066.24 457.5L 1063.93 453.499L 1057 457.5ZM 792.75 915L 792.75 923L 797.368 923L 799.677 919.001L 792.75 915ZM 264.25 915L 257.323 919.001L 259.632 923L 264.25 923L 264.25 915ZM 0 457.5L -6.92747 453.499L -9.23859 457.5L -6.92747 461.501L 0 457.5ZM 264.25 -1.74652e-08L 264.25 -8L 259.632 -8L 257.323 -4.00127L 264.25 -1.74652e-08ZM 792.75 -1.74652e-08L 799.677 -4.00127L 797.368 -8L 792.75 -8L 792.75 -1.74652e-08ZM 1050.07 453.499L 785.823 910.999L 799.677 919.001L 1063.93 461.501L 1050.07 453.499ZM 792.75 907L 264.25 907L 264.25 923L 792.75 923L 792.75 907ZM 271.177 910.999L 6.92747 453.499L -6.92747 461.501L 257.323 919.001L 271.177 910.999ZM 6.92747 461.501L 271.177 4.00127L 257.323 -4.00127L -6.92747 453.499L 6.92747 461.501ZM 264.25 8L 792.75 8L 792.75 -8L 264.25 -8L 264.25 8ZM 785.823 4.00127L 1050.07 461.501L 1063.93 453.499L 799.677 -4.00127L 785.823 4.00127Z"/>
+<path id="path2_fill" d="M 60.7353 420L 202.451 0L 88.2686 0L 6.48926e-06 286.77L 60.7353 420Z"/>
+<path id="path3_fill" fill-rule="evenodd" d="M 272 420L 120.979 -3.0404e-23L 0 -3.0404e-23L 143.713 420L 272 420Z"/>
+</defs>
+</svg>
