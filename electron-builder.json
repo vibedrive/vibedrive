@@ -29,7 +29,12 @@
     {
       "from": "dist",
       "to": ".",
-      "filter": ["**/*"]
+      "filter": [
+        "!**/*",
+        "**/client",
+        "**/server",
+        "**/index.js"
+      ]
     },
     "!dist",
     "!src",
