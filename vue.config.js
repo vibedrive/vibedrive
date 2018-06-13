@@ -2,7 +2,7 @@ var path = require('path')
 
 module.exports = {
   lintOnSave: true,
-  baseUrl: path.join(__dirname, 'dist'),
+  baseUrl: '.',
   configureWebpack: {
     resolve: {
       alias: {

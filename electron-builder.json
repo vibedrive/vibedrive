@@ -1,36 +1,42 @@
 {
   "productName": "Vibedrive",
-  "compression": "maximum",
+  "appId": "app.vibedrive.desktop",
   "copyright": "Copyright © 2017-2018 Jonathan Dupré",
+  "compression": "store",
   "directories": {
-    "output": "build"
-  },
-  "dmg": {
-    "contents": [
-      {
-        "x": 110,
-        "y": 150
-      },
-      {
-        "x": 240,
-        "y": 150,
-        "type": "link",
-        "path": "/Applications"
-      }
-    ]
+    "buildResources": "resources",
+    "output": "dist/electron"
   },
   "mac": {
     "category": "public.app-category.music",
     "target": "zip",
-    "icon": "assets/64.icns"
+    "publish": null,
+    "electronLanguages": [
+      "en"
+    ],
+    "icon": "resources/64.icns",
+    "asar": {
+      "smartUnpack": false
+    },
+    "files": [
+      "**/node_modules/ffprobe-static/bin/darwin/x64/ffprobe"
+    ],
+    "asarUnpack": [
+      "**/node_modules/ffprobe-static/bin/darwin/x64/ffprobe"
+    ]
   },
   "files": [
-    "**/*",
-    "build",
+    {
+      "from": "dist",
+      "to": ".",
+      "filter": ["**/*"]
+    },
+    "!dist",
+    "!src",
     "!**/.*",
     "!buildResources{,/**/*}",
     "!**/node_modules/**/{CONTRIBUTORS,License,CNAME,AUTHOR,TODO,CONTRIBUTING,COPYING,INSTALL,NEWS,PORTING,Makefile,license,LICENCE,LICENSE,htdocs,CHANGELOG,ChangeLog,changelog,README,Readme,readme,test,sample,example,demo,composer.json,tsconfig.json,jsdoc.json,tslint.json,typings.json,gulpfile,bower.json,package-lock,Gruntfile,CMakeLists,karma.conf,yarn.lock}*",
-    "!**/node_modules/**/{man,benchmark,node_modules,spec,cmake,browser,vagrant,doxy*,bin,obj,obj.target,example,examples,test,tests,doc,docs,msvc,Xcode,CVS,RCS,SCCS}{,/**/*}",
+    "!**/node_modules/**/{man,benchmark,node_modules,spec,cmake,bin,browser,vagrant,doxy*,obj,obj.target,example,examples,test,tests,doc,docs,msvc,Xcode,CVS,RCS,SCCS}{,/**/*}",
     "!**/node_modules/**/*.{conf,png,pc,coffee,txt,spec.js,ts,js.flow,html,def,jst,xml,ico,in,ac,sln,dsp,dsw,cmd,vcproj,vcxproj,vcxproj.filters,pdb,exp,obj,lib,map,md,sh,gypi,gyp,h,cpp,yml,log,tlog,Makefile,mk,c,cc,rc,xcodeproj,xcconfig,d.ts,yaml,hpp}",
     "!**/node_modules/**!(dom-to-image).min.js",
     "!**/node_modules/!(serialport|xpc-connection|unix-dgram|mraa)/build{,/**/*}",
@@ -74,6 +80,6 @@
     "!**/node_modules/opencv/!(package.json|lib)",
     "!**/node_modules/json-schema/!(package.json|lib)",
     "!**/node_modules/hawk/dist/{,/**/*}",
-    "!**/node_modules/hawk/lib/browser.js",
+    "!**/node_modules/hawk/lib/browser.js"
   ]
 }

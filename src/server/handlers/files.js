@@ -8,8 +8,12 @@ var trash = require('trash')
 var musicmetadata = require('music-metadata')
 var cp = require('cp')
 var uuid = require('uuid/v4')
+var { fixPathForAsarUnpack } = require('electron-util')
 
 const { HOME, DIRECTORY, FORMATS } = require('@/constants')
+const FFPROBE_PATH = fixPathForAsarUnpack(ffprobeStatic.path)
+
+console.log('hello?', FFPROBE_PATH)
 
 module.exports = {
   finishImporting: finishImporting,
@@ -122,7 +126,7 @@ function trashFile (filepath, cb) {
 function getFileInfo (filepath, cb) {
   var fullpath = path.join(HOME, filepath)
 
-  ffprobe(fullpath, { path: ffprobeStatic.path }, (err, info) => {
+  ffprobe(fullpath, { path: FFPROBE_PATH }, (err, info) => {
     if (err) return cb(err)
 
     info = info.streams.find(stream => stream.codec_type === 'audio')

@@ -8,11 +8,14 @@ require('update-electron-app')({
 })
 
 var server = require('./server')
+var isDev = require('electron-is-dev')
 
 var path = require('path')
-var { app, BrowserWindow, Menu, shell } = require('electron')
+var { app, BrowserWindow, Menu, shell, globalShortcut } = require('electron')
 
-const INDEX_URL = 'http://localhost:8080' // path.join('file://', __dirname, '../dist/index.html')
+const INDEX_URL = isDev
+  ? 'http://localhost:8080'
+  : 'file://' + path.join(__dirname, 'client/index.html')
 const ICON_PATH = path.join(__dirname, 'assets/64.png')
 const WIDTH = 1100
 const HEIGHT = 710
@@ -23,7 +26,7 @@ app.on('ready', onReady)
 app.on('window-all-closed', onWindowsClosed)
 
 function onReady () {
-  server.on('ready', () => {
+  server.on('ready', () => {
     createWindow()
     createMenu()
   })
@@ -53,11 +56,15 @@ function createWindow () {
     mainWindow = null
   })
 
-  console.log(INDEX_URL)
-
   mainWindow.loadURL(INDEX_URL)
 
-  process.env.NODE_ENV !== 'production' && mainWindow.openDevTools()
+  globalShortcut.register('CmdOrCtrl+Shift+I', () => {
+    mainWindow.toggleDevTools()
+  })
+
+  if (isDev) {
+    mainWindow.openDevTools()
+  }
 
   return mainWindow
 }
@@ -101,16 +108,4 @@ function createMenu () {
   ]
 
   Menu.setApplicationMenu(Menu.buildFromTemplate(template))
-}
-
-function isMac () {
-  return process.platform === 'darwin'
-}
-
-function isLinux () {
-  return process.platform === 'linux'
-}
-
-function isWindows () {
-  return process.platform === 'win32'
 }

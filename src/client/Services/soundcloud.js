@@ -1,5 +1,6 @@
 /* globals SC */
 
+import 'soundcloud'
 import constants from '@/constants'
 
 var { URL, SOUNDCLOUD_CLIENT_ID } = constants

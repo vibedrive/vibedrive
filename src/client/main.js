@@ -1,6 +1,4 @@
 import 'isomorphic-fetch'
-import 'material-design-icons-iconfont/dist/material-design-icons.css'
-import '@/Assets/fonts/WorkSans.css'
 
 import Vue from 'vue'
 import Vuex from 'vuex'
