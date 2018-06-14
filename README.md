@@ -13,6 +13,8 @@
 
 <br>
 
+> I can listen to my tracks on my phone/in the car, AND I can edit the meta data and create playlist easily from there. The changes get applied to my Rekordbox/Traktor/Serato collection in real-time, with formatted file names, while being copied to a USB key, Dropbox/Google Drive & my NAS. It even remembers the warp markers I added once in Ableton.
+
 ## Copyright / License
 
 Copyright 2017 - 2018 Jonathan Dupré.
