@@ -31,8 +31,8 @@
       "to": ".",
       "filter": [
         "!**/*",
-        "**/client",
-        "**/server",
+        "**/client/**/*",
+        "**/server/**/*",
         "**/index.js"
       ]
     },

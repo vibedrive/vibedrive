@@ -1,9 +1,8 @@
 # backlog
 
-- [ ] next goal: run in an electron shell
-  - [x] make dev script work with livereload 
-  - [x] make build script work
-  - [x] fix ffprobe in build
+- [ ] next goal: 
+  - [ ] save database to app data folder
+  - [ ] setup connection w/ remote (default to api.vibedrive.app)
   - [ ] make auto-update work
   - [ ] setup continuous integration (alpha channel)
 - [ ] select row in files table
@@ -15,9 +14,12 @@
 - [ ] display artist in bottom toolbar
 - [ ] allow scrubbing (hovering should display a handle)
 - [ ] make file table header sticky (should stay at the top)
-- [ ] save database to app data folder
 - [ ] allow login button to connect to remote couchdb on @carbon
 
 
 ## done
 
+- [x] run in an electron shell
+  - [x] make dev script work with livereload 
+  - [x] make build script work
+  - [x] fix ffprobe in build
