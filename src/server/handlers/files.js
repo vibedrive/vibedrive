@@ -13,8 +13,6 @@ var { fixPathForAsarUnpack } = require('electron-util')
 const { HOME, DIRECTORY, FORMATS } = require('@/constants')
 const FFPROBE_PATH = fixPathForAsarUnpack(ffprobeStatic.path)
 
-console.log('hello?', FFPROBE_PATH)
-
 module.exports = {
   finishImporting: finishImporting,
   import: trackFromFile,

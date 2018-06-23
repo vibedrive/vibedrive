@@ -7,35 +7,106 @@ require('update-electron-app')({
   repo: 'vibedrive/releases'
 })
 
+var request = require('request')
 var server = require('./server')
 var isDev = require('electron-is-dev')
 
 var path = require('path')
 var { app, BrowserWindow, Menu, shell, globalShortcut } = require('electron')
 
+const SPLASH_URL = isDev
+  ? 'file://' + path.join(__dirname, '../public/splash.html')
+  : 'file://' + path.join(__dirname, '../splash.html')
 const INDEX_URL = isDev
   ? 'http://localhost:8080'
   : 'file://' + path.join(__dirname, 'client/index.html')
 const ICON_PATH = path.join(__dirname, 'assets/64.png')
-const WIDTH = 1100
-const HEIGHT = 710
+const WIDTH = 945
+const HEIGHT = 645
 
 var mainWindow = null
+var splashScreen = null
 
 app.on('ready', onReady)
 app.on('window-all-closed', onWindowsClosed)
 
 function onReady () {
-  server.on('ready', () => {
-    createWindow()
-    createMenu()
+  createSplashScreen(() => {
+    server.on('ready', () => {
+      if (isDev) {
+        var opts = { method: 'get', url: 'http://localhost:8080' }
+        var timer = setInterval(ping, 1000)
+      } else {
+        openMainWindow()
+      }
+
+      function ping () {
+        request(opts, (err, res, body) => {
+          if (timer && !err) {
+            clearInterval(timer)
+            timer = null
+            openMainWindow()
+          }
+        })
+      }
+    })
+
+    server.start()
   })
 
-  server.start()
+  globalShortcut.register('CmdOrCtrl+Shift+I', () => {
+    if (splashScreen) splashScreen.toggleDevTools()
+    if (mainWindow) mainWindow.toggleDevTools()
+  })
+
+  globalShortcut.register('CmdOrCtrl+R', () => {
+    if (splashScreen) splashScreen.reload()
+    if (mainWindow) mainWindow.reload()
+  })
+}
+
+function openMainWindow () {
+  createWindow()
+  createMenu()
+  splashScreen.close()
 }
 
 function onWindowsClosed () {
   app.quit()
+}
+
+function createSplashScreen (callback) {
+  splashScreen = new BrowserWindow({
+    show: false,
+    title: 'Vibedrive',
+    frame: false,
+    width: 1100 / 2,
+    height: 710 / 2,
+    minWidth: 500,
+    minHeight: 400,
+    focusable: false,
+    alwaysOnTop: true,
+    hasShadow: false,
+    resizable: false,
+    acceptFirstMouse: true,
+    icon: ICON_PATH,
+    webPreferences: {
+      zoomFactor: 1
+    }
+  })
+
+  splashScreen.loadURL(SPLASH_URL)
+
+  splashScreen.once('ready-to-show', () => {
+    splashScreen.show()
+    callback()
+  })
+
+  splashScreen.on('closed', () => {
+    splashScreen = null
+  })
+
+  return splashScreen
 }
 
 function createWindow () {
@@ -57,14 +128,6 @@ function createWindow () {
   })
 
   mainWindow.loadURL(INDEX_URL)
-
-  globalShortcut.register('CmdOrCtrl+Shift+I', () => {
-    mainWindow.toggleDevTools()
-  })
-
-  if (isDev) {
-    mainWindow.openDevTools()
-  }
 
   return mainWindow
 }
