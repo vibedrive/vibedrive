@@ -4,7 +4,7 @@
  */
 
 require('update-electron-app')({
-  repo: 'vibedrive/releases'
+  repo: 'vibedrive/vibedrive'
 })
 
 var request = require('request')
@@ -17,9 +17,11 @@ var { app, BrowserWindow, Menu, shell, globalShortcut } = require('electron')
 const SPLASH_URL = isDev
   ? 'file://' + path.join(__dirname, '../public/splash.html')
   : 'file://' + path.join(__dirname, '../splash.html')
+
 const INDEX_URL = isDev
   ? 'http://localhost:8080'
   : 'file://' + path.join(__dirname, 'client/index.html')
+
 const ICON_PATH = path.join(__dirname, 'assets/64.png')
 const WIDTH = 945
 const HEIGHT = 645
