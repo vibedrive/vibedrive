@@ -1,17 +1,33 @@
 var net = require('net')
+var loadConfig = require('./load-config')
 
-const PORT = 15796
+const { PORT } = loadConfig()
+const EXIT_COMMANDS = [ 'quit', 'exit', '.exit', 'q' ]
 
-var client = net.connect({ port: PORT }, onConnect)
+var socket = net.connect({ port: PORT }, onConnect)
 
 function onConnect () {
-  process.stdout.write('> ')
+  const CURSOR = `127.0.0.1:${PORT}> `
 
-  client.on('data', () => {
-    console.log('data!')
+  process.stdout.write(CURSOR)
+
+  process.stdin.on('data', function (buf) {
+    var msg = buf.toString().replace('\n', '')
+
+    if (EXIT_COMMANDS.includes(msg)) {
+      return process.exit(0)
+    }
+
+    socket.write(msg)
   })
 
-  client.on('end', () => {
-    console.log('disconnected from server')
+  socket.on('data', buf => {
+    process.stdout.write(buf.toString())
+    process.stdout.write('\n' + CURSOR)
+  })
+
+  socket.on('end', () => {
+    console.log('Disconnected from server')
+    process.exit(0)
   })
 }
