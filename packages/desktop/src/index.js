@@ -1,5 +1,5 @@
 /*
- *  Vibedrive v0.8
+ *  Vibedrive Desktop
  *
  */
 
