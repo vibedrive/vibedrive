@@ -1,0 +1,15 @@
+{
+  "name": "vibedrive-cli",
+  "version": "0.1.0",
+  "description": "control vibedrive from a shell",
+  "main": "index.js",
+  "scripts": {
+    "test": "standard --fix"
+  },
+  "keywords": [
+    "vibedrive",
+    "cli"
+  ],
+  "author": "kareniel",
+  "license": "GPL-2.0"
+}

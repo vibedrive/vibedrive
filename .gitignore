@@ -22,3 +22,11 @@ yarn-error.log*
 
 env.js
 build
+
+# Cordova-specific directories
+platforms
+plugins
+res/ios
+res/android
+res/windows
+res/blackberry10

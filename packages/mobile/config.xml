@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="co.vibedrive.mobile" version="0.1.0" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>Vibedrive</name>
+    <description>
+        Vibedrive Mobile App.
+    </description>
+    <author email="hello@jonathandupre.com" href="http://jonathandupre.com">
+        Jonathan Dupré
+    </author>
+    <content src="index.html" />
+    <access origin="*" />
+    <allow-intent href="http://*/*" />
+    <allow-intent href="https://*/*" />
+    <allow-intent href="tel:*" />
+    <allow-intent href="sms:*" />
+    <allow-intent href="mailto:*" />
+    <allow-intent href="geo:*" />
+    <platform name="android">
+        <allow-intent href="market:*" />
+    </platform>
+    <platform name="ios">
+        <allow-intent href="itms:*" />
+        <allow-intent href="itms-apps:*" />
+    </platform>
+    <preference name="iosPersistentFileLocation" value="Library" />
+    <preference name="AndroidPersistentFileLocation" value="Internal" />
+    <plugin name="cordova-plugin-whitelist" spec="1" />
+    <plugin name="cordova-plugin-browsersync" spec="~0.1.7" />
+    <plugin name="cordova-plugin-file" spec="^6.0.1" />
+    <plugin name="cordova-plugin-splashscreen" spec="^5.0.2" />
+    <platform name="ios">
+        <icon height="40" src="res/ios/icon/icon-40.png" width="40" />
+        <icon height="60" src="res/ios/icon/icon-60.png" width="60" />
+        <icon height="80" src="res/ios/icon/icon-40@2x.png" width="80" />
+        <icon height="120" src="res/ios/icon/icon-60@2x.png" width="120" />
+        <icon height="76" src="res/ios/icon/icon-76.png" width="76" />
+        <icon height="152" src="res/ios/icon/icon-76@2x.png" width="152" />
+        <icon height="57" src="res/ios/icon/icon.png" width="57" />
+        <icon height="114" src="res/ios/icon/icon@2x.png" width="114" />
+        <icon height="72" src="res/ios/icon/icon-72.png" width="72" />
+        <icon height="144" src="res/ios/icon/icon-72@2x.png" width="144" />
+        <icon height="29" src="res/ios/icon/icon-small.png" width="29" />
+        <icon height="58" src="res/ios/icon/icon-small@2x.png" width="58" />
+        <icon height="50" src="res/ios/icon/icon-50.png" width="50" />
+        <icon height="100" src="res/ios/icon/icon-50@2x.png" width="100" />
+        <splash height="480" src="res/ios/splash/Default~iphone.png" width="320" />
+        <splash height="960" src="res/ios/splash/Default@2x~iphone.png" width="640" />
+        <splash height="1024" src="res/ios/splash/Default-Portrait~ipad.png" width="768" />
+        <splash height="2048" src="res/ios/splash/Default-Portrait@2x~ipad.png" width="1536" />
+        <splash height="768" src="res/ios/splash/Default-Landscape~ipad.png" width="1024" />
+        <splash height="1536" src="res/ios/splash/Default-Landscape@2x~ipad.png" width="2048" />
+        <splash height="1136" src="res/ios/splash/Default-568h@2x~iphone.png" width="640" />
+        <splash height="1334" src="res/ios/splash/Default-667h.png" width="750" />
+        <splash height="2208" src="res/ios/splash/Default-736h.png" width="1242" />
+        <splash height="1242" src="res/ios/splash/Default-Landscape-736h.png" width="2208" />
+    </platform>
+    <platform name="android">
+        <icon density="ldpi" src="res/android/icon/ldpi.png" />
+        <icon density="mdpi" src="res/android/icon/mdpi.png" />
+        <icon density="hdpi" src="res/android/icon/hdpi.png" />
+        <icon density="xhdpi" src="res/android/icon/xhdpi.png" />
+        <icon density="xxhdpi" src="res/android/icon/xxhdpi.png" />
+        <icon density="xxxhdpi" src="res/android/icon/xxxhdpi.png" />
+        <splash density="land-hdpi" src="res/android/splash/splash-land-hdpi.png" />
+        <splash density="land-ldpi" src="res/android/splash/splash-land-ldpi.png" />
+        <splash density="land-mdpi" src="res/android/splash/splash-land-mdpi.png" />
+        <splash density="land-xhdpi" src="res/android/splash/splash-land-xhdpi.png" />
+    </platform>
+    <engine name="android" spec="^7.0.0" />
+    <engine name="browser" spec="^5.0.3" />
+    <engine name="ios" spec="^4.5.4" />
+</widget>

@@ -1,11 +1,11 @@
 {
   "name": "Vibedrive",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "private": true,
   "author": "kareniel",
   "license": "GPLv2",
   "main": "index.js",
-  "description": "Vibedrive Desktop Application",
+  "description": "Vibedrive Applications",
   "scripts": {
     "start": "npm run watch",
     "postinstall": "run-s postinstall:*",
