@@ -1,5 +1,5 @@
 {
-  "name": "Vibedrive",
+  "name": "@vibedrive/desktop",
   "version": "0.8.0",
   "private": true,
   "author": "kareniel",
@@ -10,7 +10,6 @@
     "start": "npm run watch",
     "postinstall": "run-s postinstall:*",
     "postinstall:rebuild": "electron-builder install-app-deps",
-    "postinstall:link": "npm link node-traktor",
     "lint": "vue-cli-service lint",
     "watch": "run-p watch:*",
     "watch:client": "vue-cli-service serve src/client/main.js",

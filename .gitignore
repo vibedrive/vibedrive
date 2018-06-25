@@ -30,3 +30,5 @@ res/ios
 res/android
 res/windows
 res/blackberry10
+
+lerna-debug.log

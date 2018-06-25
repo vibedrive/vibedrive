@@ -36,7 +36,7 @@ function onReady () {
   createSplashScreen(() => {
     server.on('ready', () => {
       if (isDev) {
-        var opts = { method: 'get', url: 'http://localhost:8080' }
+        var opts = { method: 'get', url: INDEX_URL }
         var timer = setInterval(ping, 1000)
       } else {
         openMainWindow()
@@ -44,7 +44,7 @@ function onReady () {
 
       function ping () {
         request(opts, (err, res, body) => {
-          if (timer && !err) {
+          if (!err && timer && body && body.includes('<script type="text/javascript"')) {
             clearInterval(timer)
             timer = null
             openMainWindow()

@@ -1,8 +1,8 @@
 {
-  "name": "vibedrive-mobile",
-  "private": "true",
+  "name": "@vibedrive/mobile",
+  "private": true,
   "displayName": "Vibedrive",
-  "version": "0.1.0",
+  "version": "0.3.0",
   "description": "Vibedrive mobile client",
   "main": "index.js",
   "scripts": {

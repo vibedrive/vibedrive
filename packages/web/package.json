@@ -1,14 +1,14 @@
 {
-  "name": "@vibedrive/cli",
+  "name": "@vibedrive/web",
   "version": "0.1.0",
-  "description": "control vibedrive from a shell",
+  "private": true,
+  "description": "Vibedrive Web Application",
   "main": "index.js",
   "scripts": {
     "test": "standard --fix"
   },
   "keywords": [
-    "vibedrive",
-    "cli"
+    "vibedrive"
   ],
   "author": "kareniel",
   "license": "GPL-2.0"
