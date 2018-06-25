@@ -1,0 +1,15 @@
+{
+  "name": "@vibedrive/web",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Vibedrive Web Application",
+  "main": "index.js",
+  "scripts": {
+    "test": "standard --fix"
+  },
+  "keywords": [
+    "vibedrive"
+  ],
+  "author": "kareniel",
+  "license": "GPL-2.0"
+}

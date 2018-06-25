@@ -1,0 +1,11 @@
+{
+  "background_color": "#FFF",
+  "display": "standalone",
+  "name": "Vibedrive",
+  "short_name": "Vibedrive",
+  "version": "co.vibedrive.mobile",
+  "description": "Vibedrive Mobile App.",
+  "author": "Jonathan Dupré",
+  "icons": [],
+  "start_url": "index.html"
+}

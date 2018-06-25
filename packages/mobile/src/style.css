@@ -1,0 +1,63 @@
+* {
+  user-select: none !important;
+}
+*:focus {
+  outline: none;
+}
+body, html { 
+  overflow-x: hidden; 
+  overflow-y: auto;
+}
+body {
+  position: relative;
+}
+.modal { 
+  top: 0; 
+  width: 100%; 
+  position: fixed; 
+  background-color: grey; 
+  height: 100vh; 
+}
+.waveform {
+  width: 100vw;
+  height: 15vh;
+  background-color: white;
+  content: '';
+  position: fixed;
+  transform: translateX(50vw);
+  bottom: 15vh;
+  left: 0;
+  z-index: 3;
+}
+.cover-bg {
+  width: 100vh;
+  height: 100vh;
+  position: fixed;
+  background-color: blue;
+}
+.modal-hidden { transform: translateY(100vh); }
+.modal-entering { animation: modal-entering ease-out 0.3s 1 forwards; }
+.modal-visible { transform: translateY(0); }
+.modal-leaving { animation: modal-leaving ease-in 0.3s 1 forwards; }
+
+@keyframes modal-entering {
+  from { transform: translateY(100vh); }
+  to { transform: translateY(0); }
+}
+
+@keyframes modal-leaving {
+  from { transform: translateY(0); }
+  to { transform: translateY(100vh); }
+}
+
+.fadein {
+  animation: fadein 1s ease-in forwards;
+}
+.fadeout {
+  opacity: 0;
+  transition: 1s;
+}
+@keyframes fadein {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
