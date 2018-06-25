@@ -11,8 +11,9 @@
   "main": "index.js",
   "description": "Vibedrive Applications",
   "scripts": {
-    "bootstrap": "npm install && lerna bootstrap && lerna run bootstrap",
-    "publish": "lerna publish"
+    "bootstrap": "npm install && lerna bootstrap --hoist && lerna run bootstrap",
+    "publish": "lerna publish",
+    "desktop": "cd packages/desktop && npm run start"
   },
   "devDependencies": {
     "lerna": "^2.11.0"

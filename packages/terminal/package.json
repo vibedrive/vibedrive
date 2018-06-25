@@ -11,5 +11,9 @@
     "cli"
   ],
   "author": "kareniel",
-  "license": "GPL-2.0"
+  "license": "GPL-2.0",
+  "dependencies": {
+    "keypress": "^0.2.1",
+    "vorpal": "^1.12.0"
+  }
 }

@@ -9,6 +9,8 @@ var folders = require('@/handlers/folders')
 var files = require('@/handlers/files')
 var plugins = require('@/handlers/plugins')
 
+var db = require('@vibedrive/vibedb')
+
 const { PORT } = require('@/constants')
 
 var server = new EventEmitter()
@@ -24,6 +26,7 @@ function start () {
   io.on('connection', function (socket) {
     console.log('Connected to the browser.')
 
+    socket.on('tracks:list', db.tracks.list)
     socket.on('traktor:locate', plugins.traktor.locate)
     socket.on('folders:clean', folders.clean)
     socket.on('folders:list', folders.list)

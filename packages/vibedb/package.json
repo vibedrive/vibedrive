@@ -1,0 +1,21 @@
+{
+  "name": "@vibedrive/vibedb",
+  "version": "0.1.0",
+  "description": "db server for vibedrive",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "nodemon src",
+    "test": "standard --fix"
+  },
+  "keywords": [
+    "vibedrive"
+  ],
+  "author": "kareniel",
+  "license": "GPL-2.0",
+  "dependencies": {
+    "level": "^4.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^1.17.5"
+  }
+}
